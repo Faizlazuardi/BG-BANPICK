@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@layer base{
+    img{
+        @apply pointer-events-none;
+    }
+    button{
+        @apply hover:bg-gray-100 active:bg-gray-200 border-2 rounded-full h-10; 
+    }
+    input  {
+        @apply p-2 border-2 w-36.5 h-11;
+    }
+}
+
+@layer utilities{
+    .fly-in {
+        animation: flyIn 1.2s ease-in-out;
+    }
+    
+    .fly-out {
+        animation: flyOut 1.2s ease-in-out;
+    }
+}
+
+
+@keyframes flyIn {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes flyOut {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(100%);
+    }
+}
