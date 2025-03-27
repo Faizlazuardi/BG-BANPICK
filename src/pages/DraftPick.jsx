@@ -184,8 +184,8 @@ export default function DraftPick() {
     };
     
     const initialTeamSelectionState = {
-        blue: { Name: "", Logo: "/src/assets/80x80.png", WinCheck: [false, false, false] },
-        red: { Name: "", Logo: "/src/assets/80x80.png", WinCheck: [false, false, false] }
+        blue: { Name: "", Logo: "./src/assets/80x80.png", WinCheck: [false, false, false] },
+        red: { Name: "", Logo: "./src/assets/80x80.png", WinCheck: [false, false, false] }
     };
     
     const initialTeamInputState = {

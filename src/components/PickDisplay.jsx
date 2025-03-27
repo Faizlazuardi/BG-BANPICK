@@ -9,7 +9,7 @@ export default function PickDisplay({ grid, playerInputs, picks, animationClasse
     const renderPicks = (ids, player, picks, animationClass) => {
         return ids.map((id) => (
             <div className="flex flex-col" key={id}>
-                <div className="bg-[url('/src/assets/pick.png')] bg-cover bg-center w-29 h-48 overflow-hidden">
+                <div className="bg-[url('./src/assets/pick.png')] bg-cover bg-center w-29 h-48 overflow-hidden">
                     <img className={`h-full object-cover ${animationClass[(id - 1) % 5]}`} src={picks[(id - 1) % 5].img} alt="" />
                 </div>
                 <div className="flex justify-center items-center bg-black h-5 text-white">
