@@ -9,7 +9,7 @@ export default function ban({ grid, bans, animationClasses }) {
     const renderBans = (Ids, bans, animationClass) => {
         return Ids.map((id) => (
             <div key={id}>
-                <div className="bg-[url('./src/assets/Ban.png')] bg-gray-300 bg-cover bg-center grayscale-100 w-16 h-16 overflow-hidden" key={id}>
+                <div className="bg-[url('/src/assets/Ban.png')] bg-gray-300 bg-cover bg-center grayscale-100 w-16 h-16 overflow-hidden" key={id}>
                     <img className={`grayscale-100 h-full object-cover ${animationClass[(id - 1) % 5]}`} src={bans[(id - 1) % 5].img} alt=""/>
                 </div>
             </div>

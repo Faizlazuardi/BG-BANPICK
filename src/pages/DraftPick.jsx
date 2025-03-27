@@ -7,9 +7,10 @@ import TeamField from "/src/components/TeamField";
 import BanField from "/src/components/BanField";
 import PickField from "/src/components/PickField";
 import PlayerField from "/src/components/PlayerField";
-import { getHeroes } from "../../services/heroService";
-import { getTeams } from "../../services/teamService";
-import { getPlayersByTeam } from "../../services/playerService";
+import { getHeroes, getTeams, getPlayersByTeam } from "../../services/supabaseService";
+// import { getHeroes } from "../../services/heroService";
+// import { getTeams } from "../../services/teamService";
+// import { getPlayersByTeam } from "../../services/playerService";
 
 export default function DraftPick() {
     const HOK = [
@@ -184,8 +185,8 @@ export default function DraftPick() {
     };
     
     const initialTeamSelectionState = {
-        blue: { Name: "", Logo: "./src/assets/80x80.png", WinCheck: [false, false, false] },
-        red: { Name: "", Logo: "./src/assets/80x80.png", WinCheck: [false, false, false] }
+        blue: { Name: "", Logo: "/src/assets/80x80.png", WinCheck: [false, false, false] },
+        red: { Name: "", Logo: "/src/assets/80x80.png", WinCheck: [false, false, false] }
     };
     
     const initialTeamInputState = {
