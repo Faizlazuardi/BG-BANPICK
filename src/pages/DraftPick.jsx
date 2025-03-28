@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import DefaultTeam from "/src/assets/80x80.png";
 import TeamDisplay from "/src/components/TeamDisplay.jsx";
 import BanDisplay from "/src/components/BanDisplay.jsx";
 import PickDisplay from "/src/components/PickDisplay.jsx";
@@ -185,8 +186,8 @@ export default function DraftPick() {
     };
     
     const initialTeamSelectionState = {
-        blue: { Name: "", Logo: "/src/assets/80x80.png", WinCheck: [false, false, false] },
-        red: { Name: "", Logo: "/src/assets/80x80.png", WinCheck: [false, false, false] }
+        blue: { Name: "", Logo: DefaultTeam, WinCheck: [false, false, false] },
+        red: { Name: "", Logo: DefaultTeam, WinCheck: [false, false, false] }
     };
     
     const initialTeamInputState = {
