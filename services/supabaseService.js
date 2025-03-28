@@ -1,8 +1,13 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = 'https://bluktltvzslrzitntrjl.supabase.co'
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey)
+const supabase = createClient(supabaseUrl, supabaseKey, {
+    auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+    }
+});
 
 export const getHeroes = async (game) => {
     if (game === 'MLBB') {
@@ -35,7 +40,6 @@ export const getPlayersByTeam = async (teamName) => {
             .select('Id')
             .eq('Name', teamName)
             .maybeSingle();
-
         if (teamError) throw teamError;
         if (!teamData) return { error: "Team not found" };
 
@@ -43,10 +47,8 @@ export const getPlayersByTeam = async (teamName) => {
             .from('Players')
             .select('Id, Username')
             .eq('Team_id', teamData.Id);
-
         if (playersError) throw playersError;
-
-        return players;
+        return players.length > 0 ? players : { error: "No players found in this team" };
     } catch (err) {
         console.error("Error fetching players:", err);
         return { error: err.message };

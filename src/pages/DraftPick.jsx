@@ -142,18 +142,18 @@ export default function DraftPick() {
     };
 
     useEffect(() => {
-        const fetchDefaultGameStats = async () => {
-            const data = await getHeroes("MLBB");
+        const fetchDefaultGameData = async () => {
+            const data = await getHeroes(gameOption[0].game);
             if (!data.error) {
                 setHeroes(data);
             }
             
-            const team = await getTeams("MLBB");
+            const team = await getTeams(gameOption[0].game);
             if (!team.error) {
                 setTeams(team);
             }
         };
-        fetchDefaultGameStats();
+        fetchDefaultGameData();
     }, []);
 
     const roundOption = [
