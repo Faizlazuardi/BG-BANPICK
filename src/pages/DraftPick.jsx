@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import DefaultTeamLogo from "/src/assets/80x80.png";
-import TeamDisplay from "/src/components/TeamDisplay.jsx";
-import BanDisplay from "/src/components/BanDisplay.jsx";
-import PickDisplay from "/src/components/PickDisplay.jsx";
+import TeamDisplay from "/src/components/TeamDisplay";
+import BanDisplay from "/src/components/BanDisplay";
+import PickDisplay from "/src/components/PickDisplay";
 import MatchSummary from "/src/components/MatchSummary";
 import TeamField from "/src/components/TeamField";
 import BanField from "/src/components/BanField";
