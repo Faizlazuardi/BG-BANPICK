@@ -24,8 +24,8 @@ export default function PickField({ onPickChange, onPickInputChange, pickInputs,
                             {heroes
                                 .filter(hero => hero.Name.toLowerCase().startsWith(pickInput[index].toLowerCase()))
                                 .map(hero => (
-                                    <div className="flex items-center gap-2 hover:bg-gray-100 h-8"
-                                        key={hero.Name}
+                                    <div className="flex items-center gap-2 hover:bg-gray-100 p-2 cursor-pointer"
+                                        key={hero.Id}
                                         onMouseDown={(e) => e.preventDefault()}
                                         onClick={() => {
                                             const shiftId = onShiftPick(teamSide.toLowerCase(), index);

@@ -24,7 +24,7 @@ export default function TeamField({ onTeamChange, teamSelection, teamInputs, onT
                             {teams
                                 .filter(team => team.Name.toLowerCase().startsWith(teamInput.toLowerCase()))
                                 .map(team => (
-                                    <div className="flex items-center gap-2 hover:bg-gray-100 h-8"
+                                    <div className="flex items-center gap-2 hover:bg-gray-100 p-2 cursor-pointer"
                                         key={team.Name}
                                         onMouseDown={(e) => e.preventDefault()}
                                         onClick={() => {

@@ -24,8 +24,8 @@ export default function BanField({ onBanChange, onBanInputChange, banInputs, her
                             {heroes
                                 .filter(hero => hero.Name.toLowerCase().startsWith(banInput[index].toLowerCase()))
                                 .map(hero => (
-                                    <div className="flex items-center gap-2 hover:bg-gray-100 h-8"
-                                        key={hero.Name}
+                                    <div className="flex items-center gap-2 hover:bg-gray-100 p-2 cursor-pointer"
+                                        key={hero.Id}
                                         onMouseDown={(e) => e.preventDefault()}
                                         onClick={() => {
                                             onBanChange("ban", teamSide.toLowerCase(), index, { name: hero.Name, img: hero.Banned });
