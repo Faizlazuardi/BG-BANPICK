@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-export default function BanField({ onBanChange, onBanInputChange, banInputs, heroes }) {
+export default function BanField({ onBanSelectionChange, onBanInputChange, banInputs, heroes }) {
     const { blue: blueBanInputs, red: redBanInputs } = banInputs;
     const banBlueIds = [1, 2, 3, 4, 5];
     const banRedIds = [6, 7, 8, 9, 10];
@@ -28,7 +28,7 @@ export default function BanField({ onBanChange, onBanInputChange, banInputs, her
                                         key={hero.Id}
                                         onMouseDown={(e) => e.preventDefault()}
                                         onClick={() => {
-                                            onBanChange("ban", teamSide.toLowerCase(), index, { name: hero.Name, img: hero.Banned });
+                                            onBanSelectionChange(teamSide.toLowerCase(), index, { name: hero.Name, img: hero.Banned });
                                             onBanInputChange(teamSide.toLowerCase(), index, hero.Name);
                                             inputRefs.current[id].blur();
                                         }}

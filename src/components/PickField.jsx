@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-export default function PickField({ onPickChange, onPickInputChange, pickInputs, heroes, onShiftPick, swaper, onSwaperChange }) {
+export default function PickField({ onPickSelectionChange, onPickInputChange, pickInputs, heroes, onShiftPick, swapStatus, onswapStatusChange }) {
     const { blue: bluePickInputs, red: redPickInputs } = pickInputs;
     const pickBlueIds = [1, 2, 3, 4, 5];
     const pickRedIds = [6, 7, 8, 9, 10];
@@ -29,7 +29,7 @@ export default function PickField({ onPickChange, onPickInputChange, pickInputs,
                                         onMouseDown={(e) => e.preventDefault()}
                                         onClick={() => {
                                             const shiftId = onShiftPick(teamSide.toLowerCase(), index);
-                                            onPickChange("pick", teamSide.toLowerCase(), shiftId, { name: hero.Name, img: hero.Picked });
+                                            onPickSelectionChange(teamSide.toLowerCase(), shiftId, { name: hero.Name, img: hero.Picked });
                                             onPickInputChange(teamSide.toLowerCase(), shiftId, hero.Name);
                                             inputRefs.current[id].blur();
                                         }}
@@ -42,11 +42,11 @@ export default function PickField({ onPickChange, onPickInputChange, pickInputs,
                     </div>
                     <div className="w-5 h-5">
                         <input
-                            className="peer absolute opacity-0 w-5 h-5 blue-swaper"
+                            className="peer absolute opacity-0 w-5 h-5"
                             id={`swap-${id}`}
                             type="checkbox"
-                            checked={swaper[teamSide.toLowerCase()][index]}
-                            onChange={() => onSwaperChange(teamSide.toLowerCase(), index)}
+                            checked={swapStatus[teamSide.toLowerCase()][index]}
+                            onChange={() => onswapStatusChange(teamSide.toLowerCase(), index)}
                         />
                         <div className="absolute border-3 border-black peer-checked:border-blue-700 rounded-sm w-5 h-5" />
                         <label

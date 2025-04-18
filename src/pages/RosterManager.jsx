@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getTeams } from "../../services/supabaseService";
+import { getTeams } from "../../services/api";
 
 export default function RosterManager() {
     const [teams, setTeams] = useState([]);
