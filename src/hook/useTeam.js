@@ -13,7 +13,7 @@ export const initialTeamInputState = {
 
 export const useTeam = () => {
     const [teamSelection, setTeamSelection] = useState(initialTeamSelectionState);
-    const [teamInputs, setTeamInputs] = useState(initialTeamInputState);
+    const [teamInput, setTeamInput] = useState(initialTeamInputState);
 
     const handleTeamChange = (team, { name, logo }) => {
         setTeamSelection(prev => ({
@@ -40,17 +40,17 @@ export const useTeam = () => {
         });
     };
 
-    const handleTeamNameInputChange = (team, value) => {
-        setTeamInputs(prev => ({
+    const handleTeamInputChange = (team, value) => {
+        setTeamInput(prev => ({
             ...prev,
             [team]: value
         }));
     };
 
     return {
-        teamInputs,
-        setTeamInputs,
-        handleTeamNameInputChange,
+        teamInput,
+        setTeamInput,
+        handleTeamInputChange,
 
         teamSelection,
         setTeamSelection,

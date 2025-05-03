@@ -1,8 +1,8 @@
 import { useRef } from "react";
 
-export default function TeamField({ onTeamChange, teamSelection, teamInputs, onTeamInputChange, teams }) {
+export default function TeamField({ onTeamChange, teamSelection, teamInput, onTeamInputChange, teams }) {
     const { onTeamNameChange, onWinCheckChange } = onTeamChange;
-    const { blue: blueTeamInput, red: redTeamInput } = teamInputs;
+    const { blue: blueTeamInput, red: redTeamInput } = teamInput;
     const inputRefs = useRef({});
 
     const renderTeamField = ({ teamSide, id, teamInput }) => {

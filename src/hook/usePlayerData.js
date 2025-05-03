@@ -6,7 +6,7 @@ export const initialplayerDataState = {
     red: []
 };
 
-export const usePlayerData = (games, teamSelection) => {
+export const usePlayerData = ({ games, teamSelection }) => {
     const [playerData, setPlayerData] = useState(initialplayerDataState);
     
     useEffect(() => {

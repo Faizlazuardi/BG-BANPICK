@@ -1,15 +1,10 @@
-// hooks/useGameControl.js
-export const useGameControl = ({
+export const useResetPickandBan = ({
     setPickSelection, initialPickSelectionState,
     setPickInputs, initialPickInputState,
     setBanSelection, initialBanSelectionState,
     setBanInputs, initialBanInputState,
     setAnimationClasses, initialAnimationState,
-    setTeamInputs, initialTeamInputState,
-    setTeamSelection, initialTeamSelectionState,
-    setPlayerInputs,  initialPlayerInputState,
-    setPlayerData, initialplayerDataState,
-    setSwapStatus, initialSwapStatus
+    setPhase, setHighlights
 }) => {
     const resetPickandBan = () => {
         setAnimationClasses(prev => {
@@ -29,26 +24,13 @@ export const useGameControl = ({
             setBanSelection(initialBanSelectionState);
             setBanInputs(initialBanInputState);
             setAnimationClasses(initialAnimationState);
+            setPhase(0);
+            setHighlights({ blue: Array(5).fill(false), red: Array(5).fill(false) });
         }, 1200);
         return () => clearTimeout(flyOutTimeout);
     };
     
-    const resetTeam = () => {
-        setTeamInputs(initialTeamInputState);
-        setTeamSelection(initialTeamSelectionState);
-        setPlayerInputs(initialPlayerInputState);
-        setPlayerData(initialplayerDataState);
-        setSwapStatus(initialSwapStatus);
-    };
-    
-    const switchTeam = () => {
-        setPlayerInputs(prev => ({ blue: prev.red, red: prev.blue }));
-        setTeamSelection(prev => ({ blue: prev.red, red: prev.blue }));
-    };
-    
     return {
         resetPickandBan,
-        resetTeam,
-        switchTeam,
     };
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 
 // Components
 import TeamDisplay from "/src/components/TeamDisplay";
@@ -13,6 +13,7 @@ import PlayerField from "/src/components/PlayerField";
 // Hooks & Initial States
 import { useAnimation, initialAnimationState } from "../hook/useAnimation";
 import { useSwap, initialSwapStatus } from "../hook/useSwap";
+import { usePhase } from "../hook/usePhase";
 import { useHeroData } from "../hook/useHeroData";
 import { usePick, initialPickSelectionState, initialPickInputState } from "../hook/usePick";
 import { useBan, initialBanSelectionState, initialBanInputState } from "../hook/useBan";
@@ -20,7 +21,9 @@ import { useTeam, initialTeamSelectionState, initialTeamInputState } from "../ho
 import { useTeamData } from "../hook/useTeamData";
 import { usePlayer, initialPlayerInputState } from "../hook/usePlayer";
 import { usePlayerData, initialplayerDataState } from "../hook/usePlayerData";
-import { useGameControl } from "../hook/useGameControl";
+import { useResetPickandBan } from "../hook/useResetPickandBan";
+import { useResetTeam } from "../hook/useResetTeam";
+import { useSwitchTeam } from "../hook/useSwitchTeam";
 
 // Constants
 const roundOption = [
@@ -39,36 +42,42 @@ export default function DraftPick() {
     const [rounds, setRounds] = useState(roundOption[0].round);
     const [games, setGame] = useState(gameOption[0].game);
 
-  // Hooks
+    // Hooks
     const { heroData } = useHeroData(games);
-    const { teamInputs, setTeamInputs, handleTeamNameInputChange, teamSelection, setTeamSelection, handleTeamChange, handleWinCheckChange } = useTeam();
+    const { teamInput, setTeamInput, handleTeamInputChange, teamSelection, setTeamSelection, handleTeamChange, handleWinCheckChange } = useTeam();
     const { teamData } = useTeamData(games);
-    const { playerInputs, setPlayerInputs, handlePlayer } = usePlayer();
-    const { playerData, setPlayerData } = usePlayerData(games, teamSelection);
+    const { playerInputs, setPlayerInputs, handlePlayerInputsChange } = usePlayer();
+    const { playerData, setPlayerData } = usePlayerData({games, teamSelection});
     const { banSelection, setBanSelection, banInputs, setBanInputs, handleBan } = useBan();
     const { pickSelection, setPickSelection, pickInputs, setPickInputs, handlePick, handleShiftPick } = usePick(playerInputs);
 
-    const { animationClasses, setAnimationClasses, handleAnimationFlyIn, handleAnimationFlyOut, handleAnimatedSelection } = useAnimation(
+    const { animationClasses, setAnimationClasses, handleAnimationFlyIn, handleAnimationFlyOut, handleAnimatedSelection } = useAnimation({
         pickSelection, handlePick,
         banSelection, handleBan
-    );
-
-    const { swapStatus, setSwapStatus, handleswapStatusChange } = useSwap(
+    });
+    const { swapStatus, setSwapStatus, handleswapStatusChange } = useSwap({
         setPickSelection, setPickInputs,
         handleAnimationFlyIn, handleAnimationFlyOut
-    );
+    });
+    const { highlights, setHighlights, setPhase } = usePhase(banSelection, pickSelection);
 
-    const { resetPickandBan, resetTeam, switchTeam } = useGameControl({
+    const{ resetPickandBan } = useResetPickandBan({
         setPickSelection, initialPickSelectionState,
         setPickInputs, initialPickInputState,
         setBanSelection, initialBanSelectionState,
         setBanInputs, initialBanInputState,
         setAnimationClasses, initialAnimationState,
-        setTeamInputs, initialTeamInputState,
+        setPhase, setHighlights
+    });
+    const { resetTeam } = useResetTeam({
+        setTeamInput, initialTeamInputState,
         setTeamSelection, initialTeamSelectionState,
         setPlayerInputs, initialPlayerInputState,
         setPlayerData, initialplayerDataState,
         setSwapStatus, initialSwapStatus
+    });
+    const { switchTeam } = useSwitchTeam({
+        setPlayerInputs, setTeamSelection
     });
 
   // Rendering
@@ -90,11 +99,12 @@ export default function DraftPick() {
                     playerInputs={playerInputs}
                     picks={pickSelection}
                     animationClasses={animationClasses.pick}
+                    highlights={highlights}
                 />
                 <MatchSummary
                     grid="col-start-3 row-span-2 row-start-1"
                     round={rounds}
-                    teamInputs={teamSelection}
+                    teamInput={teamSelection}
                 />
             </div>
 
@@ -103,7 +113,7 @@ export default function DraftPick() {
                 <div className="flex gap-3">
                     <select id="round" className="p-2 border-2 w-35 h-11 text-center" onChange={(e) => setRounds(e.target.value)}>
                         {roundOption.map(({ id, round }) => (
-                            <option option value={round} key={id}>{round}</option>
+                            <option value={round} key={id}>{round}</option>
                         ))}
                     </select>
                     <select id="Games" className="p-2 border-2 w-35 h-11 text-center" onChange={(e) => setGame(e.target.value)}>
@@ -127,12 +137,12 @@ export default function DraftPick() {
                         onWinCheckChange: handleWinCheckChange
                     }}
                     teamSelection={teamSelection}
-                    teamInputs={teamInputs}
-                    onTeamInputChange={handleTeamNameInputChange}
+                    teamInput={teamInput}
+                    onTeamInputChange={handleTeamInputChange}
                     teams={teamData}
                 />
                 <PlayerField
-                    onPlayerChange={(team, id, value) => handlePlayer("playerInput", team, id, value)}
+                    onPlayerChange={(team, id, value) => handlePlayerInputsChange("playerInput", team, id, value)}
                     playerInputs={playerInputs}
                     players={playerData}
                 />
@@ -147,7 +157,7 @@ export default function DraftPick() {
                     onPickInputChange={(team, id, hero) => handlePick("pickInput", team, id, hero)}
                     pickInputs={pickInputs}
                     heroes={heroData}
-                    onhandleShiftPick={handleShiftPick}
+                    onShiftPick={handleShiftPick}
                     swapStatus={swapStatus}
                     onswapStatusChange={handleswapStatusChange}
                 />

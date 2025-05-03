@@ -11,7 +11,7 @@ export const initialAnimationState = {
     }
 };
 
-export const useAnimation = (pickSelection, handlePick, banSelection, handleBan) => {
+export const useAnimation = ({ pickSelection, handlePick, banSelection, handleBan }) => {
     const [animationClasses, setAnimationClasses] = useState(initialAnimationState);
 
     const handleAnimationFlyIn = (type, team, id) => {

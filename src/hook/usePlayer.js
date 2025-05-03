@@ -12,7 +12,7 @@ export const initialPlayerInputState = createArrayState("");
 export const usePlayer = () => {
     const [playerInputs, setPlayerInputs] = useState(initialPlayerInputState);
 
-    const handlePlayer = (type, team, id, value) => {
+    const handlePlayerInputsChange = (type, team, id, value) => {
         const setState = {
             playerInput: setPlayerInputs
         }[type];
@@ -28,6 +28,6 @@ export const usePlayer = () => {
 
     return {
         playerInputs, setPlayerInputs,
-        handlePlayer
+        handlePlayerInputsChange
     };
 };

@@ -1,7 +1,7 @@
 import TournamentLogo from '/src/assets/TournamentLogo.gif';
 
-export default function MatchSummary({ round, teamInputs, grid }) {
-    const { blue: blueTeamInputs, red: redTeamInputs } = teamInputs;
+export default function MatchSummary({ round, teamInput, grid }) {
+    const { blue: blueTeamInput, red: redTeamInput } = teamInput;
     const winCard = (team, teamInput, style) => {
         return (
             <div className="flex flex-col justify-center gap-3">
@@ -22,8 +22,8 @@ export default function MatchSummary({ round, teamInputs, grid }) {
             </div>
             <h1 className="text-2xl text-center">{round}</h1>
             <div className="flex justify-evenly">
-                {winCard("blue",blueTeamInputs ,"")}
-                {winCard("red",redTeamInputs ,"flex-row-reverse")}
+                {winCard("blue", blueTeamInput, "")}
+                {winCard("red", redTeamInput, "flex-row-reverse")}
             </div>
         </div>
     );
