@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-export default function PickField({ onPickSelectionChange, onPickInputChange, pickInputs, heroes, onShiftPick, swapStatus, onswapStatusChange }) {
+export default function PickField({ onPickSelectionChange, onPickInputChange, pickInputs, heroes, onShiftPick, swapStatus, onSwapStatusChange }) {
     const { blue: bluePickInputs, red: redPickInputs } = pickInputs;
     const pickBlueIds = [1, 2, 3, 4, 5];
     const pickRedIds = [6, 7, 8, 9, 10];

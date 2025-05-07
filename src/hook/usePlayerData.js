@@ -13,6 +13,7 @@ export const usePlayerData = ({ games, teamSelection }) => {
         Object.entries(teamSelection).forEach(([team]) => {
             const teamPlayers = async () => {
                 if (!teamSelection[team].Name) return;
+                
                 const data = await getPlayersByTeam(games, teamSelection[team].Name);
                 if (!data.error) {
                     setPlayerData(prevPlayers => ({
@@ -24,5 +25,9 @@ export const usePlayerData = ({ games, teamSelection }) => {
             teamPlayers();
         });
     }, [teamSelection, games]);
-    return { playerData, setPlayerData };
+    
+    return { 
+        playerData, 
+        setPlayerData 
+    };
 }

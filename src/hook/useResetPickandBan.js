@@ -4,7 +4,8 @@ export const useResetPickandBan = ({
     setBanSelection, initialBanSelectionState,
     setBanInputs, initialBanInputState,
     setAnimationClasses, initialAnimationState,
-    setPhase, setHighlights
+    setPhase, 
+    setHighlights
 }) => {
     const resetPickandBan = () => {
         setAnimationClasses(prev => {
@@ -30,7 +31,5 @@ export const useResetPickandBan = ({
         return () => clearTimeout(flyOutTimeout);
     };
     
-    return {
-        resetPickandBan,
-    };
+    return { resetPickandBan };
 };

@@ -9,7 +9,7 @@ const getClient = (game) => {
         default:
             throw new Error('Unknown game selected');
     }
-    };
+};
 
 export const getHeroes = async (game) => {
     const supabase = getClient(game);

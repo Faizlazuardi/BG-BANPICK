@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useState } from "react";
 
 // Components
 import TeamDisplay from "/src/components/TeamDisplay";
@@ -76,11 +76,8 @@ export default function DraftPick() {
         setPlayerData, initialplayerDataState,
         setSwapStatus, initialSwapStatus
     });
-    const { switchTeam } = useSwitchTeam({
-        setPlayerInputs, setTeamSelection
-    });
+    const { switchTeam } = useSwitchTeam({ setPlayerInputs, setTeamSelection });
 
-  // Rendering
     return (
         <main className="flex flex-col flex-grow items-center gap-10 mt-10">
             {/* Match Display Section */}
@@ -159,7 +156,7 @@ export default function DraftPick() {
                     heroes={heroData}
                     onShiftPick={handleShiftPick}
                     swapStatus={swapStatus}
-                    onswapStatusChange={handleswapStatusChange}
+                    onSwapStatusChange={handleswapStatusChange}
                 />
             </div>
         </main>

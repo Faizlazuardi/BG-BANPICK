@@ -26,13 +26,13 @@ export const useSwap = (setPickSelection, setPickInputs, handleAnimationFlyIn, h
         }, []);
         
         if (ids.length === 2) {
-            let flyOutTimeout, flyInTimeout;
+            let flyTimeout;
             const [id1, id2] = ids;
             
             handleAnimationFlyOut("pick", team, id1);
             handleAnimationFlyOut("pick", team, id2);
             
-            flyOutTimeout = setTimeout(() => {
+            flyTimeout = setTimeout(() => {
                 setPickSelection(prev => ({
                     ...prev,
                     [team]: prev[team].map((item, i) => {
@@ -61,8 +61,7 @@ export const useSwap = (setPickSelection, setPickInputs, handleAnimationFlyIn, h
             }));
             
             return () => {
-                if (flyOutTimeout) clearTimeout(flyOutTimeout);
-                if (flyInTimeout) clearTimeout(flyInTimeout);
+                () => clearTimeout(flyTimeout);
             };
         }
     };

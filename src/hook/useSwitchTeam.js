@@ -5,7 +5,5 @@ export const useSwitchTeam = ({ setTeamSelection, setPlayerInputs }) => {
         setTeamSelection(prev => ({ blue: prev.red, red: prev.blue }));
     };
     
-    return {
-        switchTeam,
-    };
+    return { switchTeam };
 };

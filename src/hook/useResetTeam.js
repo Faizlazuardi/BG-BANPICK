@@ -13,7 +13,5 @@ export const useResetTeam = ({
         setSwapStatus(initialSwapStatus);
     };
 
-    return {
-        resetTeam,
-    };
+    return { resetTeam };
 };

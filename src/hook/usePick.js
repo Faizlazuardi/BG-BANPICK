@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-// Initial states
 const createArrayState = (value, length = 5) => ({
     blue: Array(length).fill(value),
     red: Array(length).fill(value)

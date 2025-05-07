@@ -92,8 +92,7 @@ export const usePhase = (banSelection, pickSelection) => {
     }, [pickSelection, banSelection]);
 
     return {
-        highlights,
-        setHighlights,
+        highlights, setHighlights,
         setPhase
     };
 }
