@@ -51,7 +51,13 @@ export default function DraftPick() {
     const { banSelection, setBanSelection, banInputs, setBanInputs, handleBan } = useBan();
     const { pickSelection, setPickSelection, pickInputs, setPickInputs, handlePick, handleShiftPick } = usePick(playerInputs);
 
-    const { animationClasses, setAnimationClasses, handleAnimationFlyIn, handleAnimationFlyOut, handleAnimatedSelection } = useAnimation({
+    const { 
+        animationClasses,
+        setAnimationClasses,
+        handleAnimationFlyIn,
+        handleAnimationFlyOut,
+        handleAnimatedSelection
+    } = useAnimation({
         pickSelection, handlePick,
         banSelection, handleBan
     });
@@ -76,7 +82,7 @@ export default function DraftPick() {
         setPlayerData, initialplayerDataState,
         setSwapStatus, initialSwapStatus
     });
-    const { switchTeam } = useSwitchTeam({ setPlayerInputs, setTeamSelection });
+    const { switchTeam } = useSwitchTeam({ setPlayerInputs, setTeamSelection, setTeamInput });
 
     return (
         <main className="flex flex-col flex-grow items-center gap-10 mt-10">

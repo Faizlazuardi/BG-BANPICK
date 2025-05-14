@@ -13,7 +13,7 @@ export default function PickDisplay({ grid, playerInputs, picks, animationClasse
                 <div className="bg-[url('/src/assets/Pick.png')] bg-cover bg-center w-29 h-48 overflow-hidden">
                     <img className={`h-full object-cover ${animationClass[(id - 1) % 5]}`} src={picks[(id - 1) % 5].img} alt="" />
                 </div>
-                <div className={`flex justify-center items-center bg-black h-5 text-white ${highlight[(id - 1) % 5] ? 'border-yellow-500 border-b-4' : ''}`}>
+                <div className={`flex justify-center items-center bg-black h-5 text-white ${highlight[(id - 1) % 5] ? 'border-red-500 border-b-5' : ''}`}>
                     {player[(id - 1) % 5]}
                 </div>
             </div>

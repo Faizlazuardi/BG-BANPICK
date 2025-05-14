@@ -46,7 +46,7 @@ export default function PickField({ onPickSelectionChange, onPickInputChange, pi
                             id={`swap-${id}`}
                             type="checkbox"
                             checked={swapStatus[teamSide.toLowerCase()][index]}
-                            onChange={() => onswapStatusChange(teamSide.toLowerCase(), index)}
+                            onChange={() => onSwapStatusChange(teamSide.toLowerCase(), index)}
                         />
                         <div className="absolute border-3 border-black peer-checked:border-blue-700 rounded-sm w-5 h-5" />
                         <label

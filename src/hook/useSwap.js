@@ -5,7 +5,7 @@ export const initialSwapStatus = {
     red: Array(5).fill(false)
 };
 
-export const useSwap = (setPickSelection, setPickInputs, handleAnimationFlyIn, handleAnimationFlyOut,) => {
+export const useSwap = ({setPickSelection, setPickInputs, handleAnimationFlyIn, handleAnimationFlyOut}) => {
     const [swapStatus, setSwapStatus] = useState(initialSwapStatus)
     
     const handleswapStatusChange = (team, index) => {
