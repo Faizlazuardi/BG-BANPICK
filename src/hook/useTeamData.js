@@ -5,11 +5,10 @@ export const useTeamData = (games) => {
     const [teamData, setTeamData] = useState([]);
     
     useEffect(() => {
-        const fetchTeamData = async () => {
+        (async () => {
             const team = await getTeams(games);
             if (!team.error) setTeamData(team);
-        };
-        fetchTeamData();
+        })()
     }, [games]);
     return { teamData };
 };

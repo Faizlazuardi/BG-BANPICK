@@ -35,7 +35,6 @@ const roundOption = [
 
 const gameOption = [
     { id: "1", game: "MLBB" },
-    { id: "2", game: "HOK" }
 ];
 
 export default function DraftPick() {
