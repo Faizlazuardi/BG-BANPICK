@@ -1,11 +1,9 @@
-import { supabaseMLBB, supabaseHOK } from './supabaseClients.js';
+import { supabaseMLBB } from './supabaseClients.js';
 
 const getClient = (game) => {
     switch (game) {
         case 'MLBB':
             return supabaseMLBB;
-        case 'HOK':
-            return supabaseHOK;
         default:
             throw new Error('Unknown game selected');
     }
