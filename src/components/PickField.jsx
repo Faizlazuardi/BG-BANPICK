@@ -1,5 +1,7 @@
 import { useRef } from "react";
 
+import { ArrowUpDown } from 'lucide-react';
+
 export default function PickField({ onPickSelectionChange, onPickInputChange, pickInputs, heroes, onShiftPick, swapStatus, onSwapStatusChange }) {
     const { blue: bluePickInputs, red: redPickInputs } = pickInputs;
     const pickBlueIds = [1, 2, 3, 4, 5];
@@ -40,20 +42,20 @@ export default function PickField({ onPickSelectionChange, onPickInputChange, pi
                             }
                         </div>
                     </div>
-                    <div className="w-5 h-5">
+                    <div className="relative flex justify-center items-center w-7 h-7">
                         <input
-                            className="peer absolute opacity-0 w-5 h-5"
+                            className="peer top-0 left-0 absolute opacity-0 w-7 h-7"
                             id={`swap-${id}`}
                             type="checkbox"
                             checked={swapStatus[teamSide.toLowerCase()][index]}
                             onChange={() => onSwapStatusChange(teamSide.toLowerCase(), index)}
                         />
-                        <div className="absolute border-3 border-black peer-checked:border-blue-700 rounded-sm w-5 h-5" />
+                        <div className="top-0 left-0 absolute border-3 border-black peer-checked:border-blue-700 rounded-sm w-7 h-7" />
                         <label
-                            className="bottom-0.75 relative flex justify-center w-5 h-5 peer-checked:text-blue-700 cursor-pointer"
+                            className="top-0 relative flex justify-center items-center rounded-sm w-4 h-4 peer-checked:text-blue-700 cursor-pointer"
                             htmlFor={`swap-${id}`}
                         >
-                            ↑↓
+                            <ArrowUpDown className="w-4 h-4" />
                         </label>
                     </div>
                 </div>

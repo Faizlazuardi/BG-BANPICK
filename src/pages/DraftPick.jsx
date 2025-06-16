@@ -20,12 +20,11 @@ import { useBan, initialBanSelectionState, initialBanInputState } from "../hook/
 import { useTeam, initialTeamSelectionState, initialTeamInputState } from "../hook/useTeam";
 import { useTeamData } from "../hook/useTeamData";
 import { usePlayer, initialPlayerInputState } from "../hook/usePlayer";
-import { usePlayerData, initialplayerDataState } from "../hook/usePlayerData";
+import { usePlayerData } from "../hook/usePlayerData";
 import { useResetPickandBan } from "../hook/useResetPickandBan";
 import { useResetTeam } from "../hook/useResetTeam";
 import { useSwitchTeam } from "../hook/useSwitchTeam";
 
-// Constants
 const roundOption = [
     { id: "1", round: "Quarterfinals" },
     { id: "2", round: "Semifinals" },
@@ -38,15 +37,16 @@ const gameOption = [
 ];
 
 export default function DraftPick() {
+    const initialPlayerDataState = {blue: [], red: [] }
+
     const [rounds, setRounds] = useState(roundOption[0].round);
     const [games, setGame] = useState(gameOption[0].game);
 
-    // Hooks
     const { heroData } = useHeroData(games);
     const { teamInput, setTeamInput, handleTeamInputChange, teamSelection, setTeamSelection, handleTeamChange, handleWinCheckChange } = useTeam();
     const { teamData } = useTeamData(games);
     const { playerInputs, setPlayerInputs, handlePlayerInputsChange } = usePlayer();
-    const { playerData, setPlayerData } = usePlayerData({games, teamSelection});
+    const { playerData, setPlayerData } = usePlayerData({games, teamSelection, initialPlayerDataState});
     const { banSelection, setBanSelection, banInputs, setBanInputs, handleBan } = useBan();
     const { pickSelection, setPickSelection, pickInputs, setPickInputs, handlePick, handleShiftPick } = usePick(playerInputs);
 
@@ -78,14 +78,13 @@ export default function DraftPick() {
         setTeamInput, initialTeamInputState,
         setTeamSelection, initialTeamSelectionState,
         setPlayerInputs, initialPlayerInputState,
-        setPlayerData, initialplayerDataState,
+        setPlayerData, initialPlayerDataState,
         setSwapStatus, initialSwapStatus
     });
     const { switchTeam } = useSwitchTeam({ setPlayerInputs, setTeamSelection, setTeamInput });
 
     return (
         <main className="flex flex-col flex-grow items-center gap-10 mt-10">
-            {/* Match Display Section */}
             <div className="grid grid-cols-[auto] grid-rows-[auto]">
                 <TeamDisplay
                     grid={{ gridBlue: "col-start-1 row-start-1", gridRed: "col-start-5 row-start-1" }}
@@ -110,7 +109,6 @@ export default function DraftPick() {
                 />
             </div>
 
-            {/* Controls Section */}
             <div className="flex flex-col items-center gap-5">
                 <div className="flex gap-3">
                     <select id="round" className="p-2 border-2 w-35 h-11 text-center" onChange={(e) => setRounds(e.target.value)}>
@@ -131,7 +129,6 @@ export default function DraftPick() {
                 </div>
             </div>
 
-            {/* Fields Section */}
             <div className="flex gap-9">
                 <TeamField
                     onTeamChange={{

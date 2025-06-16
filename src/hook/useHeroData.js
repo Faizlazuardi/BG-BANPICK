@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getHeroes } from "../../services/api.js";
+import { getHeroes } from "../services/api.js";
 
 export const useHeroData = (games) => {
     const [heroData, setHeroData] = useState([]);

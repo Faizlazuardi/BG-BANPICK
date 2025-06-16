@@ -9,8 +9,8 @@ export default function App() {
             <div className="flex select-none">
                 <SideBar/>
                 <Routes>
-                    <Route path="/" element={<RosterManager/>} />
-                    <Route path="/draftpick" element={<DraftPick/>} />
+                    <Route path="/" element={<DraftPick/>} />
+                    <Route path="/Roaster" element={<RosterManager/>} />
                 </Routes>
             </div>
         </Router>

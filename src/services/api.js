@@ -1,4 +1,4 @@
-import { supabaseMLBB } from './supabaseClients.js';
+import { supabaseMLBB } from '../utils/supabaseClients.js';
 
 const getClient = (game) => {
     switch (game) {
@@ -52,3 +52,27 @@ export const getPlayersByTeam = async (game, teamName) => {
         return { error: err.message };
     }
 };
+
+export const addTeams = (game)=>{
+    const supabase = getClient(game)
+}
+
+export const updateTeams = (game)=>{
+    const supabase = getClient(game)
+}
+
+export const deleteTeams = (game)=>{
+    const supabase = getClient(game)
+}
+
+export const addPlayers = (game)=>{
+    const supabase = getClient(game)
+}
+
+export const updatePlayers = (game)=>{
+    const supabase = getClient(game)
+}
+
+export const deletePlayers = (game)=>{
+    const supabase = getClient(game)
+}

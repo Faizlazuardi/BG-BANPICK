@@ -1,18 +1,30 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import logo from "/src/assets/LogoBinusianGaming.png";
 
 export default function sideBar() {
+    const location = useLocation();
+    const isActive = (path) => location.pathname === path;
     return (
-        <nav className="flex flex-col items-center bg-orange-500 w-50 h-screen">
+        <nav className="flex flex-col items-center bg-amber-400 w-50 h-screen">
             <div className="flex justify-center my-4 w-full">
                 <img className="h-20" src={logo} alt="Logo" />
             </div>
             <div className="flex flex-col gap-4 mt-8">
-                <Link to="/" className="font-semibold text-white hover:text-black text-lg transition">
-                    Roaster Manager
-                </Link>
-                <Link to="/draftpick" className="font-semibold text-white hover:text-black text-lg transition">
+                <Link
+                    to="/"
+                    className={`font-semibold text-lg transition hover:text-cyan-950 ${
+                    isActive('/') ? 'text-yellow-100' : 'text-amber-900'
+                    }`}
+                >
                     Draft Pick
+                </Link>
+                <Link
+                    to="/roaster"
+                    className={`font-semibold text-lg transition hover:text-cyan-950 ${
+                    isActive('/roaster') ? 'text-yellow-100' : 'text-amber-900'
+                    }`}
+                >
+                    Roaster Manager
                 </Link>
             </div>
         </nav>

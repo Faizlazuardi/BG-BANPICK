@@ -1,9 +1,8 @@
 import { useState } from "react";
-import DefaultTeamLogo from "/src/assets/80x80.png";
 
 export const initialTeamSelectionState = {
-    blue: { Name: "", Logo: DefaultTeamLogo, WinCheck: [false, false, false] },
-    red: { Name: "", Logo: DefaultTeamLogo, WinCheck: [false, false, false] }
+    blue: { Name: "", Logo: null, WinCheck: [false, false, false] },
+    red: { Name: "", Logo: null, WinCheck: [false, false, false] }
 };
 
 export const initialTeamInputState = {
