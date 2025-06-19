@@ -1,8 +1,8 @@
 import { useRef } from "react";
 
-export default function PlayerField({ onPlayerChange, playerInputs, players }) {
+export default function PlayerField({ onPlayerChange, playerInputs, playerData }) {
     const { blue: bluePlayerInputs, red: redPlayerInputs } = playerInputs;
-    const { blue: bluePlayers, red: redPlayers } = players;
+    const { blue: bluePlayers, red: redPlayers } = playerData;
     const playerBlueIds = [1, 2, 3, 4, 5];
     const playerRedIds = [6, 7, 8, 9, 10];
     const inputRefs = useRef({});

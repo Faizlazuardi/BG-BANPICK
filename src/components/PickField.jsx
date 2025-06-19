@@ -2,7 +2,12 @@ import { useRef } from "react";
 
 import { ArrowUpDown } from 'lucide-react';
 
-export default function PickField({ onPickSelectionChange, onPickInputChange, pickInputs, heroes, onShiftPick, swapStatus, onSwapStatusChange }) {
+import { useGameContext } from "../contexts/GameContext";
+import { useHeroData } from "../hook/useHeroData";
+
+export default function PickField({ onPickSelectionChange, onPickInputChange, pickInputs, onShiftPick, swapStatus, onSwapStatusChange }) {
+    const { selectedGame } = useGameContext()
+    const { heroData } = useHeroData(selectedGame);
     const { blue: bluePickInputs, red: redPickInputs } = pickInputs;
     const pickBlueIds = [1, 2, 3, 4, 5];
     const pickRedIds = [6, 7, 8, 9, 10];
@@ -23,7 +28,7 @@ export default function PickField({ onPickSelectionChange, onPickInputChange, pi
                             onChange={(e) => onPickInputChange(teamSide.toLowerCase(), index, e.target.value)}
                         />
                         <div id={`dropdown-picked-${teamSide}-${id}`} className="invisible absolute bg-white w-36.5 max-h-15 overflow-y-auto peer-focus:visible">
-                            {heroes
+                            {heroData
                                 .filter(hero => hero.Name.toLowerCase().startsWith(pickInput[index].toLowerCase()))
                                 .map(hero => (
                                     <div className="flex items-center gap-2 hover:bg-gray-100 p-2 cursor-pointer"

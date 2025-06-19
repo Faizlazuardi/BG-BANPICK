@@ -53,12 +53,27 @@ export const getPlayersByTeam = async (game, teamName) => {
     }
 };
 
-export const addTeams = (game)=>{
+export const addTeams = async (game, input)=>{
     const supabase = getClient(game)
+    const { data, error } = await supabase
+    .from('Teams')
+    .insert(input)
+    .select()
+
+    if (error) {
+        console.error('Insert error:', error.message);
+        throw error;
+    }
+    return data;
 }
 
-export const updateTeams = (game)=>{
+export const updateTeams = async (game, input)=>{
     const supabase = getClient(game)
+    const { data, error } = await supabase
+        .from('Teams')
+        .update({ other_column: 'otherValue' })
+        .eq('some_column', 'someValue')
+        .select()
 }
 
 export const deleteTeams = (game)=>{

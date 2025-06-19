@@ -1,6 +1,11 @@
 import { useRef } from "react";
 
+import { useGameContext } from "../contexts/GameContext";
+import { useTeamData } from "../hook/useTeamData";
+
 export default function TeamField({ onTeamChange, teamSelection, teamInput, onTeamInputChange, teams }) {
+    const { selectedGame } = useGameContext()
+    const { teamData } = useTeamData(selectedGame);
     const { onTeamNameChange, onWinCheckChange } = onTeamChange;
     const { blue: blueTeamInput, red: redTeamInput } = teamInput;
     const inputRefs = useRef({});
@@ -21,7 +26,7 @@ export default function TeamField({ onTeamChange, teamSelection, teamInput, onTe
                             onChange={(e) => onTeamInputChange(teamSide.toLowerCase(), e.target.value)}
                         />
                         <div id={`dropdown-team-${teamSide.toLowerCase()}`} className="invisible absolute bg-white w-36.5 max-h-15 overflow-y-auto peer-focus:visible">
-                            {teams
+                            {teamData
                                 .filter(team => team.Name.toLowerCase().startsWith(teamInput.toLowerCase()))
                                 .map(team => (
                                     <div className="flex items-center gap-2 hover:bg-gray-100 p-2 cursor-pointer"

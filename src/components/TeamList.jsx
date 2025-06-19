@@ -2,12 +2,20 @@ import { useState } from 'react';
 
 import { X, Eye, SquarePen, Trash2 } from 'lucide-react';
 
-export default function TeamList({ teamData, handleTeamSelectionChange }) {
-    const [currentPage, setCurrentPage] = useState(1);
+import { useTeamData } from "../hook/useTeamData";
 
+import { useGameContext } from "../contexts/GameContext";
+
+export default function TeamList({handleTeamSelectionChange}) {
+    const { selectedGame } = useGameContext()
+    
+    const { teamData } = useTeamData(selectedGame);
+    
+    const [currentPage, setCurrentPage] = useState(1);
+    
     const teamsPerPage = 10;
     const totalPages = Math.ceil(teamData.length / teamsPerPage);
-
+    
     const indexOfLastTeam = currentPage * teamsPerPage;
     const indexOfFirstTeam = indexOfLastTeam - teamsPerPage;
     const currentTeams = teamData.slice(indexOfFirstTeam, indexOfLastTeam);

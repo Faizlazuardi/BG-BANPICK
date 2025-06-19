@@ -1,6 +1,11 @@
 import { useRef } from "react";
 
-export default function BanField({ onBanSelectionChange, onBanInputChange, banInputs, heroes }) {
+import { useGameContext } from "../contexts/GameContext";
+import { useHeroData } from "../hook/useHeroData";
+
+export default function BanField({ onBanSelectionChange, onBanInputChange, banInputs }) {
+    const { selectedGame } = useGameContext()
+    const { heroData } = useHeroData(selectedGame);
     const { blue: blueBanInputs, red: redBanInputs } = banInputs;
     const banBlueIds = [1, 2, 3, 4, 5];
     const banRedIds = [6, 7, 8, 9, 10];
@@ -21,7 +26,7 @@ export default function BanField({ onBanSelectionChange, onBanInputChange, banIn
                             onChange={(e) => onBanInputChange(teamSide.toLowerCase(), index, e.target.value)}
                         />
                         <div id={`dropdown-banned-${teamSide}-${id}`} className="invisible absolute bg-white w-36.5 max-h-15 overflow-y-auto peer-focus:visible">
-                            {heroes
+                            {heroData
                                 .filter(hero => hero.Name.toLowerCase().startsWith(banInput[index].toLowerCase()))
                                 .map(hero => (
                                     <div className="flex items-center gap-2 hover:bg-gray-100 p-2 cursor-pointer"

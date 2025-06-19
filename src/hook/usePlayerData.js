@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
 import { getPlayersByTeam } from "../services/api.js";
 
-export const usePlayerData = ({ games, teamSelection, initialPlayerDataState }) => {
+export const usePlayerData = ({ selectedGame, teamSelection, initialPlayerDataState }) => {
     const [playerData, setPlayerData] = useState(initialPlayerDataState);
     useEffect(() => {
         Object.entries(teamSelection).forEach(([role]) => {
             (async () => {
                 if (!teamSelection[role].Name) return;
                 
-                const data = await getPlayersByTeam(games, teamSelection[role].Name);
-                console.log(`Fetching players for ${role}:`, data);
+                const data = await getPlayersByTeam(selectedGame, teamSelection[role].Name);
                 if (!data.error) {
                     setPlayerData(prevPlayers => ({
                         ...prevPlayers,
@@ -18,7 +17,7 @@ export const usePlayerData = ({ games, teamSelection, initialPlayerDataState }) 
                 }
             })();
         });
-    }, [teamSelection, games]);
+    }, [teamSelection, selectedGame]);
     
     return { 
         playerData, 

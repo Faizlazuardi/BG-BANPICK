@@ -1,9 +1,20 @@
 import { X, SquarePen, Trash2  } from 'lucide-react';
 
-export default function PlayerList({ team, playerData }) {
+import { usePlayerData } from "../hook/usePlayerData";
+
+import { useGameContext } from "../contexts/GameContext";
+
+export default function PlayerList({teamSelection}) {
+    const { selectedGame } = useGameContext()
+    
+    const initialPlayerDataState = {
+        single: []
+    };
+    
+    const { playerData } = usePlayerData({ selectedGame, teamSelection, initialPlayerDataState });
     return (
         <div className="flex flex-col gap-5 mt-5 max-w-3xl text-cyan-950">
-            <h2 className="text-5xl text-center">{team} Player List</h2>
+            <h2 className="text-5xl text-center">{teamSelection.single.Name} Player List</h2>
             <button className="flex items-center gap-2 bg-green-500 hover:bg-green-800 px-3 py-1 rounded w-32 font-semibold text-white text-sm">
                 <X className='rotate-45'/>
                 Add Player

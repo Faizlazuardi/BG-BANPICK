@@ -16,7 +16,7 @@ export default function sideBar() {
                     isActive('/') ? 'text-yellow-100' : 'text-amber-900'
                     }`}
                 >
-                    Draft Pick
+                    DraftPick
                 </Link>
                 <Link
                     to="/roaster"

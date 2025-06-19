@@ -3,25 +3,21 @@ import { useState, useEffect } from "react";
 const generatePhaseActions = () => {
     const actions = [];
     
-    // First Ban Phase
     for (let i = 0; i < 3; i++) {
         actions.push({ type: 'ban', team: 'blue', index: i });
         actions.push({ type: 'ban', team: 'red', index: i });
     }
     
-    // Pick Phase 1
     actions.push({ type: 'pick', team: 'blue', index: 0 });
     actions.push({ type: 'pick', team: 'red', index: [0, 1] });
     actions.push({ type: 'pick', team: 'blue', index: [1, 2] });
     actions.push({ type: 'pick', team: 'red', index: 2 });
     
-    // Second Ban Phase
     for (let i = 3; i < 5; i++) {
         actions.push({ type: 'ban', team: 'red', index: i });
         actions.push({ type: 'ban', team: 'blue', index: i });
     }
     
-    // Final Pick Phase
     actions.push({ type: 'pick', team: 'red', index: 3 });
     actions.push({ type: 'pick', team: 'blue', index: [3, 4] });
     actions.push({ type: 'pick', team: 'red', index: 4 });
