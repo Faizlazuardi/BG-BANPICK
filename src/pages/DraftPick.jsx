@@ -103,12 +103,12 @@ export default function DraftPick() {
 
             <div className="flex flex-col items-center gap-5">
                 <div className="flex gap-3">
-                    <select id="round" className="p-2 border-2 w-35 h-11 text-center" value={selectedRound} onChange={(e) => setSelectedRound(e.target.value)}>
+                    <select aria-label="round" className="p-2 border-2 w-35 h-11 text-center" value={selectedRound} onChange={(e) => setSelectedRound(e.target.value)}>
                         {roundOptions.map(({ id, round }) => (
                             <option value={round} key={id}>{round}</option>
                         ))}
                     </select>
-                    <select id="selectedGame" className="p-2 border-2 w-35 h-11 text-center" value={selectedGame} onChange={(e) => setSelectedGame(e.target.value)}>
+                    <select aria-label="selectedGame" className="p-2 border-2 w-35 h-11 text-center" value={selectedGame} onChange={(e) => setSelectedGame(e.target.value)}>
                             {gameOptions.map(({ id, game }) => (
                                 <option value={game} key={id}>{game}</option>
                             ))}

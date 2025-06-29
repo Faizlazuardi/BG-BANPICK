@@ -18,14 +18,13 @@ export default function TeamField({ onTeamChange, teamSelection, teamInput, onTe
                     <div className="">
                         <input
                             ref={(elem) => inputRefs.current[id] = elem}
-                            id={`team-${id}`}
-                            className="peer rounded-md"
+                            className="peer rounded-md w-36.5"
                             type="text"
                             placeholder="Enter Team Name"
                             value={teamInput}
                             onChange={(e) => onTeamInputChange(teamSide.toLowerCase(), e.target.value)}
                         />
-                        <div id={`dropdown-team-${teamSide.toLowerCase()}`} className="invisible absolute bg-white w-36.5 max-h-15 overflow-y-auto peer-focus:visible">
+                        <div className="invisible absolute bg-white w-36.5 max-h-15 overflow-y-auto peer-focus:visible">
                             {teamData
                                 .filter(team => team.Name.toLowerCase().startsWith(teamInput.toLowerCase()))
                                 .map(team => (
@@ -52,7 +51,6 @@ export default function TeamField({ onTeamChange, teamSelection, teamInput, onTe
                             <label key={index} className="flex flex-col justify-center text-center">
                                 <input
                                     className="w-5 h-5"
-                                    id={`win-check-${id * 3 - (3 - index)}`}
                                     type="checkbox"
                                     checked={teamSelection[teamSide.toLowerCase()].WinCheck[index - 1] || false}
                                     onChange={() => onWinCheckChange(teamSide.toLowerCase(), index - 1)}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getPlayersByTeam } from "../services/api.js";
+import { getAllPlayersByTeam } from "../services/api.js";
 
 export const usePlayerData = ({ selectedGame, teamSelection, initialPlayerDataState }) => {
     const [playerData, setPlayerData] = useState(initialPlayerDataState);
@@ -8,7 +8,7 @@ export const usePlayerData = ({ selectedGame, teamSelection, initialPlayerDataSt
             (async () => {
                 if (!teamSelection[role].Name) return;
                 
-                const data = await getPlayersByTeam(selectedGame, teamSelection[role].Name);
+                const data = await getAllPlayersByTeam(selectedGame, teamSelection[role].Name);
                 if (!data.error) {
                     setPlayerData(prevPlayers => ({
                         ...prevPlayers,

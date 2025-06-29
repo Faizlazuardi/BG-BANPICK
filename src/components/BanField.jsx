@@ -19,7 +19,7 @@ export default function BanField({ onBanSelectionChange, onBanInputChange, banIn
                         <input
                             ref={(elem) => (inputRefs.current[id] = elem)}
                             id={`ban-${teamSide}-${id}`}
-                            className="peer rounded-md"
+                            className="peer rounded-md w-36.5"
                             type="text"
                             placeholder={`${teamSide} Side Ban ${index + 1}`}
                             value={banInput[index]}

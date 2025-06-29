@@ -9,7 +9,7 @@ const getClient = (game) => {
     }
 };
 
-export const getHeroes = async (game) => {
+export const getAllHeroes = async (game) => {
     const supabase = getClient(game);
     try {
         const { data, error } = await supabase.from('Heroes').select();
@@ -20,10 +20,10 @@ export const getHeroes = async (game) => {
     }
 };
 
-export const getTeams = async (game) => {
+export const getAllTeams = async (game) => {
     const supabase = getClient(game);
     try {
-        const { data, error } = await supabase.from('Teams').select('*');
+        const { data, error } = await supabase.from('Teams').select('*').order('Id', { ascending: true });
         if (error) throw error;
         return data;
     } catch (err) {
@@ -31,27 +31,20 @@ export const getTeams = async (game) => {
     }
 };
 
-export const getPlayersByTeam = async (game, teamName) => {
-    const supabase = getClient(game);
-    try {
-        const { data: teamData, error: teamError } = await supabase
+export const getTeamById = async (game, id)=>{
+    const supabase = getClient(game)
+    const { data, error } = await supabase
         .from('Teams')
-        .select('Id')
-        .eq('Name', teamName)
-        .maybeSingle();
-        if (teamError) throw teamError;
-        if (!teamData) return { error: 'Team not found' };
-
-        const { data: players, error: playersError } = await supabase
-        .from('Players')
-        .select('Id, Username')
-        .eq('Team_id', teamData.Id);
-        if (playersError) throw playersError;
-        return players.length > 0 ? players : { error: 'No players found in this team' };
-    } catch (err) {
-        return { error: err.message };
+        .select('*')
+        .eq('Id', id)
+        .single()
+        .order('Id', { ascending: true });
+    if (error) {
+        console.error('Error fetching team by ID:', error.message);
+        throw error;
     }
-};
+    return data;
+}
 
 export const addTeams = async (game, input)=>{
     const supabase = getClient(game)
@@ -59,7 +52,7 @@ export const addTeams = async (game, input)=>{
     .from('Teams')
     .insert(input)
     .select()
-
+    
     if (error) {
         console.error('Insert error:', error.message);
         throw error;
@@ -67,27 +60,101 @@ export const addTeams = async (game, input)=>{
     return data;
 }
 
-export const updateTeams = async (game, input)=>{
+export const updateTeams = async (game, id, value)=>{
     const supabase = getClient(game)
     const { data, error } = await supabase
         .from('Teams')
-        .update({ other_column: 'otherValue' })
-        .eq('some_column', 'someValue')
+        .update({
+            Name: value.Name,
+            Logo: value.Logo ? value.Logo : null
+        })
+        .eq('Id', id)
         .select()
+    if (error) {
+        console.error('Update error:', error.message);
+        throw error;
+    }
+    return data;
 }
 
-export const deleteTeams = (game)=>{
+export const deleteTeams = async (game, id)=>{
+    const supabase = getClient(game)
+    const { error } = await supabase
+    .from('Teams')
+    .delete()
+    .eq('Id', id)
+    if (error) {
+        console.error('Delete error:', error.message);
+        throw error;
+    }
+}
+
+export const getAllPlayersByTeam = async (game, teamName) => {
+    const supabase = getClient(game);
+    try {
+        const { data: teamData, error: teamError } = await supabase
+        .from('Teams')
+        .select('Id')
+        .eq('Name', teamName)
+        .maybeSingle().order('Id', { ascending: true });
+        if (teamError) throw teamError;
+        if (!teamData) return { error: 'Team not found' };
+        
+        const { data: players, error: playersError } = await supabase
+        .from('Players')
+        .select('Id, Name')
+        .eq('Team_id', teamData.Id);
+    
+    if (playersError) throw playersError;
+        return players.length > 0 ? players : { error: 'No players found in this team' };
+    } catch (err) {
+        return { error: err.message };
+    }
+};
+
+export const getPlayerById = async (game, id) => {
+    const supabase = getClient(game);
+    try {
+    const { data, error } = await supabase
+    .from('Players')
+    .select('Team:Teams(Id, Name), Id, Name, Foto')
+    .eq('Id', id)
+    .single()
+    .order('Id', { ascending: true });
+    
+    if (error) throw error;
+        return data;
+    } catch (err) {
+        return { error: err.message };
+    }
+};
+
+export const addPlayers = async (game)=>{
     const supabase = getClient(game)
 }
 
-export const addPlayers = (game)=>{
+export const updatePlayers = async (game, id, value)=>{
     const supabase = getClient(game)
+    const { data, error } = await supabase
+    .from('Players')
+    .update({
+        Team_id: value.Team.Id,
+        Name: value.Name,
+        Foto: value.Foto ? value.Foto : null
+    })
+    .eq('Id', id)
+    .select()
 }
 
-export const updatePlayers = (game)=>{
+export const deletePlayers = async (game, id)=>{
     const supabase = getClient(game)
-}
-
-export const deletePlayers = (game)=>{
-    const supabase = getClient(game)
+        const { error } = await supabase
+    .from('Players')
+    .delete()
+    .eq('Id', id)
+    
+    if (error) {
+        console.error('Delete error:', error.message);
+        throw error;
+    }
 }

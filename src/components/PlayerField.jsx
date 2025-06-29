@@ -13,7 +13,7 @@ export default function PlayerField({ onPlayerChange, playerInputs, playerData }
                 <input
                     ref={(elem) => (inputRefs.current[id] = elem)}
                     id={`Player-${team}-${id}`}
-                    className="peer rounded-md"
+                    className="peer rounded-md w-36.5"
                     type="text"
                     placeholder={`${team} Side Player ${(id - 1) % 5 + 1}`}
                     maxLength="12"

@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { getTeams } from "../services/api.js";
+import { getAllTeams } from "../services/api.js";
 
 export const useTeamData = (selectedGame) => {
     const [teamData, setTeamData] = useState([]);
     
     useEffect(() => {
         (async () => {
-            const team = await getTeams(selectedGame);
+            const team = await getAllTeams(selectedGame);
             if (!team.error) setTeamData(team);
         })()
     }, [selectedGame]);

@@ -21,13 +21,13 @@ export default function PickField({ onPickSelectionChange, onPickInputChange, pi
                         <input
                             ref={(elem) => (inputRefs.current[id] = elem)}
                             id={`pick-${teamSide}-${id}`}
-                            className="peer rounded-md"
+                            className="peer rounded-md w-36.5"
                             type="text"
                             placeholder={`${teamSide} Side Pick ${index + 1}`}
                             value={pickInput[index]}
                             onChange={(e) => onPickInputChange(teamSide.toLowerCase(), index, e.target.value)}
                         />
-                        <div id={`dropdown-picked-${teamSide}-${id}`} className="invisible absolute bg-white w-36.5 max-h-15 overflow-y-auto peer-focus:visible">
+                        <div id={`dropdown-picked-${teamSide}-${id}`} className="invisible absolute bg-white w-36.5 max-h-20 overflow-y-auto peer-focus:visible">
                             {heroData
                                 .filter(hero => hero.Name.toLowerCase().startsWith(pickInput[index].toLowerCase()))
                                 .map(hero => (
@@ -50,18 +50,13 @@ export default function PickField({ onPickSelectionChange, onPickInputChange, pi
                     <div className="relative flex justify-center items-center w-7 h-7">
                         <input
                             className="peer top-0 left-0 absolute opacity-0 w-7 h-7"
-                            id={`swap-${id}`}
+                            aria-label={`swap-${id}`}
                             type="checkbox"
                             checked={swapStatus[teamSide.toLowerCase()][index]}
                             onChange={() => onSwapStatusChange(teamSide.toLowerCase(), index)}
                         />
                         <div className="top-0 left-0 absolute border-3 border-black peer-checked:border-blue-700 rounded-sm w-7 h-7" />
-                        <label
-                            className="top-0 relative flex justify-center items-center rounded-sm w-4 h-4 peer-checked:text-blue-700 cursor-pointer"
-                            htmlFor={`swap-${id}`}
-                        >
-                            <ArrowUpDown className="w-4 h-4" />
-                        </label>
+                        <ArrowUpDown className="top-0 relative flex justify-center items-center rounded-sm w-4 h-4 peer-checked:text-blue-700 cursor-pointer" />
                     </div>
                 </div>
             );
