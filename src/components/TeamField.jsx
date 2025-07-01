@@ -1,13 +1,13 @@
 import { useRef } from "react";
 
 import { useGameContext } from "../contexts/GameContext";
-import { useTeamData } from "../hook/useTeamData";
+import { useTeamData } from "../hooks/useTeamData";
 
-export default function TeamField({ onTeamChange, teamSelection, teamInput, onTeamInputChange, teams }) {
-    const { selectedGame } = useGameContext()
+export default function TeamField({ onTeamChange, teamSelection, teamInputs, onTeamInputChange }) {
+    const { selectedGame, requiredWins } = useGameContext()
     const { teamData } = useTeamData(selectedGame);
     const { onTeamNameChange, onWinCheckChange } = onTeamChange;
-    const { blue: blueTeamInput, red: redTeamInput } = teamInput;
+    const { blue: blueTeamInput, red: redTeamInput } = teamInputs;
     const inputRefs = useRef({});
 
     const renderTeamField = ({ teamSide, id, teamInput }) => {
@@ -18,6 +18,7 @@ export default function TeamField({ onTeamChange, teamSelection, teamInput, onTe
                     <div className="">
                         <input
                             ref={(elem) => inputRefs.current[id] = elem}
+                            id={`team-${id}`}
                             className="peer rounded-md w-36.5"
                             type="text"
                             placeholder="Enter Team Name"
@@ -47,15 +48,16 @@ export default function TeamField({ onTeamChange, teamSelection, teamInput, onTe
                 <div className="flex flex-col gap-5">
                     <h2 className="font-bold text-lg text-center">Win Check</h2>
                     <div className="flex justify-center gap-3">
-                        {[1, 2, 3].map((index) => (
+                        {Array.from({ length: requiredWins }).map((_, index) => (
                             <label key={index} className="flex flex-col justify-center text-center">
                                 <input
                                     className="w-5 h-5"
+                                    id={`${teamSide.toLowerCase()}-win-check-${index + 1}`}
                                     type="checkbox"
                                     checked={teamSelection[teamSide.toLowerCase()].WinCheck[index - 1] || false}
                                     onChange={() => onWinCheckChange(teamSide.toLowerCase(), index - 1)}
                                 />
-                                {index}
+                                {index + 1}
                             </label>
                         ))}
                     </div>

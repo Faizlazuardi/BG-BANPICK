@@ -1,14 +1,10 @@
 import { useState } from "react";
-
-const createArrayState = (value, length = 5) => ({
-    blue: Array(length).fill(value),
-    red: Array(length).fill(value)
-});
-
-export const initialBanSelectionState = createArrayState({ Name: "", img: null });
-export const initialBanInputState = createArrayState("");
+import { createTeamArray } from "../utils/arrayUtils";
+import { TEAM_SIZE } from "../constants/gameConstant";
 
 export const useBan = () => {
+    const initialBanSelectionState = createTeamArray(TEAM_SIZE, { Name: "", img: null });
+    const initialBanInputState = createTeamArray(TEAM_SIZE, "");
     const [banSelection, setBanSelection] = useState(initialBanSelectionState);
     const [banInputs, setBanInputs] = useState(initialBanInputState);
 
@@ -28,8 +24,8 @@ export const useBan = () => {
     };
 
     return {
-        banSelection, setBanSelection,
-        banInputs, setBanInputs,
+        initialBanSelectionState, banSelection, setBanSelection,
+        initialBanInputState, banInputs, setBanInputs,
         handleBan
     };
 };

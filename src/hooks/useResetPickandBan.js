@@ -1,23 +1,24 @@
+const TEAM_SIZE = 5;
+const TIMEOUT_DURATION = 1200;
+
 export const useResetPickandBan = ({
     setPickSelection, initialPickSelectionState,
     setPickInputs, initialPickInputState,
     setBanSelection, initialBanSelectionState,
     setBanInputs, initialBanInputState,
     setAnimationClasses, initialAnimationState,
-    setPhase, 
-    setHighlights
+    setHighlights, initialHighlights,
+    setPhase
 }) => {
     const resetPickandBan = () => {
-        setAnimationClasses(prev => {
-            const updated = { ...prev };
-            for (const team in prev.pick) {
-                updated.pick[team] = Array(5).fill("fly-out");
-            }
-            for (const team in prev.ban) {
-                updated.ban[team] = Array(5).fill("fly-out");
-            }
-            return updated;
-        });
+        setAnimationClasses(prev => ({
+            pick: Object.fromEntries(
+                Object.keys(prev.pick).map(team => [team, Array(TEAM_SIZE).fill("fly-out")])
+            ),
+            ban: Object.fromEntries(
+                Object.keys(prev.ban).map(team => [team, Array(TEAM_SIZE).fill("fly-out")])
+            )
+        }));
         
         const flyOutTimeout = setTimeout(() => {
             setPickSelection(initialPickSelectionState);
@@ -25,9 +26,9 @@ export const useResetPickandBan = ({
             setBanSelection(initialBanSelectionState);
             setBanInputs(initialBanInputState);
             setAnimationClasses(initialAnimationState);
+            setHighlights(initialHighlights);
             setPhase(0);
-            setHighlights({ blue: Array(5).fill(false), red: Array(5).fill(false) });
-        }, 1200);
+        }, TIMEOUT_DURATION);
         return () => clearTimeout(flyOutTimeout);
     };
     

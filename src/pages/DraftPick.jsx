@@ -1,6 +1,3 @@
-import { useState } from "react";
-
-// Components
 import TeamDisplay from "/src/components/TeamDisplay";
 import TeamField from "/src/components/TeamField";
 import PlayerDisplay from "../components/PlayerDisplay";
@@ -10,34 +7,51 @@ import PickField from "/src/components/PickField";
 import BanDisplay from "/src/components/BanDisplay";
 import BanField from "/src/components/BanField";
 import MatchSummary from "/src/components/MatchSummary";
+import DropdownSelector from "../components/DropdownSelector";
 
-// Hooks & Initial States
-import { useAnimation, initialAnimationState } from "../hook/useAnimation";
-import { useSwap, initialSwapStatus } from "../hook/useSwap";
-import { usePhase } from "../hook/usePhase";
-import { usePick, initialPickSelectionState, initialPickInputState } from "../hook/usePick";
-import { useBan, initialBanSelectionState, initialBanInputState } from "../hook/useBan";
-import { useTeam, initialTeamSelectionState, initialTeamInputState } from "../hook/useTeam";
-import { usePlayer, initialPlayerInputState } from "../hook/usePlayer";
-import { usePlayerData } from "../hook/usePlayerData";
-import { useResetPickandBan } from "../hook/useResetPickandBan";
-import { useResetTeam } from "../hook/useResetTeam";
-import { useSwitchTeam } from "../hook/useSwitchTeam";
+import { useTeam } from "../hooks/useTeam";
+import { usePlayer } from "../hooks/usePlayer";
+import { useBan } from "../hooks/useBan";
+import { usePick } from "../hooks/usePick";
+import { useAnimation } from "../hooks/useAnimation";
+import { useSwap } from "../hooks/useSwap";
+import { usePhase } from "../hooks/usePhase";
+import { usePlayerData } from "../hooks/usePlayerData";
+import { useResetPickandBan } from "../hooks/useResetPickandBan";
+import { useResetTeam } from "../hooks/useResetTeam";
+import { useSwitchTeam } from "../hooks/useSwitchTeam";
 
 import { useGameContext } from "../contexts/GameContext";
 
 export default function DraftPick() {
-    const { roundOptions, selectedRound, setSelectedRound, gameOptions, selectedGame, setSelectedGame } = useGameContext()
-
-    const initialPlayerDataState = {blue: [], red: [] }
-
-    const { teamInput, setTeamInput, handleTeamInputChange, teamSelection, setTeamSelection, handleTeamChange, handleWinCheckChange } = useTeam();
-    const { playerData, setPlayerData } = usePlayerData({selectedGame, teamSelection, initialPlayerDataState});
-    const { playerInputs, setPlayerInputs, handlePlayerInputsChange } = usePlayer();
-    const { banSelection, setBanSelection, banInputs, setBanInputs, handleBan } = useBan();
-    const { pickSelection, setPickSelection, pickInputs, setPickInputs, handlePick, handleShiftPick } = usePick(playerInputs);
-
     const { 
+        roundOptions, selectedRound, setSelectedRound,
+        BestOfOption, selectedBestOf, setSelectedBestOf,
+        gameOptions, selectedGame, setSelectedGame,
+    } = useGameContext()
+    
+    const { 
+        initialTeamInputState, teamInput, setTeamInput, handleTeamInputChange, 
+        initialTeamSelectionState, teamSelection, setTeamSelection, handleTeamChange, handleWinCheckChange
+    } = useTeam();
+    
+    const initialPlayerDataState = {blue: [], red: [] }
+    const { playerData, setPlayerData } = usePlayerData({selectedGame, teamSelection, initialPlayerDataState});
+    const { initialPlayerInputState, playerInputs, setPlayerInputs, handlePlayerInputsChange } = usePlayer();
+    
+    const { 
+        initialBanSelectionState, banSelection, setBanSelection, 
+        initialBanInputState,banInputs, setBanInputs,
+        handleBan
+    } = useBan();
+    const { 
+        initialPickSelectionState, pickSelection, setPickSelection,
+        initialPickInputState,pickInputs, setPickInputs,
+        handlePick, handleShiftPick 
+    } = usePick(playerInputs);
+    
+    const { 
+        initialAnimationState,
         animationClasses,
         setAnimationClasses,
         handleAnimationFlyIn,
@@ -47,25 +61,26 @@ export default function DraftPick() {
         pickSelection, handlePick,
         banSelection, handleBan
     });
-    const { swapStatus, setSwapStatus, handleswapStatusChange } = useSwap({
+    const { initialSwapStatus, swapStatus, setSwapStatus, handleswapStatusChange } = useSwap({
         setPickSelection, setPickInputs,
         handleAnimationFlyIn, handleAnimationFlyOut
     });
-    const { highlights, setHighlights, setPhase } = usePhase(banSelection, pickSelection);
-
+    const { highlights, setHighlights, initialHighlights, setPhase } = usePhase(banSelection, pickSelection);
+    
     const{ resetPickandBan } = useResetPickandBan({
         setPickSelection, initialPickSelectionState,
         setPickInputs, initialPickInputState,
         setBanSelection, initialBanSelectionState,
         setBanInputs, initialBanInputState,
         setAnimationClasses, initialAnimationState,
-        setPhase, setHighlights
+        setHighlights, initialHighlights,
+        setPhase,
     });
     const { resetTeam } = useResetTeam({
         setTeamInput, initialTeamInputState,
         setTeamSelection, initialTeamSelectionState,
-        setPlayerInputs, initialPlayerInputState,
         setPlayerData, initialPlayerDataState,
+        setPlayerInputs, initialPlayerInputState,
         setSwapStatus, initialSwapStatus
     });
     const { switchTeam } = useSwitchTeam({ setTeamInput, setTeamSelection, setPlayerInputs });
@@ -103,16 +118,24 @@ export default function DraftPick() {
 
             <div className="flex flex-col items-center gap-5">
                 <div className="flex gap-3">
-                    <select aria-label="round" className="p-2 border-2 w-35 h-11 text-center" value={selectedRound} onChange={(e) => setSelectedRound(e.target.value)}>
-                        {roundOptions.map(({ id, round }) => (
-                            <option value={round} key={id}>{round}</option>
-                        ))}
-                    </select>
-                    <select aria-label="selectedGame" className="p-2 border-2 w-35 h-11 text-center" value={selectedGame} onChange={(e) => setSelectedGame(e.target.value)}>
-                            {gameOptions.map(({ id, game }) => (
-                                <option value={game} key={id}>{game}</option>
-                            ))}
-                    </select>
+                    <DropdownSelector
+                        id="round-selector"
+                        options={roundOptions}
+                        selectedOption={selectedRound}
+                        setSelectedOption={setSelectedRound}
+                    />
+                    <DropdownSelector
+                        id="best-of-selector"
+                        options={BestOfOption}
+                        selectedOption={selectedBestOf}
+                        setSelectedOption={setSelectedBestOf}
+                    />
+                    <DropdownSelector
+                        id="game-selector"
+                        options={gameOptions}
+                        selectedOption={selectedGame}
+                        setSelectedOption={setSelectedGame}
+                    />
                 </div>
                 <div className="flex gap-3">
                     <button className="w-30" id="switch-team" onClick={switchTeam}>Switch Team</button>
@@ -128,7 +151,7 @@ export default function DraftPick() {
                         onWinCheckChange: handleWinCheckChange
                     }}
                     teamSelection={teamSelection}
-                    teamInput={teamInput}
+                    teamInputs={teamInput}
                     onTeamInputChange={handleTeamInputChange}
                 />
                 <PlayerField

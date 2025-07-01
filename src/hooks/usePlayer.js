@@ -1,14 +1,9 @@
 import { useState } from "react";
-
-const createArrayState = (value, length = 5) => ({
-    blue: Array(length).fill(value),
-    red: Array(length).fill(value)
-});
-
-export const initialPlayerInputState = createArrayState("");
-
+import { createTeamArray } from "../utils/arrayUtils";
+import { TEAM_SIZE } from "../constants/gameConstant";
 
 export const usePlayer = () => {
+    const initialPlayerInputState = createTeamArray(TEAM_SIZE, "");
     const [playerInputs, setPlayerInputs] = useState(initialPlayerInputState);
 
     const handlePlayerInputsChange = (type, team, id, value) => {
@@ -26,7 +21,6 @@ export const usePlayer = () => {
     };
 
     return {
-        playerInputs, setPlayerInputs,
-        handlePlayerInputsChange
+        initialPlayerInputState,playerInputs, setPlayerInputs, handlePlayerInputsChange
     };
 };

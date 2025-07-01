@@ -1,19 +1,14 @@
 import { useState } from "react";
-
-export const initialAnimationState = {
-    pick: {
-        red: Array(5).fill(""),
-        blue: Array(5).fill("")
-    },
-    ban: {
-        red: Array(5).fill(""),
-        blue: Array(5).fill("")
-    }
-};
+import { createTeamArray } from "../utils/arrayUtils";
+import { TEAM_SIZE, TIMEOUT_DURATION } from "../constants/gameConstant";
 
 export const useAnimation = ({ pickSelection, handlePick, banSelection, handleBan }) => {
+    const initialAnimationState = {
+        pick: createTeamArray(TEAM_SIZE, ""),
+        ban: createTeamArray(TEAM_SIZE, "")
+    };
     const [animationClasses, setAnimationClasses] = useState(initialAnimationState);
-
+    
     const handleAnimationFlyIn = (type, team, id) => {
         setAnimationClasses(prev => ({
             ...prev,
@@ -46,14 +41,14 @@ export const useAnimation = ({ pickSelection, handlePick, banSelection, handleBa
                 handleAnimationFlyIn(type, team, id)
                 flyInTimeout = setTimeout(() => {
                     setAnimationClasses(initialAnimationState);
-                }, 1200);
-            }, 1200);
+                }, TIMEOUT_DURATION);
+            }, TIMEOUT_DURATION);
         } else {
             handleSelection(type, team, id, hero);
             handleAnimationFlyIn(type, team, id)
             flyInTimeout = setTimeout(() => {
                 setAnimationClasses(initialAnimationState);
-            }, 1200);
+            }, TIMEOUT_DURATION);
         }
         return () => {
             if (flyOutTimeout) clearTimeout(flyOutTimeout);
@@ -62,7 +57,7 @@ export const useAnimation = ({ pickSelection, handlePick, banSelection, handleBa
     };
 
     return {
-        animationClasses, setAnimationClasses,
+        initialAnimationState, animationClasses, setAnimationClasses,
         handleAnimationFlyIn,
         handleAnimationFlyOut,
         handleAnimatedSelection

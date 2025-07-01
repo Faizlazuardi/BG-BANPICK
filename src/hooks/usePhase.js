@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { createTeamArray } from "../utils/arrayUtils";
+import { TEAM_SIZE } from "../constants/gameConstant";
 
 const generatePhaseActions = () => {
     const actions = [];
@@ -24,29 +26,24 @@ const generatePhaseActions = () => {
     return actions;
 };
 
-export const initialPhaseState = {
-    blue: Array(5).fill(false),
-    red: Array(5).fill(false)
-};
-
 export const usePhase = (banSelection, pickSelection) => {
+    const initialHighlights = createTeamArray(TEAM_SIZE, false);
+    const [highlights, setHighlights] = useState(initialHighlights);
     
     const [phase, setPhase] = useState(0);
     const phaseActions = generatePhaseActions();
-
-    const [highlights, setHighlights] = useState(initialPhaseState);
     
     const highlightCurrentPhase = () => {
         const action = phaseActions[phase];
         if (!action) return;
-    
+        
         const {team, index } = action;
-    
+        
         setHighlights({
             blue: Array(5).fill(false),
             red: Array(5).fill(false)
         });
-    
+        
         if (Array.isArray(index)) {
             setHighlights(prev => ({
                 ...prev,
@@ -88,7 +85,7 @@ export const usePhase = (banSelection, pickSelection) => {
     }, [pickSelection, banSelection]);
 
     return {
-        highlights, setHighlights,
+        initialHighlights, highlights, setHighlights,
         setPhase
     };
 }

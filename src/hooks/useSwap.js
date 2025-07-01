@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
+import { createTeamArray } from "../utils/arrayUtils";
 
-export const initialSwapStatus = {
-    blue: Array(5).fill(false),
-    red: Array(5).fill(false)
-};
+const TEAM_SIZE = 5;
+const TIMEOUT_DURATION = 1200;
 
 export const useSwap = ({setPickSelection, setPickInputs, handleAnimationFlyIn, handleAnimationFlyOut}) => {
+    const initialSwapStatus = createTeamArray(TEAM_SIZE, false);
     const [swapStatus, setSwapStatus] = useState(initialSwapStatus)
     
     const handleswapStatusChange = (team, index) => {
@@ -53,7 +53,7 @@ export const useSwap = ({setPickSelection, setPickInputs, handleAnimationFlyIn, 
                 
                 handleAnimationFlyIn("pick", team, id1);
                 handleAnimationFlyIn("pick", team, id2);
-            }, 1200);
+            }, TIMEOUT_DURATION);
             
             setSwapStatus(prev => ({
                 ...prev,
@@ -71,6 +71,7 @@ export const useSwap = ({setPickSelection, setPickInputs, handleAnimationFlyIn, 
     }, [swapStatus]);
 
     return {
+        initialSwapStatus,
         swapStatus,
         setSwapStatus,
         handleswapStatusChange

@@ -1,15 +1,15 @@
 export const useResetTeam = ({
     setTeamInput, initialTeamInputState,
     setTeamSelection, initialTeamSelectionState,
-    setPlayerInputs,  initialPlayerInputState,
     setPlayerData, initialPlayerDataState,
+    setPlayerInputs,  initialPlayerInputState,
     setSwapStatus, initialSwapStatus,
 }) => {
     const resetTeam = () => {
         setTeamInput(initialTeamInputState);
         setTeamSelection(initialTeamSelectionState);
-        setPlayerInputs(initialPlayerInputState);
         setPlayerData(initialPlayerDataState);
+        setPlayerInputs(initialPlayerInputState);
         setSwapStatus(initialSwapStatus);
     };
 

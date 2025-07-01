@@ -1,4 +1,4 @@
-import { supabaseMLBB } from '../utils/supabaseClients.js';
+import { supabaseMLBB } from '../lib/supabaseClients.js';
 
 const getClient = (game) => {
     switch (game) {

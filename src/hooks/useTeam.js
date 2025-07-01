@@ -1,19 +1,22 @@
 import { useState } from "react";
-
-export const initialTeamSelectionState = {
-    blue: { Name: "", Logo: null, WinCheck: [false, false, false] },
-    red: { Name: "", Logo: null, WinCheck: [false, false, false] }
-};
-
-export const initialTeamInputState = {
-    blue: "",
-    red: ""
-};
+import { useGameContext } from "../contexts/GameContext";
 
 export const useTeam = () => {
+    const { requiredWins } = useGameContext();
+    
+    const initialTeamSelectionState = {
+    blue: { Name: "", Logo: null, WinCheck: Array(requiredWins).fill(false) },
+    red: { Name: "", Logo: null, WinCheck: Array(requiredWins).fill(false) }
+    };
+    
+    const initialTeamInputState = {
+    blue: "",
+    red: ""
+    };
+    
     const [teamSelection, setTeamSelection] = useState(initialTeamSelectionState);
     const [teamInput, setTeamInput] = useState(initialTeamInputState);
-
+    
     const handleTeamChange = (team, { name, logo }) => {
         setTeamSelection(prev => ({
             ...prev,
@@ -47,13 +50,15 @@ export const useTeam = () => {
     };
 
     return {
-        teamInput,
-        setTeamInput,
-        handleTeamInputChange,
-
+        initialTeamSelectionState,
         teamSelection,
         setTeamSelection,
         handleTeamChange,
-        handleWinCheckChange
+        handleWinCheckChange,
+        
+        initialTeamInputState,
+        teamInput,
+        setTeamInput,
+        handleTeamInputChange,
     };
 };
