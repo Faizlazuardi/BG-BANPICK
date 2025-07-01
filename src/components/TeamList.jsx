@@ -2,20 +2,48 @@ import { useState } from 'react';
 
 import { X, Eye, SquarePen, Trash2 } from 'lucide-react';
 
-import { useTeamData } from "../hook/useTeamData";
+import UpdateModal from './UpdateModal';
+import ConfirmDeleteModal from './ConfirmDeleteModal';
+
+import { useTeamData } from "../hooks/useTeamData";
 
 import { useGameContext } from "../contexts/GameContext";
+
+import { getTeamById, updateTeams, deleteTeams } from '../services/api';
 
 export default function TeamList({handleTeamSelectionChange}) {
     const { selectedGame } = useGameContext()
     
+    const [updatedValue, setUpdatedValue] = useState(null);
+    
+    const handleUpdatedValueChange = (Field, value) => {
+        if (Field === "Logo") {
+            value = URL.createObjectURL(value);
+        }
+        setUpdatedValue((prev) => {
+            return {
+                ...prev,
+                [Field]: value,
+            };
+        });
+    };
+    
+    const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+    const handleUpdateModalClose = () => {
+        setIsUpdateModalOpen(false);
+    };
+    
+    const [deletedValue, setDeletedValue] = useState(null);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const handledeleteModalClose = () => {
+        setIsDeleteModalOpen(false);
+    };
+    
     const { teamData } = useTeamData(selectedGame);
     
     const [currentPage, setCurrentPage] = useState(1);
-    
     const teamsPerPage = 10;
     const totalPages = Math.ceil(teamData.length / teamsPerPage);
-    
     const indexOfLastTeam = currentPage * teamsPerPage;
     const indexOfFirstTeam = indexOfLastTeam - teamsPerPage;
     const currentTeams = teamData.slice(indexOfFirstTeam, indexOfLastTeam);
@@ -52,11 +80,24 @@ export default function TeamList({handleTeamSelectionChange}) {
                                     <Eye/>
                                     View
                                 </button>
-                                <button className="flex items-center gap-2 bg-cyan-500 hover:bg-cyan-800 px-3 py-1 rounded w-21 font-semibold text-white text-sm">
+                                <button className="flex items-center gap-2 bg-cyan-500 hover:bg-cyan-800 px-3 py-1 rounded w-21 font-semibold text-white text-sm"
+                                    onClick={async () => {
+                                        const data = await getTeamById(selectedGame, team.Id);
+                                        setUpdatedValue(data);
+                                        setIsUpdateModalOpen(true);
+                                    }}
+                                >
                                     <SquarePen/>
                                     Edit
                                 </button>
-                                <button className="flex items-center gap-2 bg-red-500 hover:bg-red-800 px-3 py-1 rounded w-25 font-semibold text-white text-sm">
+                                <button className="flex items-center gap-2 bg-red-500 hover:bg-red-800 px-3 py-1 rounded w-25 font-semibold text-white text-sm" 
+                                    onClick={
+                                        () => {
+                                            setDeletedValue(team);
+                                            setIsDeleteModalOpen(true)
+                                        }
+                                    }
+                                >
                                     <Trash2/>
                                     Delete
                                 </button>
@@ -84,6 +125,22 @@ export default function TeamList({handleTeamSelectionChange}) {
                     Next
                 </button>
             </div>
+            <UpdateModal
+                type={"Team"}
+                isOpen={isUpdateModalOpen}
+                onClose={handleUpdateModalClose}
+                onUpdate={updateTeams}
+                onInputChange={handleUpdatedValueChange}
+                value={updatedValue}
+                game={selectedGame}
+            />
+            <ConfirmDeleteModal
+                isOpen={isDeleteModalOpen}
+                onClose={handledeleteModalClose}
+                onDelete={deleteTeams}
+                value={deletedValue}
+                game={selectedGame}
+            />
         </div>
     );
 }
