@@ -48,7 +48,7 @@ export default function PickField({ onPickSelectionChange, onPickInputChange, pi
                             }
                         </div>
                     </div>
-                    <div className="relative flex justify-center items-center w-7 h-7">
+                    <label className="relative flex justify-center items-center w-7 h-7">
                         <input
                             className="peer top-0 left-0 absolute opacity-0 w-7 h-7"
                             id={`swap-${teamSide}-${index}`}
@@ -59,7 +59,7 @@ export default function PickField({ onPickSelectionChange, onPickInputChange, pi
                         />
                         <div className="top-0 left-0 absolute border-3 border-black peer-checked:border-blue-700 rounded-sm w-7 h-7" />
                         <ArrowUpDown className="top-0 relative flex justify-center items-center rounded-sm w-4 h-4 peer-checked:text-blue-700 cursor-pointer" />
-                    </div>
+                    </label>
                 </div>
             );
         });

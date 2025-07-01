@@ -39,20 +39,17 @@ export const usePhase = (banSelection, pickSelection) => {
         
         const {team, index } = action;
         
-        setHighlights({
-            blue: Array(5).fill(false),
-            red: Array(5).fill(false)
-        });
+        setHighlights(initialHighlights);
         
         if (Array.isArray(index)) {
             setHighlights(prev => ({
                 ...prev,
-                [team]: prev[team].map((val, i) => index.includes(i) ? true : false)
+                [team]: prev[team].map((_, i) => index.includes(i) ? true : false)
             }));
         } else {
             setHighlights(prev => ({
                 ...prev,
-                [team]: prev[team].map((val, i) => i === index ? true : false)
+                [team]: prev[team].map((_, i) => i === index ? true : false)
             }));
         }
     };
@@ -86,6 +83,6 @@ export const usePhase = (banSelection, pickSelection) => {
 
     return {
         initialHighlights, highlights, setHighlights,
-        setPhase
+        setPhase, phase
     };
 }

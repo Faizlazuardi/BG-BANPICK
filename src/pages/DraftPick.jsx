@@ -65,7 +65,7 @@ export default function DraftPick() {
         setPickSelection, setPickInputs,
         handleAnimationFlyIn, handleAnimationFlyOut
     });
-    const { highlights, setHighlights, initialHighlights, setPhase } = usePhase(banSelection, pickSelection);
+    const { highlights, setHighlights, initialHighlights, setPhase, phase } = usePhase(banSelection, pickSelection);
     
     const{ resetPickandBan } = useResetPickandBan({
         setPickSelection, initialPickSelectionState,
@@ -74,7 +74,7 @@ export default function DraftPick() {
         setBanInputs, initialBanInputState,
         setAnimationClasses, initialAnimationState,
         setHighlights, initialHighlights,
-        setPhase,
+        setPhase, phase
     });
     const { resetTeam } = useResetTeam({
         setTeamInput, initialTeamInputState,

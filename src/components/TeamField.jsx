@@ -8,17 +8,17 @@ export default function TeamField({ onTeamChange, teamSelection, teamInputs, onT
     const { teamData } = useTeamData(selectedGame);
     const { onTeamNameChange, onWinCheckChange } = onTeamChange;
     const { blue: blueTeamInput, red: redTeamInput } = teamInputs;
-    const inputRefs = useRef({});
+    const inputRefs = useRef({red: null, blue: null});
 
-    const renderTeamField = ({ teamSide, id, teamInput }) => {
+    const renderTeamField = ({ teamSide, teamInput }) => {
         return (
-            <div className="flex flex-col gap-20" key={id}>
+            <div className="flex flex-col gap-20" key={teamSide}>
                 <div className="flex flex-col gap-5">
                     <h2 className="font-bold text-lg text-center">{`${teamSide} Team`}</h2>
                     <div className="">
                         <input
-                            ref={(elem) => inputRefs.current[id] = elem}
-                            id={`team-${id}`}
+                            ref={(elem) => inputRefs.current[teamSide] = elem}
+                            id={`team-${teamSide.toLowerCase()}-input`}
                             className="peer rounded-md w-36.5"
                             type="text"
                             placeholder="Enter Team Name"
@@ -35,7 +35,7 @@ export default function TeamField({ onTeamChange, teamSelection, teamInputs, onT
                                         onClick={() => {
                                             onTeamNameChange(teamSide.toLowerCase(), {name:team.Name, logo:team.Logo});
                                             onTeamInputChange(teamSide.toLowerCase(), team.Name);
-                                            inputRefs.current[id].blur();
+                                            inputRefs.current[teamSide].blur();
                                         }}
                                     >
                                         {team.Name}
@@ -54,8 +54,8 @@ export default function TeamField({ onTeamChange, teamSelection, teamInputs, onT
                                     className="w-5 h-5"
                                     id={`${teamSide.toLowerCase()}-win-check-${index + 1}`}
                                     type="checkbox"
-                                    checked={teamSelection[teamSide.toLowerCase()].WinCheck[index - 1] || false}
-                                    onChange={() => onWinCheckChange(teamSide.toLowerCase(), index - 1)}
+                                    checked={teamSelection[teamSide.toLowerCase()].WinCheck[index] || false}
+                                    onChange={() => onWinCheckChange(teamSide.toLowerCase(), index)}
                                 />
                                 {index + 1}
                             </label>
@@ -68,8 +68,8 @@ export default function TeamField({ onTeamChange, teamSelection, teamInputs, onT
 
     return (
         <>
-            {renderTeamField({ teamSide: "Blue", id: 1, teamInput: blueTeamInput })}
-            {renderTeamField({ teamSide: "Red", id: 2, teamInput: redTeamInput })}
+            {renderTeamField({ teamSide: "Blue", teamInput: blueTeamInput })}
+            {renderTeamField({ teamSide: "Red", teamInput: redTeamInput })}
         </>
     );
 }

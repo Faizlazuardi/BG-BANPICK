@@ -10,7 +10,7 @@ export default function MatchSummary({ round, teamInput, grid }) {
                 <img className="w-20 h-20" id={`logo-${team}`} src={teamInput.Logo} alt="" />
                 <div className={`flex justify-center gap-2.5 h-5 ${style}`}>
                     {Array.from({ length: requiredWins }).map((_, index) => (
-                        <div key={index} className={`border-2 w-5 h-5 ${teamInput.WinCheck[index - 1] ? 'bg-black' : 'bg-white'}`} />
+                        <div key={index} className={`border-2 w-5 h-5 ${teamInput.WinCheck[index] ? 'bg-black' : 'bg-white'}`} />
                     ))}
                 </div>
             </div>
