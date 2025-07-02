@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { X, Eye, SquarePen, Trash2 } from 'lucide-react';
 
-import UpdateModal from './UpdateModal';
+import FormModal from './FormModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 import { useTeamData } from "../hooks/useTeamData";
@@ -14,19 +14,24 @@ import { getTeamById, updateTeams, deleteTeams } from '../services/api';
 export default function TeamList({handleTeamSelectionChange}) {
     const { selectedGame } = useGameContext()
     
-    const [updatedValue, setUpdatedValue] = useState(null);
+    const [teamValue, setTeamValue] = useState(null);
     
-    const handleUpdatedValueChange = (Field, value) => {
+    const handleTeamValueChange = (Field, value) => {
         if (Field === "Logo") {
             value = URL.createObjectURL(value);
         }
-        setUpdatedValue((prev) => {
+        setTeamValue((prev) => {
             return {
                 ...prev,
                 [Field]: value,
             };
         });
     };
+    
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const handleAddModalClose = () => {
+        setIsAddModalOpen(false);
+    }
     
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
     const handleUpdateModalClose = () => {
@@ -51,7 +56,13 @@ export default function TeamList({handleTeamSelectionChange}) {
     return (
         <div className="flex flex-col flex-grow gap-5 mt-5 max-w-3xl text-cyan-950">
             <h1 className="text-5xl text-center">Team List</h1>
-            <button className="flex items-center gap-2 bg-green-500 hover:bg-green-800 px-3 py-1 rounded w-32 font-semibold text-white text-sm">
+            <button 
+                className="flex items-center gap-2 bg-green-500 hover:bg-green-800 px-3 py-1 rounded w-32 font-semibold text-white text-sm"
+                onClick={() => {
+                    setTeamValue({ Name: "", Logo: null });
+                    setIsAddModalOpen(true);
+                }}
+            >
                 <X className='rotate-45'/>
                 Add Team
             </button>
@@ -82,8 +93,7 @@ export default function TeamList({handleTeamSelectionChange}) {
                                 </button>
                                 <button className="flex items-center gap-2 bg-cyan-500 hover:bg-cyan-800 px-3 py-1 rounded w-21 font-semibold text-white text-sm"
                                     onClick={async () => {
-                                        const data = await getTeamById(selectedGame, team.Id);
-                                        setUpdatedValue(data);
+                                        getTeamById(selectedGame, team.Id).then(data => setTeamValue(data));
                                         setIsUpdateModalOpen(true);
                                     }}
                                 >
@@ -125,13 +135,24 @@ export default function TeamList({handleTeamSelectionChange}) {
                     Next
                 </button>
             </div>
-            <UpdateModal
+            <FormModal
+                action={"Add"}
+                type={"Team"}
+                isOpen={isAddModalOpen}
+                onClose={handleAddModalClose}
+                onUpdate={updateTeams}
+                onInputChange={handleTeamValueChange}
+                value={teamValue}
+                game={selectedGame}
+            />
+            <FormModal
+                action={"Edit"}
                 type={"Team"}
                 isOpen={isUpdateModalOpen}
                 onClose={handleUpdateModalClose}
                 onUpdate={updateTeams}
-                onInputChange={handleUpdatedValueChange}
-                value={updatedValue}
+                onInputChange={handleTeamValueChange}
+                value={teamValue}
                 game={selectedGame}
             />
             <ConfirmDeleteModal

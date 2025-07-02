@@ -96,14 +96,15 @@ export const getAllPlayersByTeam = async (game, teamName) => {
         .from('Teams')
         .select('Id')
         .eq('Name', teamName)
-        .maybeSingle().order('Id', { ascending: true });
+        .maybeSingle();
         if (teamError) throw teamError;
         if (!teamData) return { error: 'Team not found' };
         
         const { data: players, error: playersError } = await supabase
         .from('Players')
         .select('Id, Name')
-        .eq('Team_id', teamData.Id);
+        .eq('Team_id', teamData.Id)
+        .order('Id', { ascending: true });
     
     if (playersError) throw playersError;
         return players.length > 0 ? players : { error: 'No players found in this team' };
