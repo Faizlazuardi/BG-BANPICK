@@ -1,8 +1,10 @@
-import { TEAM_SIZE } from '../constants/gameConstant';
+import { TEAM_SIZE } from '../../../constants/gameConstant';
 
-export default function PickDisplay({ grid, picks, animationClasses }) {
-    const { gridBlue, gridRed } = grid;
-    const { blue: bluePicks, red: redPicks } = picks
+import { useDraftContext } from '../../../contexts/DraftContext';
+
+export default function PickDisplay({ grid }) {
+    const { pickSelection, animationClasses:{pick: animationClasses}} = useDraftContext()
+    const { blue: bluePicks, red: redPicks } = pickSelection
     const { blue: animationBlueClass, red: animationRedClass } = animationClasses;
     
     const renderPicks = (picks, animationClass) => {
@@ -15,10 +17,10 @@ export default function PickDisplay({ grid, picks, animationClasses }) {
 
     return (
         <>
-            <div className={`flex ${gridBlue}`}>
+            <div className={`flex ${grid.Blue}`}>
                 {renderPicks(bluePicks, animationBlueClass)}
             </div>
-            <div className={`flex flex-row-reverse ${gridRed}`}>
+            <div className={`flex flex-row-reverse ${grid.Red}`}>
                 {renderPicks(redPicks, animationRedClass)}
             </div>
         </>

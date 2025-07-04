@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { createTeamArray } from "../utils/arrayUtils";
 import { TEAM_SIZE } from "../constants/gameConstant";
+import { createTeamArray } from "../utils/arrayUtils";
 
 const generatePhaseActions = () => {
     const actions = [];

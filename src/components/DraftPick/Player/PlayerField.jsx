@@ -1,10 +1,14 @@
 import { useRef } from "react";
-import { TEAM_SIZE } from "../constants/gameConstant";
-import { createTeamArray } from "../utils/arrayUtils";
+import { TEAM_SIZE } from "../../../constants/gameConstant";
+import { createTeamArray } from "../../../utils/arrayUtils";
 
-export default function PlayerField({ onPlayerChange, playerInputs, playerData }) {
+import { useDraftContext } from "../../../contexts/DraftContext";
+
+export default function PlayerField() {
+    const { playerInputs, playerData, handlePlayerInputsChange } = useDraftContext()
     const { blue: bluePlayerInputs, red: redPlayerInputs } = playerInputs;
     const { blue: bluePlayers, red: redPlayers } = playerData;
+    const onPlayerChange = (team, id, value) => handlePlayerInputsChange("playerInput", team, id, value)
     const inputRefs = useRef(createTeamArray(TEAM_SIZE, ""));
     
     const renderPlayerField = ({ teamSide, playerInput, playerList }) => {
@@ -20,7 +24,7 @@ export default function PlayerField({ onPlayerChange, playerInputs, playerData }
                     value={playerInput[index]}
                     onChange={(e) => onPlayerChange(teamSide.toLowerCase(), index, e.target.value)}
                 />
-                <div id={`dropdown-Player-${teamSide}-${index + 1}`} className="invisible absolute bg-white w-36.5 max-h-20 overflow-y-auto peer-focus:visible">
+                <div className="invisible absolute bg-white w-36.5 max-h-20 overflow-y-auto peer-focus:visible">
                     {playerList.length > 0 && playerList
                         .filter(player => player.Name.toLowerCase().startsWith(playerInput[index].toLowerCase()))
                         .map(player => (

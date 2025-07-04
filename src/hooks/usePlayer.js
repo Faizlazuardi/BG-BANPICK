@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { createTeamArray } from "../utils/arrayUtils";
 import { TEAM_SIZE } from "../constants/gameConstant";
+import { createTeamArray } from "../utils/arrayUtils";
 
 export const usePlayer = () => {
-    const initialPlayerInputState = createTeamArray(TEAM_SIZE, "");
-    const [playerInputs, setPlayerInputs] = useState(initialPlayerInputState);
+    const initialPlayerInputsState = createTeamArray(TEAM_SIZE, "");
+    const [playerInputs, setPlayerInputs] = useState(initialPlayerInputsState);
 
     const handlePlayerInputsChange = (type, team, id, value) => {
         const setState = {
@@ -21,6 +21,6 @@ export const usePlayer = () => {
     };
 
     return {
-        initialPlayerInputState,playerInputs, setPlayerInputs, handlePlayerInputsChange
+        initialPlayerInputsState,playerInputs, setPlayerInputs, handlePlayerInputsChange
     };
 };

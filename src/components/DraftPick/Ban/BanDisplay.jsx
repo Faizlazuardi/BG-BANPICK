@@ -1,10 +1,12 @@
 import { X } from 'lucide-react';
 
-import { TEAM_SIZE } from '../constants/gameConstant';
+import { TEAM_SIZE } from '../../../constants/gameConstant';
 
-export default function ban({ grid, bans, animationClasses }) {
-    const { gridBlue, gridRed } = grid;
-    const { blue: blueBans, red: redBans } = bans;
+import { useDraftContext } from '../../../contexts/DraftContext';
+
+export default function ban({ grid }) {
+    const { banSelection, animationClasses:{ban: animationClasses} } = useDraftContext()
+    const { blue: blueBans, red: redBans } = banSelection;
     const { blue: animationBlueClass, red: animationRedClass } = animationClasses;
 
     const renderBans = (bans, animationClass) => {
@@ -20,10 +22,10 @@ export default function ban({ grid, bans, animationClasses }) {
 
     return (
         <>
-            <div className={`flex ${gridBlue}`}>
+            <div className={`flex ${grid.Blue}`}>
                 {renderBans(blueBans, animationBlueClass)}
             </div>
-            <div className={`flex flex-row-reverse ${gridRed}`}>
+            <div className={`flex flex-row-reverse ${grid.Red}`}>
                 {renderBans(redBans, animationRedClass)}
             </div>
         </>

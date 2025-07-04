@@ -1,17 +1,23 @@
 import { useRef } from "react";
 
-import { useGameContext } from "../contexts/GameContext";
-import { useHeroData } from "../hooks/useHeroData";
+import { useGameContext } from "../../../contexts/GameContext";
+import { useDraftContext } from "../../../contexts/DraftContext";
 
-import { TEAM_SIZE } from "../constants/gameConstant";
-import { createTeamArray } from "../utils/arrayUtils";
+import { useHeroData } from "../../../hooks/useHeroData";
 
-export default function BanField({ onBanSelectionChange, onBanInputChange, banInputs }) {
+import { TEAM_SIZE } from "../../../constants/gameConstant";
+import { createTeamArray } from "../../../utils/arrayUtils";
+
+export default function BanField() {
     const { selectedGame } = useGameContext()
+    const { banInputs, handleAnimatedSelection, handleBan } = useDraftContext()
+    
     const { heroData } = useHeroData(selectedGame);
     const { blue: blueBanInputs, red: redBanInputs } = banInputs;
+    const onBanSelectionChange = (team, id, hero) => handleAnimatedSelection('ban', team, id, hero)
+    const onBanInputChange = (team, id, hero) => handleBan("banInput", team, id, hero)
     const inputRefs = useRef(createTeamArray(TEAM_SIZE, ""));
-
+    
     const renderBanField = ({ teamSide, banInput}) => {
         return Array.from({ length: TEAM_SIZE }).map((_, index) => {
             return (
@@ -26,7 +32,7 @@ export default function BanField({ onBanSelectionChange, onBanInputChange, banIn
                             value={banInput[index]}
                             onChange={(e) => onBanInputChange(teamSide.toLowerCase(), index, e.target.value)}
                         />
-                        <div id={`dropdown-banned-${teamSide}-${index + 1}`} className="invisible absolute bg-white w-36.5 max-h-20 overflow-y-auto peer-focus:visible">
+                        <div className="invisible absolute bg-white w-36.5 max-h-20 overflow-y-auto peer-focus:visible">
                             {heroData
                                 .filter(hero => hero.Name.toLowerCase().startsWith(banInput[index].toLowerCase()))
                                 .map(hero => (

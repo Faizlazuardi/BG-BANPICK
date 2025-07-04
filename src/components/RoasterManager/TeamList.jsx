@@ -5,11 +5,11 @@ import { X, Eye, SquarePen, Trash2 } from 'lucide-react';
 import FormModal from './FormModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
-import { useTeamData } from "../hooks/useTeamData";
+import { useTeamData } from "../../hooks/useTeamData";
 
-import { useGameContext } from "../contexts/GameContext";
+import { useGameContext } from "../../contexts/GameContext";
 
-import { getTeamById, updateTeams, deleteTeams } from '../services/api';
+import { getTeamById, updateTeams, deleteTeams } from '../../services/api';
 
 export default function TeamList({handleTeamSelectionChange}) {
     const { selectedGame } = useGameContext()

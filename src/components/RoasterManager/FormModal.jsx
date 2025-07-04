@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 
-import { useTeamData } from "../hooks/useTeamData";
+import { useTeamData } from "../../hooks/useTeamData";
 
-import { getTeamById } from '../services/api';
+import { getTeamById } from '../../services/api';
 
 function PlayerField({ value, onInputChange, action, game, teamData }) {
     if (!value) return null;

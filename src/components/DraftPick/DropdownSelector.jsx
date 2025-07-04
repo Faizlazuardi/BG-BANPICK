@@ -2,7 +2,7 @@ export default function DropdownSelector({ id, options, selectedOption, setSelec
     return (
         <select
             id={id}
-            className="p-2 border-2 w-35 h-11 text-center"
+            className="p-2 border-2 w-35 h-11 text-center hover:cursor-pointer"
             value={selectedOption}
             onChange={(e) => setSelectedOption(e.target.value)}
         >

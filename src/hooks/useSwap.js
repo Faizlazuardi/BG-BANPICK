@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
+import { TEAM_SIZE, TIMEOUT_DURATION } from "../constants/gameConstant";
 import { createTeamArray } from "../utils/arrayUtils";
-
-const TEAM_SIZE = 5;
-const TIMEOUT_DURATION = 1200;
 
 export const useSwap = ({setPickSelection, setPickInputs, handleAnimationFlyIn, handleAnimationFlyOut}) => {
     const initialSwapStatus = createTeamArray(TEAM_SIZE, false);

@@ -1,13 +1,21 @@
 import { useRef } from "react";
 
-import { useGameContext } from "../contexts/GameContext";
-import { useTeamData } from "../hooks/useTeamData";
+import { useGameContext } from "../../../contexts/GameContext";
+import { useDraftContext } from "../../../contexts/DraftContext";
 
-export default function TeamField({ onTeamChange, teamSelection, teamInputs, onTeamInputChange }) {
+import { useTeamData } from "../../../hooks/useTeamData";
+
+export default function TeamField() {
     const { selectedGame, requiredWins } = useGameContext()
+    const { 
+        handleTeamChange: onTeamNameChange, handleWinCheckChange: onWinCheckChange, handleTeamInputChange: onTeamInputChange,
+        teamSelection,
+        teamInput: teamInputs,
+    } = useDraftContext()
+
     const { teamData } = useTeamData(selectedGame);
-    const { onTeamNameChange, onWinCheckChange } = onTeamChange;
     const { blue: blueTeamInput, red: redTeamInput } = teamInputs;
+
     const inputRefs = useRef({red: null, blue: null});
 
     const renderTeamField = ({ teamSide, teamInput }) => {

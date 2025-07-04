@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { createTeamArray } from "../utils/arrayUtils";
 import { TEAM_SIZE } from "../constants/gameConstant";
+import { createTeamArray } from "../utils/arrayUtils";
 
 export const usePick = (playerInputs) => {
     const initialPickSelectionState = createTeamArray(TEAM_SIZE, { Name: "", img: null });
-    const initialPickInputState = createTeamArray(TEAM_SIZE, "");
+    const initialPickInputsState = createTeamArray(TEAM_SIZE, "");
     const [pickSelection, setPickSelection] = useState(initialPickSelectionState);
-    const [pickInputs, setPickInputs] = useState(initialPickInputState);
+    const [pickInputs, setPickInputs] = useState(initialPickInputsState);
 
     const handlePick = (type, team, id, value) => {
         const setState = {
@@ -40,7 +40,7 @@ export const usePick = (playerInputs) => {
 
     return {
         initialPickSelectionState, pickSelection, setPickSelection,
-        initialPickInputState, pickInputs, setPickInputs,
+        initialPickInputsState, pickInputs, setPickInputs,
         handlePick,
         handleShiftPick
     };

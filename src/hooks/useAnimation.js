@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { createTeamArray } from "../utils/arrayUtils";
 import { TEAM_SIZE, TIMEOUT_DURATION } from "../constants/gameConstant";
+import { createTeamArray } from "../utils/arrayUtils";
 
 export const useAnimation = ({ pickSelection, handlePick, banSelection, handleBan }) => {
     const initialAnimationState = {

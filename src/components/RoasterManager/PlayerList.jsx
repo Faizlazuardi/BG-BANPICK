@@ -5,11 +5,11 @@ import { X, SquarePen, Trash2  } from 'lucide-react';
 import FormModal from './FormModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
-import { usePlayerData } from "../hooks/usePlayerData";
+import { usePlayerData } from "../../hooks/usePlayerData";
 
-import { useGameContext } from "../contexts/GameContext";
+import { useGameContext } from "../../contexts/GameContext";
 
-import { getPlayerById, updatePlayers, deletePlayers } from '../services/api'
+import { getPlayerById, updatePlayers, deletePlayers } from '../../services/api'
 
 export default function PlayerList({teamSelection}) {
     const { selectedGame } = useGameContext()

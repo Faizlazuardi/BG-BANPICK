@@ -2,18 +2,24 @@ import { useRef } from "react";
 
 import { ArrowUpDown } from 'lucide-react';
 
-import { useGameContext } from "../contexts/GameContext";
-import { useHeroData } from "../hooks/useHeroData";
+import { useGameContext } from "../../../contexts/GameContext";
+import { useDraftContext } from "../../../contexts/DraftContext";
 
-import { TEAM_SIZE } from "../constants/gameConstant";
-import { createTeamArray } from "../utils/arrayUtils";
+import { useHeroData } from "../../../hooks/useHeroData";
 
-export default function PickField({ onPickSelectionChange, onPickInputChange, pickInputs, onShiftPick, swapStatus, onSwapStatusChange }) {
+import { TEAM_SIZE } from "../../../constants/gameConstant";
+import { createTeamArray } from "../../../utils/arrayUtils";
+
+export default function PickField() {
     const { selectedGame } = useGameContext()
+    const { pickInputs, handlePick, handleAnimatedSelection, handleShiftPick: onShiftPick, swapStatus, handleswapStatusChange: onSwapStatusChange} = useDraftContext()
+    
     const { heroData } = useHeroData(selectedGame);
     const { blue: bluePickInputs, red: redPickInputs } = pickInputs;
+    const onPickSelectionChange= (team, id, hero) => handleAnimatedSelection('pick', team, id, hero)
+    const onPickInputChange= (team, id, hero) => handlePick("pickInput", team, id, hero)
     const inputRefs = useRef(createTeamArray(TEAM_SIZE, ""));
-
+    
     const renderPickField = ({ teamSide, pickInput }) => {
         return Array.from({ length: TEAM_SIZE }).map((_, index) => {
             return (
@@ -28,7 +34,7 @@ export default function PickField({ onPickSelectionChange, onPickInputChange, pi
                             value={pickInput[index]}
                             onChange={(e) => onPickInputChange(teamSide.toLowerCase(), index, e.target.value)}
                         />
-                        <div id={`dropdown-picked-${teamSide}-${index + 1}`} className="invisible absolute bg-white w-36.5 max-h-20 overflow-y-auto peer-focus:visible">
+                        <div className="invisible absolute bg-white w-36.5 max-h-20 overflow-y-auto peer-focus:visible">
                             {heroData
                                 .filter(hero => hero.Name.toLowerCase().startsWith(pickInput[index].toLowerCase()))
                                 .map(hero => (

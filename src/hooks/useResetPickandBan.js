@@ -1,11 +1,10 @@
-const TEAM_SIZE = 5;
-const TIMEOUT_DURATION = 1200;
+import { TEAM_SIZE,TIMEOUT_DURATION } from "../constants/gameConstant";
 
 export const useResetPickandBan = ({
     setPickSelection, initialPickSelectionState,
-    setPickInputs, initialPickInputState,
+    setPickInputs, initialPickInputsState,
     setBanSelection, initialBanSelectionState,
-    setBanInputs, initialBanInputState,
+    setBanInputs, initialBanInputsState,
     setAnimationClasses, initialAnimationState,
     setHighlights, initialHighlights,
     setPhase, phase
@@ -22,9 +21,9 @@ export const useResetPickandBan = ({
         
         const flyOutTimeout = setTimeout(() => {
             setPickSelection(initialPickSelectionState);
-            setPickInputs(initialPickInputState);
+            setPickInputs(initialPickInputsState);
             setBanSelection(initialBanSelectionState);
-            setBanInputs(initialBanInputState);
+            setBanInputs(initialBanInputsState);
             setAnimationClasses(initialAnimationState);
             if(phase !== 0){
                 setHighlights(initialHighlights);

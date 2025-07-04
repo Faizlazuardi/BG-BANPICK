@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect, use } from 'react';
+import { createContext, useState, useContext } from 'react';
 
 const GameContext = createContext();
 
@@ -20,30 +20,9 @@ export function GameProvider({ children }) {
         { id: 1, option: "MLBB", value: "MLBB" },
     ];
     
-    const [selectedRound, setSelectedRound] = useState(() => {
-        return localStorage.getItem("selectedRound") || roundOptions[0].round;
-    });
-    
-    const [selectedBestOf, setSelectedBestOf] = useState(() => {
-        const savedBestOf = localStorage.getItem("selectedBestOf");
-        return savedBestOf ? JSON.parse(savedBestOf) : BestOfOption[0].value;
-    });
-    
-    const [selectedGame, setSelectedGame] = useState(() => {
-        return localStorage.getItem("selectedGame") || gameOptions[0].game;
-    });
-    
-    useEffect(() => {
-        localStorage.setItem("selectedRound", selectedRound);
-    }, [selectedRound]);
-    
-    useEffect(() => {
-        localStorage.setItem("selectedBestOf", JSON.stringify(selectedBestOf));
-    }, [selectedBestOf]);
-    
-    useEffect(() => {
-        localStorage.setItem("selectedGame", selectedGame);
-    }, [selectedGame]);
+    const [selectedRound, setSelectedRound] = useState(roundOptions[0].value);
+    const [selectedBestOf, setSelectedBestOf] = useState(BestOfOption[0].value);
+    const [selectedGame, setSelectedGame] = useState(gameOptions[0].value);
     
     const requiredWins = Math.ceil(selectedBestOf / 2);
 

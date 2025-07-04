@@ -1,7 +1,9 @@
-import { TEAM_SIZE } from '../constants/gameConstant';
+import { TEAM_SIZE } from '../../../constants/gameConstant';
 
-export default function PlayerDisplay({grid, playerInputs, highlights}){
-    const { gridBlue, gridRed } = grid;
+import { useDraftContext } from '../../../contexts/DraftContext';
+
+export default function PlayerDisplay({ grid }){
+    const { playerInputs, highlights } = useDraftContext()
     const { blue: bluePlayers, red: redPlayers } = playerInputs
     const { blue: highlightBlueClass, red: highlightRedClass } = highlights;
     
@@ -14,10 +16,10 @@ export default function PlayerDisplay({grid, playerInputs, highlights}){
     };
     return (
         <>
-            <div className={`flex ${gridBlue}`}>
+            <div className={`flex ${grid.Blue}`}>
                 {renderPlayers(bluePlayers, highlightBlueClass)}
             </div>
-            <div className={`flex flex-row-reverse ${gridRed}`}>
+            <div className={`flex flex-row-reverse ${grid.Red}`}>
                 {renderPlayers(redPlayers, highlightRedClass)}
             </div>
         </>
