@@ -11,7 +11,7 @@ import { useGameContext } from "../../contexts/GameContext";
 
 import { getPlayerById, updatePlayers, deletePlayers } from '../../services/api'
 
-export default function PlayerList({teamSelection}) {
+export default function PlayerList({ teamSelection }) {
     const { selectedGame } = useGameContext()
     
     const [playerValue, setPlayerValue] = useState(null);

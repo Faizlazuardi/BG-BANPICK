@@ -33,13 +33,12 @@ export function DraftProvider({ children }){
     const { 
         initialPickSelectionState, pickSelection, setPickSelection,
         initialPickInputsState, pickInputs, setPickInputs,
-        handlePick, handleShiftPick 
-    } = usePick(playerInputs);
+        handlePick
+    } = usePick();
     
     const { 
         initialAnimationState, animationClasses, setAnimationClasses,
-        handleAnimationFlyIn,
-        handleAnimationFlyOut,
+        handleAnimationFlyIn, handleAnimationFlyOut,
         handleAnimatedSelection
     } = useAnimation({
         pickSelection, handlePick,
@@ -51,7 +50,7 @@ export function DraftProvider({ children }){
         handleAnimationFlyIn, handleAnimationFlyOut
     });
 
-    const { highlights, setHighlights, initialHighlights, setPhase, phase } = usePhase(banSelection, pickSelection);
+    const { highlights, setHighlights, initialHighlights, setPhase, phase, action } = usePhase(banSelection, pickSelection);
 
     return (
         <DraftContext.Provider value={{
@@ -62,10 +61,10 @@ export function DraftProvider({ children }){
             initialBanSelectionState, banSelection, setBanSelection,
             initialBanInputsState, banInputs, setBanInputs, handleBan,
             initialPickSelectionState, pickSelection, setPickSelection,
-            initialPickInputsState, pickInputs, setPickInputs, handlePick, handleShiftPick,
+            initialPickInputsState, pickInputs, setPickInputs, handlePick,
             initialAnimationState, animationClasses, setAnimationClasses, handleAnimationFlyIn, handleAnimationFlyOut, handleAnimatedSelection,
             initialSwapStatus, swapStatus, setSwapStatus, handleswapStatusChange,
-            highlights, setHighlights, initialHighlights, setPhase, phase
+            highlights, setHighlights, initialHighlights, setPhase, phase, action
         }}>
             {children}
         </DraftContext.Provider>

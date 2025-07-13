@@ -11,7 +11,7 @@ import { useGameContext } from "../../contexts/GameContext";
 
 import { getTeamById, updateTeams, deleteTeams } from '../../services/api';
 
-export default function TeamList({handleTeamSelectionChange}) {
+export default function TeamList({ handleTeamSelectionChange }) {
     const { selectedGame } = useGameContext()
     
     const [teamValue, setTeamValue] = useState(null);

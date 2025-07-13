@@ -1,88 +1,62 @@
-import { useState, useEffect } from "react";
-import { TEAM_SIZE } from "../constants/gameConstant";
+import { useState, useEffect, useMemo, useCallback } from "react";
+import { TEAM_SIZE, generatePhaseActions } from "../constants/gameConstant";
 import { createTeamArray } from "../utils/arrayUtils";
 
-const generatePhaseActions = () => {
-    const actions = [];
-    
-    for (let i = 0; i < 3; i++) {
-        actions.push({ type: 'ban', team: 'blue', index: i });
-        actions.push({ type: 'ban', team: 'red', index: i });
-    }
-    
-    actions.push({ type: 'pick', team: 'blue', index: 0 });
-    actions.push({ type: 'pick', team: 'red', index: [0, 1] });
-    actions.push({ type: 'pick', team: 'blue', index: [1, 2] });
-    actions.push({ type: 'pick', team: 'red', index: 2 });
-    
-    for (let i = 3; i < 5; i++) {
-        actions.push({ type: 'ban', team: 'red', index: i });
-        actions.push({ type: 'ban', team: 'blue', index: i });
-    }
-    
-    actions.push({ type: 'pick', team: 'red', index: 3 });
-    actions.push({ type: 'pick', team: 'blue', index: [3, 4] });
-    actions.push({ type: 'pick', team: 'red', index: 4 });
-    return actions;
-};
-
 export const usePhase = (banSelection, pickSelection) => {
-    const initialHighlights = createTeamArray(TEAM_SIZE, false);
+    const initialHighlights = useMemo(() => createTeamArray(TEAM_SIZE, false), []);
     const [highlights, setHighlights] = useState(initialHighlights);
-    
     const [phase, setPhase] = useState(0);
-    const phaseActions = generatePhaseActions();
-    
-    const highlightCurrentPhase = () => {
-        const action = phaseActions[phase];
+
+    const phaseActions = useMemo(() => generatePhaseActions(), []);
+    const action = phaseActions[phase];
+
+    const updateHighlights = useCallback((team, index) => {
+        setHighlights((prev) => ({
+            ...prev,
+            [team]: prev[team].map((_, i) =>
+                Array.isArray(index) ? index.includes(i) : i === index
+            ),
+        }));
+    }, []);
+
+    const highlightCurrentPhase = useCallback(() => {
         if (!action) return;
-        
-        const {team, index } = action;
-        
+        const { team, index } = action;
         setHighlights(initialHighlights);
-        
-        if (Array.isArray(index)) {
-            setHighlights(prev => ({
-                ...prev,
-                [team]: prev[team].map((_, i) => index.includes(i) ? true : false)
-            }));
-        } else {
-            setHighlights(prev => ({
-                ...prev,
-                [team]: prev[team].map((_, i) => i === index ? true : false)
-            }));
-        }
-    };
-    
-    const checkAndAdvancePhase = () => {
-        const action = phaseActions[phase];
-        if (!action) return;
-    
+        updateHighlights(team, index);
+    }, [phase, phaseActions, initialHighlights, updateHighlights]);
+
+    const isSelectionReady = useCallback((action) => {
         const { type, team, index } = action;
-        const selection = type === 'ban' ? banSelection : pickSelection;
-    
-        const isReady = () => {
-            if (Array.isArray(index)) {
-                return index.every((id) => selection[team][id].img !== null);
-            }
-            return selection[team][index].img !== null;
-        };
-    
-        if (isReady()) {
-            setPhase(prev => prev + 1);
+        const selection = type === "ban" ? banSelection : pickSelection;
+
+        if (Array.isArray(index)) {
+        return index.every((id) => selection[team][id]?.img !== null);
         }
-    };
-    
+        return selection[team][index]?.img !== null;
+    }, [banSelection, pickSelection]);
+
+    const checkAndAdvancePhase = useCallback(() => {
+        if (!action) return;
+        if (isSelectionReady(action)) {
+            setPhase((prev) => prev + 1);
+        }
+    }, [phase, phaseActions, isSelectionReady]);
+
     useEffect(() => {
         highlightCurrentPhase();
-    }, [phase]);
-    
+    }, [highlightCurrentPhase]);
+
     useEffect(() => {
         checkAndAdvancePhase();
-    }, [pickSelection, banSelection]);
+    }, [pickSelection, banSelection, checkAndAdvancePhase]);
 
     return {
-        initialHighlights, highlights, setHighlights,
-        setPhase, phase
+        initialHighlights,
+        highlights,
+        setHighlights,
+        setPhase,
+        phase,
+        action
     };
-}
+};

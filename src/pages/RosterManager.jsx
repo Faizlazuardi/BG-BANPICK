@@ -15,11 +15,12 @@ export default function RosterManager() {
     const [isPlayerListOpen, setIsPlayerListOpen] = useState(false);
     
     const handleTeamSelectionChange = (value) => {
-        setTeamSelection({
-            single: {
-                Name: value
-            }
-        });
+    setTeamSelection(prev => ({
+        ...prev,
+        single: {
+            Name: value
+        }
+    }));
         setIsPlayerListOpen(true);
     };
     

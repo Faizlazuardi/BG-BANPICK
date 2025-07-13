@@ -10,8 +10,8 @@ import { createTeamArray } from "../../../utils/arrayUtils";
 
 export default function BanField() {
     const { selectedGame } = useGameContext()
-    const { banInputs, handleAnimatedSelection, handleBan } = useDraftContext()
-    
+    const { action, banInputs, handleAnimatedSelection, handleBan } = useDraftContext()
+    const { type:actionType, team:actionTeam, index: actionIndex } = action;
     const { heroData } = useHeroData(selectedGame);
     const { blue: blueBanInputs, red: redBanInputs } = banInputs;
     const onBanSelectionChange = (team, id, hero) => handleAnimatedSelection('ban', team, id, hero)
@@ -32,24 +32,26 @@ export default function BanField() {
                             value={banInput[index]}
                             onChange={(e) => onBanInputChange(teamSide.toLowerCase(), index, e.target.value)}
                         />
-                        <div className="invisible absolute bg-white w-36.5 max-h-20 overflow-y-auto peer-focus:visible">
-                            {heroData
-                                .filter(hero => hero.Name.toLowerCase().startsWith(banInput[index].toLowerCase()))
-                                .map(hero => (
-                                    <div className="flex items-center gap-2 hover:bg-gray-100 p-2 h-10 cursor-pointer"
-                                        key={hero.Id}
-                                        onMouseDown={(e) => e.preventDefault()}
-                                        onClick={() => {
-                                            onBanSelectionChange(teamSide.toLowerCase(), index, { name: hero.Name, img: hero.Banned });
-                                            onBanInputChange(teamSide.toLowerCase(), index, hero.Name);
-                                            inputRefs.current[teamSide.toLowerCase()][index].blur()
-                                        }}
-                                    >
-                                        {hero.Name}
-                                    </div>
-                                ))
-                            }
-                        </div>
+                        {actionType === "ban" && actionIndex === index && actionTeam === teamSide.toLowerCase() && (
+                            <div className="invisible absolute bg-white w-36.5 max-h-20 overflow-y-auto peer-focus:visible">
+                                {heroData
+                                    .filter(hero => hero.Name.toLowerCase().startsWith(banInput[index].toLowerCase()))
+                                    .map(hero => (
+                                        <div className="flex items-center gap-2 hover:bg-gray-100 p-2 h-10 cursor-pointer"
+                                            key={hero.Id}
+                                            onMouseDown={(e) => e.preventDefault()}
+                                            onClick={() => {
+                                                onBanSelectionChange(teamSide.toLowerCase(), index, { name: hero.Name, img: hero.Banned });
+                                                onBanInputChange(teamSide.toLowerCase(), index, hero.Name);
+                                                inputRefs.current[teamSide.toLowerCase()][index].blur()
+                                            }}
+                                        >
+                                            {hero.Name}
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        )}
                     </div>
                 </div>
             );
