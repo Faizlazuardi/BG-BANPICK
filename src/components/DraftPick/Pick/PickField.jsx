@@ -35,11 +35,12 @@ export default function PickField() {
                         <input
                             ref={(elem) => (inputRefs.current[teamSide.toLowerCase()][index] = elem)}
                             id={`pick-${teamSide}-${index + 1}`}
-                            className="peer rounded-md w-36.5"
+                            className={`peer rounded-md w-36.5 ${ actionType === "pick" ? (actionIndex.includes(index) && actionTeam === teamSide.toLowerCase() ? "border-blue-500" : null) : null}`}
                             type="text"
                             placeholder={`${teamSide} Side Pick ${index + 1}`}
                             value={pickInput[index]}
                             onChange={(e) => onPickInputChange(teamSide.toLowerCase(), index, e.target.value)}
+                            disabled={ (actionType === "pick") ? (actionTeam !== teamSide.toLowerCase()) : true }
                         />
                         {actionType === "pick" && actionTeam === teamSide.toLowerCase() && (
                             <div className="invisible absolute bg-white w-36.5 max-h-20 overflow-y-auto peer-focus:visible">

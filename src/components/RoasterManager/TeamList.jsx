@@ -9,17 +9,14 @@ import { useTeamData } from "../../hooks/useTeamData";
 
 import { useGameContext } from "../../contexts/GameContext";
 
-import { getTeamById, updateTeams, deleteTeams } from '../../services/api';
+import { getTeamById, addTeams, updateTeams, deleteTeams } from '../../services/api';
 
 export default function TeamList({ handleTeamSelectionChange }) {
     const { selectedGame } = useGameContext()
     
-    const [teamValue, setTeamValue] = useState(null);
+    const [teamValue, setTeamValue] = useState({ Name: "", Logo: null });
     
     const handleTeamValueChange = (Field, value) => {
-        if (Field === "Logo") {
-            value = URL.createObjectURL(value);
-        }
         setTeamValue((prev) => {
             return {
                 ...prev,
@@ -58,10 +55,7 @@ export default function TeamList({ handleTeamSelectionChange }) {
             <h1 className="text-5xl text-center">Team List</h1>
             <button 
                 className="flex items-center gap-2 bg-green-500 hover:bg-green-800 px-3 py-1 rounded w-32 font-semibold text-white text-sm"
-                onClick={() => {
-                    setTeamValue({ Name: "", Logo: null });
-                    setIsAddModalOpen(true);
-                }}
+                onClick={() => { setIsAddModalOpen(true) }}
             >
                 <X className='rotate-45'/>
                 Add Team
@@ -86,7 +80,7 @@ export default function TeamList({ handleTeamSelectionChange }) {
                             <td className="flex gap-3 px-4 py-2 w-full text-center">
                                 <button
                                     className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-800 px-3 py-1 rounded w-23 font-semibold text-white text-sm"
-                                    onClick={() => handleTeamSelectionChange(team.Name)}
+                                    onClick={() => handleTeamSelectionChange({Id:team.Id , Name:team.Name})}
                                 >
                                     <Eye/>
                                     View
@@ -135,33 +129,39 @@ export default function TeamList({ handleTeamSelectionChange }) {
                     Next
                 </button>
             </div>
-            <FormModal
-                action={"Add"}
-                type={"Team"}
-                isOpen={isAddModalOpen}
-                onClose={handleAddModalClose}
-                onUpdate={updateTeams}
-                onInputChange={handleTeamValueChange}
-                value={teamValue}
-                game={selectedGame}
-            />
-            <FormModal
-                action={"Edit"}
-                type={"Team"}
-                isOpen={isUpdateModalOpen}
-                onClose={handleUpdateModalClose}
-                onUpdate={updateTeams}
-                onInputChange={handleTeamValueChange}
-                value={teamValue}
-                game={selectedGame}
-            />
-            <ConfirmDeleteModal
-                isOpen={isDeleteModalOpen}
-                onClose={handledeleteModalClose}
-                onDelete={deleteTeams}
-                value={deletedValue}
-                game={selectedGame}
-            />
+            {isAddModalOpen && (
+                <FormModal
+                    action={"Add"}
+                    type={"Team"}
+                    isOpen={isAddModalOpen}
+                    onClose={handleAddModalClose}
+                    onAction={addTeams}
+                    onInputChange={handleTeamValueChange}
+                    value={teamValue}
+                    game={selectedGame}
+                />
+            )}
+            {isUpdateModalOpen && (
+                <FormModal
+                    action={"Edit"}
+                    type={"Team"}
+                    isOpen={isUpdateModalOpen}
+                    onClose={handleUpdateModalClose}
+                    onAction={updateTeams}
+                    onInputChange={handleTeamValueChange}
+                    value={teamValue}
+                    game={selectedGame}
+                />
+            )}
+            {isDeleteModalOpen && (
+                <ConfirmDeleteModal
+                    isOpen={isDeleteModalOpen}
+                    onClose={handledeleteModalClose}
+                    onDelete={deleteTeams}
+                    value={deletedValue}
+                    game={selectedGame}
+                />
+            )}
         </div>
     );
 }

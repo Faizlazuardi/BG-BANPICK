@@ -1,9 +1,8 @@
 import {  Trash2 } from 'lucide-react';
 
 export default function ConfirmDeleteModal({ isOpen, onClose, onDelete, value, game }) {
-    
     if (!isOpen) return null;
-
+    
     return (
         <div className="z-50 fixed inset-0 flex justify-center items-center bg-gray-900/50">
             <div className="flex flex-col items-center gap-6 bg-white shadow-lg p-6 rounded-lg w-full max-w-md">

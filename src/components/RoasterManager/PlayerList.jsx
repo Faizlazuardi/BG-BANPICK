@@ -9,25 +9,22 @@ import { usePlayerData } from "../../hooks/usePlayerData";
 
 import { useGameContext } from "../../contexts/GameContext";
 
-import { getPlayerById, updatePlayers, deletePlayers } from '../../services/api'
+import { getPlayerById, addPlayers, updatePlayers, deletePlayers } from '../../services/api'
 
 export default function PlayerList({ teamSelection }) {
     const { selectedGame } = useGameContext()
     
-    const [playerValue, setPlayerValue] = useState(null);
+    const [playerValue, setPlayerValue] = useState({ Name: "", Foto: null, Team: { Id: teamSelection.single.Id, Name: teamSelection.single.Name }});
     
     const handlePlayerValueChange = (Field, value) => {
-        if (Field === "Foto") {
-            value = URL.createObjectURL(value);
-        }
         setPlayerValue((prev) => {
             if (Field === "Team") {
                 return {
                     ...prev,
                     Team: {
                         ...prev.Team,
-                        Name: value.Name,
                         Id: value.Id,
+                        Name: value.Name,
                     },
                 };
             } else {
@@ -65,10 +62,7 @@ export default function PlayerList({ teamSelection }) {
             <h2 className="text-5xl text-center">{teamSelection.single.Name} Player List</h2>
             <button 
                 className="flex items-center gap-2 bg-green-500 hover:bg-green-800 px-3 py-1 rounded w-32 font-semibold text-white text-sm"
-                onClick={() => {
-                    setPlayerValue({ Name: "", Foto: null, Team: { Name: teamSelection.single.Name, Id: teamSelection.single.Id } });
-                    setIsAddModalOpen(true);
-                }}
+                onClick={() => { setIsAddModalOpen(true) }}
             >
                 <X className='rotate-45'/>
                 Add Player
@@ -110,32 +104,39 @@ export default function PlayerList({ teamSelection }) {
                     ))}
                 </tbody>
             </table>
-            <FormModal
-                action={"Add"}
-                type={"Player"}
-                isOpen={isAddModalOpen}
-                onClose={handleAddModalClose}
-                onUpdate={updatePlayers}
-                onInputChange={handlePlayerValueChange}
-                value={playerValue}
-                game={selectedGame}/>
-            <FormModal
-                action={"Edit"}
-                type={"Player"}
-                isOpen={isUpdateModalOpen}
-                onClose={handleUpdateModalClose}
-                onUpdate={updatePlayers}
-                onInputChange={handlePlayerValueChange}
-                value={playerValue}
-                game={selectedGame}
-            />
-            <ConfirmDeleteModal
-                isOpen={isDeleteModalOpen}
-                onClose={handledeleteModalClose}
-                onDelete={deletePlayers}
-                value={deletedValue}
-                game={selectedGame}
-            />
+            {isAddModalOpen && (
+                <FormModal
+                    action={"Add"}
+                    type={"Player"}
+                    isOpen={isAddModalOpen}
+                    onClose={handleAddModalClose}
+                    onAction={addPlayers}
+                    onInputChange={handlePlayerValueChange}
+                    value={playerValue}
+                    game={selectedGame}
+                />
+            )}
+            {isUpdateModalOpen && (
+                <FormModal
+                    action={"Edit"}
+                    type={"Player"}
+                    isOpen={isUpdateModalOpen}
+                    onClose={handleUpdateModalClose}
+                    onAction={updatePlayers}
+                    onInputChange={handlePlayerValueChange}
+                    value={playerValue}
+                    game={selectedGame}
+                />
+            )}
+            {isDeleteModalOpen && (
+                <ConfirmDeleteModal
+                    isOpen={isDeleteModalOpen}
+                    onClose={handledeleteModalClose}
+                    onDelete={deletePlayers}
+                    value={deletedValue}
+                    game={selectedGame}
+                />
+            )}
         </div>
     );
 }

@@ -18,7 +18,8 @@ export default function RosterManager() {
     setTeamSelection(prev => ({
         ...prev,
         single: {
-            Name: value
+            Id: value.Id,
+            Name: value.Name
         }
     }));
         setIsPlayerListOpen(true);

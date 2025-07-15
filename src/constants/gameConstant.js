@@ -21,5 +21,6 @@ export const generatePhaseActions = () => {
     actions.push({ type: 'pick', team: 'red', index: [3] });
     actions.push({ type: 'pick', team: 'blue', index: [3, 4] });
     actions.push({ type: 'pick', team: 'red', index: [4] });
+    actions.push({type: 'none' , team:'none', index: [null]})
     return actions;
 };

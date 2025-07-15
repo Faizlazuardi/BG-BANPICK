@@ -20,13 +20,13 @@ export const usePhase = (banSelection, pickSelection) => {
     }, []);
 
     const highlightCurrentPhase = useCallback(() => {
-        if (!action) return;
+        if (action.index[0] === null) return;
         const { team, index } = action;
         setHighlights(initialHighlights);
         updateHighlights(team, index);
     }, [phase, phaseActions, initialHighlights, updateHighlights]);
 
-    const isSelectionReady = useCallback((action) => {
+    const isSelectionFilled = useCallback((action) => {
         const { type, team, index } = action;
         const selection = type === "ban" ? banSelection : pickSelection;
 
@@ -36,20 +36,20 @@ export const usePhase = (banSelection, pickSelection) => {
         return selection[team][index]?.img !== null;
     }, [banSelection, pickSelection]);
 
-    const checkAndAdvancePhase = useCallback(() => {
-        if (!action) return;
-        if (isSelectionReady(action)) {
+    const handleUpdatePhase = useCallback(() => {
+        if (action.index[0] === null) return;
+        if (isSelectionFilled(action)) {
             setPhase((prev) => prev + 1);
         }
-    }, [phase, phaseActions, isSelectionReady]);
+    }, [phase, phaseActions, isSelectionFilled]);
 
     useEffect(() => {
         highlightCurrentPhase();
     }, [highlightCurrentPhase]);
 
     useEffect(() => {
-        checkAndAdvancePhase();
-    }, [pickSelection, banSelection, checkAndAdvancePhase]);
+        handleUpdatePhase();
+    }, [pickSelection, banSelection, handleUpdatePhase]);
 
     return {
         initialHighlights,

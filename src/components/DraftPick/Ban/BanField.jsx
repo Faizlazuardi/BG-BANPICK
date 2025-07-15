@@ -20,17 +20,20 @@ export default function BanField() {
     
     const renderBanField = ({ teamSide, banInput}) => {
         return Array.from({ length: TEAM_SIZE }).map((_, index) => {
+            const isActive = actionIndex === index && actionTeam === teamSide.toLowerCase()
             return (
                 <div className="flex items-center gap-5" key={index}>
                     <div>
                         <input
                             ref={(elem) => (inputRefs.current[teamSide.toLowerCase()][index] = elem)}
                             id={`ban-${teamSide}-${index + 1}`}
-                            className="peer rounded-md w-36.5"
+                            className={`peer rounded-md w-36.5 
+                                ${actionType === "ban" ? (isActive ? "border-blue-500" : null) : null }`}
                             type="text"
                             placeholder={`${teamSide} Side Ban ${index + 1}`}
                             value={banInput[index]}
                             onChange={(e) => onBanInputChange(teamSide.toLowerCase(), index, e.target.value)}
+                            disabled={ actionType === "ban" ? !isActive : true }
                         />
                         {actionType === "ban" && actionIndex === index && actionTeam === teamSide.toLowerCase() && (
                             <div className="invisible absolute bg-white w-36.5 max-h-20 overflow-y-auto peer-focus:visible">
