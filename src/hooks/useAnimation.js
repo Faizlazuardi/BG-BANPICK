@@ -8,7 +8,7 @@ export const useAnimation = ({ pickSelection, handlePick, banSelection, handleBa
         ban: createTeamArray(TEAM_SIZE, "")
     };
     const [animationClasses, setAnimationClasses] = useState(initialAnimationState);
-    
+
     const handleAnimationFlyIn = (type, team, id) => {
         setAnimationClasses(prev => ({
             ...prev,
@@ -33,7 +33,7 @@ export const useAnimation = ({ pickSelection, handlePick, banSelection, handleBa
         let flyOutTimeout, flyInTimeout;
         const selection = type === "pick" ? pickSelection[team][id] : banSelection[team][id];
         const handleSelection = type === "pick" ? handlePick : handleBan;
-        
+
         if (selection && selection.img) {
             handleAnimationFlyOut(type, team, id)
             flyOutTimeout = setTimeout(() => {

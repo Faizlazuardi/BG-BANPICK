@@ -7,7 +7,7 @@ import { useTeamData } from "../../../hooks/useTeamData";
 
 export default function TeamField() {
     const { selectedGame, requiredWins } = useGameContext()
-    const { 
+    const {
         handleTeamChange: onTeamNameChange, handleWinCheckChange: onWinCheckChange, handleTeamInputChange: onTeamInputChange,
         teamSelection,
         teamInput: teamInputs,
@@ -16,7 +16,7 @@ export default function TeamField() {
     const { teamData } = useTeamData(selectedGame);
     const { blue: blueTeamInput, red: redTeamInput } = teamInputs;
 
-    const inputRefs = useRef({red: null, blue: null});
+    const inputRefs = useRef({ red: null, blue: null });
 
     const renderTeamField = ({ teamSide, teamInput }) => {
         return (
@@ -41,7 +41,7 @@ export default function TeamField() {
                                         key={team.Name}
                                         onMouseDown={(e) => e.preventDefault()}
                                         onClick={() => {
-                                            onTeamNameChange(teamSide.toLowerCase(), {name:team.Name, logo:team.Logo});
+                                            onTeamNameChange(teamSide.toLowerCase(), { name: team.Name, logo: team.Logo });
                                             onTeamInputChange(teamSide.toLowerCase(), team.Name);
                                             inputRefs.current[teamSide].blur();
                                         }}

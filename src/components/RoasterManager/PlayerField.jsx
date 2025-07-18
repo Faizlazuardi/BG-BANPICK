@@ -3,15 +3,16 @@ import { getTeamById } from '../../services/api';
 
 export default function PlayerField({ value, onInputChange, action, game, teamData }) {
     const [FotoUrl, setFotoUrl] = useState(value.Foto || null)
-    const handleFotoChange = (file) =>{
+    const handleFotoChange = (file) => {
         const previewUrl = URL.createObjectURL(file);
         setFotoUrl(previewUrl);
         onInputChange("Foto", e.target.files[0])
     }
     const inputRefs = useRef();
-    return(
+
+    return (
         <>
-            { action !== "Add" && (
+            {action !== "Add" && (
                 <>
                     <h1 className="font-2xl text-bold text-gray-600">Player Team</h1>
                     <div>
@@ -21,9 +22,9 @@ export default function PlayerField({ value, onInputChange, action, game, teamDa
                             className="peer"
                             type="text"
                             placeholder="Enter Player Team Name"
-                            value={value.Team.Name} 
+                            value={value.Team.Name}
                             onChange={
-                                (e) => {onInputChange("Team", {Name: e.target.value})}
+                                (e) => { onInputChange("Team", { Name: e.target.value }) }
                             }
                         />
                         <div className="invisible absolute bg-white w-36.5 max-h-20 overflow-y-auto peer-focus:visible">
@@ -35,10 +36,10 @@ export default function PlayerField({ value, onInputChange, action, game, teamDa
                                         onMouseDown={(e) => e.preventDefault()}
                                         onClick={() => {
                                             getTeamById(game, Team.Id)
-                                            .then((team) => {
-                                                onInputChange("Team", { Id: team.Id, Name: team.Name}
-                                                );
-                                            })
+                                                .then((team) => {
+                                                    onInputChange("Team", { Id: team.Id, Name: team.Name }
+                                                    );
+                                                })
                                             inputRefs.current.blur();
                                         }}
                                     >
@@ -52,12 +53,12 @@ export default function PlayerField({ value, onInputChange, action, game, teamDa
             )}
             <label className="flex flex-col font-2xl text-bold text-gray-600 text-center">
                 Player Name
-                <input type="text" id="player-name-input" placeholder="Enter Player Name" value={value.Name} onChange={(e) => onInputChange("Name", e.target.value)}/>
+                <input type="text" id="player-name-input" placeholder="Enter Player Name" value={value.Name} onChange={(e) => onInputChange("Name", e.target.value)} />
             </label>
             <label className="flex flex-col font-2xl text-bold text-gray-600 text-center">
                 Player Photo
                 <img className="w-15 h-fit" src={FotoUrl} alt="" />
-                <input type="file" id="player-photo-input" 
+                <input type="file" id="player-photo-input"
                     onChange={(e) => { handleFotoChange(e.target.files[0]) }}
                 />
             </label>

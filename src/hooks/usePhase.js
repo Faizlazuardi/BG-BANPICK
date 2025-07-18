@@ -31,7 +31,7 @@ export const usePhase = (banSelection, pickSelection) => {
         const selection = type === "ban" ? banSelection : pickSelection;
 
         if (Array.isArray(index)) {
-        return index.every((id) => selection[team][id]?.img !== null);
+            return index.every((id) => selection[team][id]?.img !== null);
         }
         return selection[team][index]?.img !== null;
     }, [banSelection, pickSelection]);

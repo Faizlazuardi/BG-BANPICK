@@ -6,7 +6,7 @@ export default function DropdownSelector({ id, options, selectedOption, setSelec
             value={selectedOption}
             onChange={(e) => setSelectedOption(e.target.value)}
         >
-            {options.map(({id, option, value}) => (
+            {options.map(({ id, option, value }) => (
                 <option key={id} value={value}>
                     {option}
                 </option>

@@ -13,20 +13,20 @@ import { createTeamArray } from "../../../utils/arrayUtils";
 export default function PickField() {
     const { selectedGame } = useGameContext()
     const { action, pickInputs, handlePick, handleAnimatedSelection, swapStatus, handleswapStatusChange: onSwapStatusChange } = useDraftContext()
-    const { type:actionType, team:actionTeam, index: actionIndex } = action;
+    const { type: actionType, team: actionTeam, index: actionIndex } = action;
     const { heroData } = useHeroData(selectedGame);
     const { blue: bluePickInputs, red: redPickInputs } = pickInputs;
-    const onPickSelectionChange= (team, id, hero) => handleAnimatedSelection('pick', team, id, hero)
-    const onPickInputChange= (team, id, hero) => handlePick("pickInput", team, id, hero)
+    const onPickSelectionChange = (team, id, hero) => handleAnimatedSelection('pick', team, id, hero)
+    const onPickInputChange = (team, id, hero) => handlePick("pickInput", team, id, hero)
     const inputRefs = useRef(createTeamArray(TEAM_SIZE, ""));
     const [shiftId, setShiftId] = useState(null)
-    
+
     useEffect(() => {
         if (actionIndex.length === 1) {
             setShiftId(actionIndex[0]);
         }
     }, [actionIndex]);
-    
+
     const renderPickField = ({ teamSide, pickInput }) => {
         return Array.from({ length: TEAM_SIZE }).map((_, index) => {
             return (
@@ -35,12 +35,12 @@ export default function PickField() {
                         <input
                             ref={(elem) => (inputRefs.current[teamSide.toLowerCase()][index] = elem)}
                             id={`pick-${teamSide}-${index + 1}`}
-                            className={`peer rounded-md w-36.5 ${ actionType === "pick" ? (actionIndex.includes(index) && actionTeam === teamSide.toLowerCase() ? "border-blue-500" : null) : null}`}
+                            className={`peer rounded-md w-36.5 ${actionType === "pick" ? (actionIndex.includes(index) && actionTeam === teamSide.toLowerCase() ? "border-blue-500" : null) : null}`}
                             type="text"
                             placeholder={`${teamSide} Side Pick ${index + 1}`}
                             value={pickInput[index]}
                             onChange={(e) => onPickInputChange(teamSide.toLowerCase(), index, e.target.value)}
-                            disabled={ (actionType === "pick") ? (actionTeam !== teamSide.toLowerCase()) : true }
+                            disabled={(actionType === "pick") ? (actionTeam !== teamSide.toLowerCase()) : true}
                         />
                         {actionType === "pick" && actionTeam === teamSide.toLowerCase() && (
                             <div className="invisible absolute bg-white w-36.5 max-h-20 overflow-y-auto peer-focus:visible">
@@ -71,7 +71,7 @@ export default function PickField() {
                     <div className="w-6">
                         {actionType === 'pick' && teamSide.toLowerCase() === actionTeam && index > Math.max(...actionIndex) && actionIndex.length > 1 && (
                             actionIndex.map((value, index) => (
-                                <div key={index} className={`hover:bg-gray-300 w-6 h-6 text-center ${shiftId === value ? "bg-gray-300" : "" }` } onClick={()=> setShiftId(value)}>
+                                <div key={index} className={`hover:bg-gray-300 w-6 h-6 text-center ${shiftId === value ? "bg-gray-300" : ""}`} onClick={() => setShiftId(value)}>
                                     {value + 1}
                                 </div>
                             ))

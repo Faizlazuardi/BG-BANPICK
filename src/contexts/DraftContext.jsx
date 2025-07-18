@@ -13,30 +13,30 @@ import { usePhase } from "../hooks/usePhase";
 
 const DraftContext = createContext();
 
-export function DraftProvider({ children }){
+export function DraftProvider({ children }) {
     const { selectedGame } = useGameContext()
-    const { 
-        initialTeamInputState, teamInput, setTeamInput, handleTeamInputChange, 
+    const {
+        initialTeamInputState, teamInput, setTeamInput, handleTeamInputChange,
         initialTeamSelectionState, teamSelection, setTeamSelection, handleTeamChange, handleWinCheckChange
     } = useTeam();
-    
-    const initialPlayerDataState = {blue: [], red: [] }
-    const { playerData, setPlayerData } = usePlayerData({selectedGame, teamSelection, initialPlayerDataState});
+
+    const initialPlayerDataState = { blue: [], red: [] }
+    const { playerData, setPlayerData } = usePlayerData({ selectedGame, teamSelection, initialPlayerDataState });
     const { initialPlayerInputsState, playerInputs, setPlayerInputs, handlePlayerInputsChange } = usePlayer();
-    
-    const { 
-        initialBanSelectionState, banSelection, setBanSelection, 
-        initialBanInputsState,banInputs, setBanInputs,
+
+    const {
+        initialBanSelectionState, banSelection, setBanSelection,
+        initialBanInputsState, banInputs, setBanInputs,
         handleBan
     } = useBan();
-    
-    const { 
+
+    const {
         initialPickSelectionState, pickSelection, setPickSelection,
         initialPickInputsState, pickInputs, setPickInputs,
         handlePick
     } = usePick();
-    
-    const { 
+
+    const {
         initialAnimationState, animationClasses, setAnimationClasses,
         handleAnimationFlyIn, handleAnimationFlyOut,
         handleAnimatedSelection
@@ -44,7 +44,7 @@ export function DraftProvider({ children }){
         pickSelection, handlePick,
         banSelection, handleBan
     });
-    
+
     const { initialSwapStatus, swapStatus, setSwapStatus, handleswapStatusChange } = useSwap({
         setPickSelection, setPickInputs,
         handleAnimationFlyIn, handleAnimationFlyOut

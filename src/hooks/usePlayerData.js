@@ -7,7 +7,7 @@ export const usePlayerData = ({ selectedGame, teamSelection, initialPlayerDataSt
         Object.entries(teamSelection).forEach(([role]) => {
             (async () => {
                 if (!teamSelection[role].Name) return;
-                
+
                 const data = await getAllPlayersByTeam(selectedGame, teamSelection[role].Name);
                 if (!data.error) {
                     setPlayerData(prevPlayers => ({
@@ -18,9 +18,9 @@ export const usePlayerData = ({ selectedGame, teamSelection, initialPlayerDataSt
             })();
         });
     }, [teamSelection, selectedGame]);
-    
-    return { 
-        playerData, 
-        setPlayerData 
+
+    return {
+        playerData,
+        setPlayerData
     };
 }

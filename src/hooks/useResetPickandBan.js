@@ -1,4 +1,4 @@
-import { TEAM_SIZE,TIMEOUT_DURATION } from "../constants/gameConstant";
+import { TEAM_SIZE, TIMEOUT_DURATION } from "../constants/gameConstant";
 
 export const useResetPickandBan = ({
     setPickSelection, initialPickSelectionState,
@@ -18,20 +18,20 @@ export const useResetPickandBan = ({
                 Object.keys(prev.ban).map(team => [team, Array(TEAM_SIZE).fill("fly-out")])
             )
         }));
-        
+
         const flyOutTimeout = setTimeout(() => {
             setPickSelection(initialPickSelectionState);
             setPickInputs(initialPickInputsState);
             setBanSelection(initialBanSelectionState);
             setBanInputs(initialBanInputsState);
             setAnimationClasses(initialAnimationState);
-            if(phase !== 0){
+            if (phase !== 0) {
                 setHighlights(initialHighlights);
                 setPhase(0);
             }
         }, TIMEOUT_DURATION);
         return () => clearTimeout(flyOutTimeout);
     };
-    
+
     return { resetPickandBan };
 };

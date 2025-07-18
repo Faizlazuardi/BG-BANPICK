@@ -3,7 +3,7 @@ import { getAllTeams } from "../services/api.js";
 
 export const useTeamData = (selectedGame) => {
     const [teamData, setTeamData] = useState([]);
-    
+
     useEffect(() => {
         (async () => {
             const team = await getAllTeams(selectedGame);

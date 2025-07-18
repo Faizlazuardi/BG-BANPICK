@@ -22,13 +22,13 @@ export default function DraftControls() {
         initialBanInputsState, setBanInputs,
         initialPickSelectionState, setPickSelection,
         initialPickInputsState, setPickInputs,
-        initialAnimationState, setAnimationClasses, 
+        initialAnimationState, setAnimationClasses,
         initialSwapStatus, setSwapStatus,
         setHighlights, initialHighlights, setPhase, phase
     } = useDraftContext();
-    
+
     const initialPlayerDataState = { blue: [], red: [] }
-    
+
     const { resetPickandBan } = useResetPickandBan({
         setPickSelection, initialPickSelectionState,
         setPickInputs, initialPickInputsState,
@@ -46,7 +46,7 @@ export default function DraftControls() {
         setSwapStatus, initialSwapStatus
     });
     const { switchTeam } = useSwitchTeam({ setTeamInput, setTeamSelection, setPlayerInputs });
-    
+
     return (
         <div className="flex flex-col items-center gap-5">
             <div className="flex gap-3">

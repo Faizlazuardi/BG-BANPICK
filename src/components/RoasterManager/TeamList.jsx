@@ -6,16 +6,14 @@ import FormModal from './FormModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 import { useTeamData } from "../../hooks/useTeamData";
-
 import { useGameContext } from "../../contexts/GameContext";
-
 import { getTeamById, addTeams, updateTeams, deleteTeams } from '../../services/api';
 
 export default function TeamList({ handleTeamSelectionChange }) {
     const { selectedGame } = useGameContext()
-    
+
     const [teamValue, setTeamValue] = useState({ Name: "", Logo: null });
-    
+
     const handleTeamValueChange = (Field, value) => {
         setTeamValue((prev) => {
             return {
@@ -24,25 +22,25 @@ export default function TeamList({ handleTeamSelectionChange }) {
             };
         });
     };
-    
+
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const handleAddModalClose = () => {
         setIsAddModalOpen(false);
     }
-    
+
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
     const handleUpdateModalClose = () => {
         setIsUpdateModalOpen(false);
     };
-    
+
     const [deletedValue, setDeletedValue] = useState(null);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const handledeleteModalClose = () => {
         setIsDeleteModalOpen(false);
     };
-    
+
     const { teamData } = useTeamData(selectedGame);
-    
+
     const [currentPage, setCurrentPage] = useState(1);
     const teamsPerPage = 10;
     const totalPages = Math.ceil(teamData.length / teamsPerPage);
@@ -53,11 +51,11 @@ export default function TeamList({ handleTeamSelectionChange }) {
     return (
         <div className="flex flex-col flex-grow gap-5 mt-5 max-w-3xl text-cyan-950">
             <h1 className="text-5xl text-center">Team List</h1>
-            <button 
+            <button
                 className="flex items-center gap-2 bg-green-500 hover:bg-green-800 px-3 py-1 rounded w-32 font-semibold text-white text-sm"
                 onClick={() => { setIsAddModalOpen(true) }}
             >
-                <X className='rotate-45'/>
+                <X className='rotate-45' />
                 Add Team
             </button>
             <table className="shadow-md rounded-lg w-full overflow-hidden border-collapse table-auto">
@@ -80,9 +78,9 @@ export default function TeamList({ handleTeamSelectionChange }) {
                             <td className="flex gap-3 px-4 py-2 w-full text-center">
                                 <button
                                     className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-800 px-3 py-1 rounded w-23 font-semibold text-white text-sm"
-                                    onClick={() => handleTeamSelectionChange({Id:team.Id , Name:team.Name})}
+                                    onClick={() => handleTeamSelectionChange({ Id: team.Id, Name: team.Name })}
                                 >
-                                    <Eye/>
+                                    <Eye />
                                     View
                                 </button>
                                 <button className="flex items-center gap-2 bg-cyan-500 hover:bg-cyan-800 px-3 py-1 rounded w-21 font-semibold text-white text-sm"
@@ -91,10 +89,10 @@ export default function TeamList({ handleTeamSelectionChange }) {
                                         setIsUpdateModalOpen(true);
                                     }}
                                 >
-                                    <SquarePen/>
+                                    <SquarePen />
                                     Edit
                                 </button>
-                                <button className="flex items-center gap-2 bg-red-500 hover:bg-red-800 px-3 py-1 rounded w-25 font-semibold text-white text-sm" 
+                                <button className="flex items-center gap-2 bg-red-500 hover:bg-red-800 px-3 py-1 rounded w-25 font-semibold text-white text-sm"
                                     onClick={
                                         () => {
                                             setDeletedValue(team);
@@ -102,7 +100,7 @@ export default function TeamList({ handleTeamSelectionChange }) {
                                         }
                                     }
                                 >
-                                    <Trash2/>
+                                    <Trash2 />
                                     Delete
                                 </button>
                             </td>
