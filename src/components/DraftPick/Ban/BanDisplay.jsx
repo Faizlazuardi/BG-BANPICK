@@ -5,12 +5,13 @@ import { useGameContext } from '../../../contexts/GameContext';
 import { useDraftContext } from '../../../contexts/DraftContext';
 
 export default function ban({ grid }) {
+    const { selectedTotalBan } = useGameContext();
     const { banSelection, animationClasses:{ban: animationClasses} } = useDraftContext()
     const { blue: blueBans, red: redBans } = banSelection;
     const { blue: animationBlueClass, red: animationRedClass } = animationClasses;
 
     const renderBans = (bans, animationClass) => {
-        return Array.from({ length: TEAM_SIZE }).map((_, index) => (
+        return Array.from({ length: selectedTotalBan }).map((_, index) => (
             <div key={index}>
                 <div className="flex justify-center items-center bg-black bg-cover bg-center w-16 h-16 overflow-hidden" key={index}>
                     <X className="absolute w-15 h-15 text-amber-300" />

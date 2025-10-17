@@ -18,7 +18,7 @@ export default function BanField() {
     const inputRefs = useRef(createTeamArray(TEAM_SIZE, ""));
     
     const renderBanField = ({ teamSide, banInput}) => {
-        return Array.from({ length: TEAM_SIZE }).map((_, index) => {
+        return Array.from({ length: selectedTotalBan }).map((_, index) => {
             const isActive = actionIndex === index && actionTeam === teamSide.toLowerCase()
             
             return (

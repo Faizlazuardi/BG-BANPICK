@@ -1,13 +1,5 @@
-import { useState, useEffect } from "react"
-export default function TeamField({ value, onInputChange }){
-    const [LogoUrl, setLogoUrl] = useState(value.Logo || null)
-    
-    useEffect(() => {
-        if (value.Logo && typeof value.Logo === String) {
-            setLogoUrl(value.Logo);
-        }
-    }, [value.Logo]);
-import { useState } from "react"
+import { useState, useEffect } from "react";
+
 export default function TeamField({ value, onInputChange }) {
     const [previewLogoUrl, setPreviewLogoUrl] = useState(value.Logo || null)
 
