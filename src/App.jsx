@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import { GameProvider } from "../src/contexts/GameContext"
 import { DraftProvider } from "../src/contexts/DraftContext";
 import SideBar from "./components/SideBar";
-import ProtectedRoute from "./components/ProtectedRoute";
 import RosterManager from "./pages/RosterManager";
 import DraftPick from "./pages/DraftPick";
 import Login from "./pages/Login"
@@ -19,11 +18,7 @@ function AppContent() {
                 <Route path="/" element={<DraftPick />} />
                 <Route
                     path="/roaster"
-                    element={
-                        <ProtectedRoute>
-                            <RosterManager />
-                        </ProtectedRoute>
-                    } />
+                    element={ <RosterManager /> } />
                 <Route path="/login" element={<Login />} />
             </Routes>
         </div>
