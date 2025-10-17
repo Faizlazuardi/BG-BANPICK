@@ -12,6 +12,7 @@ export default function DraftControls() {
         roundOptions, selectedRound, setSelectedRound,
         BestOfOption, selectedBestOf, setSelectedBestOf,
         gameOptions, selectedGame, setSelectedGame,
+        banOptions, selectedTotalBan, setSelectedTotalBan
     } = useGameContext();
     const {
         initialTeamInputState, setTeamInput,
@@ -52,21 +53,31 @@ export default function DraftControls() {
             <div className="flex gap-3">
                 <DropdownSelector
                     id="round-selector"
+                    label="Select Round"
                     options={roundOptions}
                     selectedOption={selectedRound}
                     setSelectedOption={setSelectedRound}
                 />
                 <DropdownSelector
                     id="best-of-selector"
+                    label="Select Best Of"
                     options={BestOfOption}
                     selectedOption={selectedBestOf}
                     setSelectedOption={setSelectedBestOf}
                 />
-                <DropdownSelector
+                {/* <DropdownSelector
                     id="game-selector"
+                    label="Select Game"
                     options={gameOptions}
                     selectedOption={selectedGame}
                     setSelectedOption={setSelectedGame}
+                /> */}
+                <DropdownSelector
+                    id="ban-selector"
+                    label="Select Total Ban"
+                    options={banOptions}
+                    selectedOption={selectedTotalBan}
+                    setSelectedOption={setSelectedTotalBan}
                 />
             </div>
             <div className="flex gap-3">

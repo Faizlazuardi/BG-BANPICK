@@ -1,16 +1,10 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 export default function TeamField({ value, onInputChange }) {
-    const [LogoUrl, setLogoUrl] = useState(value.Logo || null)
-
-    useEffect(() => {
-        if (value.Logo && typeof value.Logo === String) {
-            setLogoUrl(value.Logo);
-        }
-    }, [value.Logo]);
+    const [previewLogoUrl, setPreviewLogoUrl] = useState(value.Logo || null)
 
     const handleLogoChange = (file) => {
-        const previewUrl = URL.createObjectURL(file);
-        setLogoUrl(previewUrl);
+        const Url = URL.createObjectURL(file);
+        setPreviewLogoUrl(Url);
         onInputChange("Logo", file);
     };
     return (
@@ -21,7 +15,7 @@ export default function TeamField({ value, onInputChange }) {
             </label>
             <label className="flex flex-col font-2xl text-bold text-gray-600 text-center">
                 Team Logo
-                <img className="w-15 h-fit" src={LogoUrl} alt="" />
+                <img className="w-15 h-fit" src={previewLogoUrl} alt="" />
                 <input type="file" id="team-logo-input"
                     onChange={(e) => handleLogoChange(e.target.files[0])}
                 />

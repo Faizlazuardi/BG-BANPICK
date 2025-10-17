@@ -1,11 +1,14 @@
+import { useGameContext } from "../../contexts/GameContext";
 import { useTeamData } from "../../hooks/useTeamData";
 
 import TeamField from './TeamField';
 import PlayerField from './PlayerField';
 
-export default function FormModal({ action, type, isOpen, onClose, onAction, onInputChange, value, game }) {
+export default function FormModal({ action, type, isOpen, onClose, onAction, onInputChange, value }) {
     if (!isOpen) return null;
-    const { teamData } = useTeamData(game);
+
+    const { selectedGame } = useGameContext()
+    const { teamData } = useTeamData(selectedGame);
     return (
         <div className="z-50 fixed inset-0 flex justify-center items-center bg-gray-900/50">
             <div className="flex flex-col items-center gap-6 bg-white shadow-lg p-6 rounded-lg w-full max-w-2xl">
@@ -20,8 +23,8 @@ export default function FormModal({ action, type, isOpen, onClose, onAction, onI
                 </h2>
                 {
                     type === 'Team' ? (<TeamField value={value} onInputChange={onInputChange} />) :
-                        type === 'Player' ? (<PlayerField value={value} onInputChange={onInputChange} action={action} game={game} teamData={teamData} />) :
-                            null
+                    type === 'Player' ? (<PlayerField value={value} onInputChange={onInputChange} action={action} teamData={teamData} />) :
+                    null
                 }
                 <div className="flex justify-end gap-4">
                     <button
@@ -33,7 +36,11 @@ export default function FormModal({ action, type, isOpen, onClose, onAction, onI
                     <button
                         className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white"
                         onClick={async () => {
-                            const data = await (action === "Edit" ? onAction(game, value, value.Id) : onAction(game, value))
+                            await ( 
+                                action === "Edit" ? onAction(selectedGame, value, value.Id) : 
+                                action === "Add" ? onAction(selectedGame, value) : 
+                                null 
+                            );
                             onClose();
                             window.location.reload();
                         }}

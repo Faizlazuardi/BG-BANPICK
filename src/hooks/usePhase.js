@@ -1,13 +1,27 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
+import { useGameContext } from "../contexts/GameContext";
 import { TEAM_SIZE, generatePhaseActions } from "../constants/gameConstant";
 import { createTeamArray } from "../utils/arrayUtils";
 
 export const usePhase = (banSelection, pickSelection) => {
+    const { selectedTotalBan } = useGameContext()
     const initialHighlights = useMemo(() => createTeamArray(TEAM_SIZE, false), []);
     const [highlights, setHighlights] = useState(initialHighlights);
     const [phase, setPhase] = useState(0);
 
-    const phaseActions = useMemo(() => generatePhaseActions(), []);
+    const phaseActions = () => {
+        switch (selectedTotalBan) {
+            case 3:
+                return generatePhaseActions(2, 3);
+            case 5:
+                return generatePhaseActions(3, 5);
+            default:
+                return generatePhaseActions(3, 5);
+        }
+    };
+
+    generatePhaseActions(3, 5);
+
     const action = phaseActions[phase];
 
     const updateHighlights = useCallback((team, index) => {

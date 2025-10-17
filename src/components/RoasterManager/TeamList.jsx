@@ -136,7 +136,6 @@ export default function TeamList({ handleTeamSelectionChange }) {
                     onAction={addTeams}
                     onInputChange={handleTeamValueChange}
                     value={teamValue}
-                    game={selectedGame}
                 />
             )}
             {isUpdateModalOpen && (
@@ -148,7 +147,6 @@ export default function TeamList({ handleTeamSelectionChange }) {
                     onAction={updateTeams}
                     onInputChange={handleTeamValueChange}
                     value={teamValue}
-                    game={selectedGame}
                 />
             )}
             {isDeleteModalOpen && (
@@ -157,7 +155,6 @@ export default function TeamList({ handleTeamSelectionChange }) {
                     onClose={handledeleteModalClose}
                     onDelete={deleteTeams}
                     value={deletedValue}
-                    game={selectedGame}
                 />
             )}
         </div>

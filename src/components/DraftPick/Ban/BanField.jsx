@@ -9,18 +9,19 @@ import { TEAM_SIZE } from "../../../constants/gameConstant";
 import { createTeamArray } from "../../../utils/arrayUtils";
 
 export default function BanField() {
-    const { selectedGame } = useGameContext()
+    const { selectedGame, selectedTotalBan } = useGameContext()
     const { action, banInputs, handleAnimatedSelection, handleBan } = useDraftContext()
     const { type: actionType, team: actionTeam, index: actionIndex } = action;
     const { heroData } = useHeroData(selectedGame);
     const { blue: blueBanInputs, red: redBanInputs } = banInputs;
     const onBanSelectionChange = (team, id, hero) => handleAnimatedSelection('ban', team, id, hero)
     const onBanInputChange = (team, id, hero) => handleBan("banInput", team, id, hero)
-    const inputRefs = useRef(createTeamArray(TEAM_SIZE, ""));
+    const inputRefs = useRef(createTeamArray(selectedTotalBan, ""));
 
     const renderBanField = ({ teamSide, banInput }) => {
-        return Array.from({ length: TEAM_SIZE }).map((_, index) => {
+        return Array.from({ length: selectedTotalBan }).map((_, index) => {
             const isActive = actionIndex === index && actionTeam === teamSide.toLowerCase()
+            
             return (
                 <div className="flex items-center gap-5" key={index}>
                     <div>

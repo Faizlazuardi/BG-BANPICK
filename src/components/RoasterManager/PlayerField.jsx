@@ -1,12 +1,15 @@
 import { useRef, useState } from 'react';
+import { useGameContext } from "../../contexts/GameContext";
 import { getTeamById } from '../../services/api';
 
-export default function PlayerField({ value, onInputChange, action, game, teamData }) {
-    const [FotoUrl, setFotoUrl] = useState(value.Foto || null)
+export default function PlayerField({ value, onInputChange, action, teamData }) {
+    const { selectedGame } = useGameContext()
+    const [previewFotoUrl, setPreviewFotoUrl] = useState(value.Foto || null)
+    
     const handleFotoChange = (file) => {
-        const previewUrl = URL.createObjectURL(file);
-        setFotoUrl(previewUrl);
-        onInputChange("Foto", e.target.files[0])
+        const Url = URL.createObjectURL(file);
+        setPreviewFotoUrl(Url);
+        onInputChange("Foto", file)
     }
     const inputRefs = useRef();
 
@@ -35,7 +38,7 @@ export default function PlayerField({ value, onInputChange, action, game, teamDa
                                         key={Team.Id}
                                         onMouseDown={(e) => e.preventDefault()}
                                         onClick={() => {
-                                            getTeamById(game, Team.Id)
+                                            getTeamById(selectedGame, Team.Id)
                                                 .then((team) => {
                                                     onInputChange("Team", { Id: team.Id, Name: team.Name }
                                                     );
@@ -57,7 +60,7 @@ export default function PlayerField({ value, onInputChange, action, game, teamDa
             </label>
             <label className="flex flex-col font-2xl text-bold text-gray-600 text-center">
                 Player Photo
-                <img className="w-15 h-fit" src={FotoUrl} alt="" />
+                <img className="w-15 h-fit" src={previewFotoUrl} alt="" />
                 <input type="file" id="player-photo-input"
                     onChange={(e) => { handleFotoChange(e.target.files[0]) }}
                 />

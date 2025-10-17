@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { useGameContext } from '../contexts/GameContext.jsx';
 import { getAllPlayersByTeam } from "../services/api.js";
 
-export const usePlayerData = ({ selectedGame, teamSelection, initialPlayerDataState }) => {
+export const usePlayerData = ({ teamSelection, initialPlayerDataState }) => {
+    const { selectedGame } = useGameContext()
     const [playerData, setPlayerData] = useState(initialPlayerDataState);
     useEffect(() => {
         Object.entries(teamSelection).forEach(([role]) => {
