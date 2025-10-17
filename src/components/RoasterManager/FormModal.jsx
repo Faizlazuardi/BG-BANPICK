@@ -23,7 +23,7 @@ export default function FormModal({ action, type, isOpen, onClose, onAction, onI
                 </h2>
                 {
                     type === 'Team' ? ( <TeamField value={value} onInputChange={onInputChange} />) : 
-                    type === 'Player' ? ( <PlayerField value={value} onInputChange={onInputChange} action={action} game={game} teamData={teamData}/> ) : 
+                    type === 'Player' ? ( <PlayerField value={value} onInputChange={onInputChange} action={action} teamData={teamData}/> ) : 
                     null
                 }
                 <div className="flex justify-end gap-4">
@@ -36,11 +36,11 @@ export default function FormModal({ action, type, isOpen, onClose, onAction, onI
                     <button
                         className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white"
                         onClick={async () =>{
-                            const data = await (action === "Edit" ? onAction(game, value, value.Id) : onAction(game, value))
+                            const data = await (action === "Edit" ? onAction(game, value, value.Id) : onAction(selectedGame, value))
                             console.log(value)
                             console.log(data)
                             onClose();
-                            // window.location.reload();
+                            window.location.reload();
                         }}
                     >
                         Confirm

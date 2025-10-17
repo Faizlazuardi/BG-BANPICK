@@ -16,7 +16,7 @@ export default function TeamField({ value, onInputChange }) {
             </label>
             <label className="flex flex-col font-2xl text-bold text-gray-600 text-center">
                 Team Logo
-                <img className="w-15 h-fit" src={LogoUrl} alt="" />
+                <img className="w-15 h-fit" src={previewLogoUrl} alt="" />
                 <input type="file" id="team-logo-input" 
                     onChange={ (e) => handleLogoChange(e.target.files[0]) }
                 />

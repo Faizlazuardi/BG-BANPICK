@@ -15,7 +15,7 @@ export default function BanField() {
     const { blue: blueBanInputs, red: redBanInputs } = banInputs;
     const onBanSelectionChange = (team, id, hero) => handleAnimatedSelection('ban', team, id, hero)
     const onBanInputChange = (team, id, hero) => handleBan("banInput", team, id, hero)
-    const inputRefs = useRef(createTeamArray(TEAM_SIZE, ""));
+    const inputRefs = useRef(createTeamArray(selectedTotalBan, ""));
     
     const renderBanField = ({ teamSide, banInput}) => {
         return Array.from({ length: selectedTotalBan }).map((_, index) => {

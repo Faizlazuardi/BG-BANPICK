@@ -3,7 +3,7 @@ export const TIMEOUT_DURATION = 1200;
 export const generatePhaseActions = (firstBanCount, SecondbanCount) => {
     const actions = [];
     
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < firstBanCount; i++) {
         actions.push({ type: 'ban', team: 'blue', index: i });
         actions.push({ type: 'ban', team: 'red', index: i });
     }
@@ -13,7 +13,7 @@ export const generatePhaseActions = (firstBanCount, SecondbanCount) => {
     actions.push({ type: 'pick', team: 'blue', index: [1, 2] });
     actions.push({ type: 'pick', team: 'red', index: [2] });
     
-    for (let i = 3; i < 5; i++) {
+    for (let i = firstBanCount; i < SecondbanCount; i++) {
         actions.push({ type: 'ban', team: 'red', index: i });
         actions.push({ type: 'ban', team: 'blue', index: i });
     }

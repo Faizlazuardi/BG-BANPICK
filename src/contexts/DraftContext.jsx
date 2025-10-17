@@ -1,7 +1,5 @@
 import { createContext, useContext } from 'react';
 
-import { useGameContext } from "./GameContext";
-
 import { useTeam } from "../hooks/useTeam";
 import { usePlayerData } from "../hooks/usePlayerData";
 import { usePlayer } from "../hooks/usePlayer";
@@ -14,14 +12,13 @@ import { usePhase } from "../hooks/usePhase";
 const DraftContext = createContext();
 
 export function DraftProvider({ children }){
-    const { selectedGame } = useGameContext()
     const { 
         initialTeamInputState, teamInput, setTeamInput, handleTeamInputChange, 
         initialTeamSelectionState, teamSelection, setTeamSelection, handleTeamChange, handleWinCheckChange
     } = useTeam();
     
     const initialPlayerDataState = {blue: [], red: [] }
-    const { playerData, setPlayerData } = usePlayerData({selectedGame, teamSelection, initialPlayerDataState});
+    const { playerData, setPlayerData } = usePlayerData({ teamSelection, initialPlayerDataState});
     const { initialPlayerInputsState, playerInputs, setPlayerInputs, handlePlayerInputsChange } = usePlayer();
     
     const { 

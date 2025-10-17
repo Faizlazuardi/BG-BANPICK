@@ -1,7 +1,9 @@
 import {  Trash2 } from 'lucide-react';
+import { useGameContext } from '../../contexts/GameContext';
 
 export default function ConfirmDeleteModal({ isOpen, onClose, onDelete, value }) {
     if (!isOpen) return null;
+    const { selectedGame } = useGameContext();
     
     return (
         <div className="z-50 fixed inset-0 flex justify-center items-center bg-gray-900/50">
@@ -19,7 +21,7 @@ export default function ConfirmDeleteModal({ isOpen, onClose, onDelete, value })
                     <button
                         className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-white"
                         onClick={() => 
-                            onDelete(game, value.Id)
+                            onDelete(selectedGame, value.Id)
                             .then(() => {
                                 onClose();
                                 window.location.reload();

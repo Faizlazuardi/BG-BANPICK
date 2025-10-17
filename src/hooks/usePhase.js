@@ -9,18 +9,16 @@ export const usePhase = (banSelection, pickSelection) => {
     const [highlights, setHighlights] = useState(initialHighlights);
     const [phase, setPhase] = useState(0);
 
-    const phaseActions = () => {
-        switch (selectedTotalBan) {
-            case 3:
-                return generatePhaseActions(2, 3);
-            case 5:
-                return generatePhaseActions(3, 5);
-            default:
-                return generatePhaseActions(3, 5);
-        }
-    };
-
-    generatePhaseActions(3, 5);
+const phaseActions = useMemo(() => {
+    switch (selectedTotalBan) {
+        case 3:
+            return generatePhaseActions(2, 3);
+        case 5:
+            return generatePhaseActions(3, 5);
+        default:
+            return generatePhaseActions(3, 5);
+    }
+}, [selectedTotalBan]);
 
     const action = phaseActions[phase];
 

@@ -2,7 +2,8 @@ import { useRef, useState } from 'react';
 import { useGameContext } from "../../contexts/GameContext";
 import { getTeamById } from '../../services/api';
 
-export default function PlayerField({ value, onInputChange, action, game, teamData }) {
+export default function PlayerField({ value, onInputChange, action, teamData }) {
+    const { selectedGame } = useGameContext();
     const [FotoUrl, setFotoUrl] = useState(value.Foto || null)
     const handleFotoChange = (file) =>{
         const previewUrl = URL.createObjectURL(file);
@@ -35,7 +36,7 @@ export default function PlayerField({ value, onInputChange, action, game, teamDa
                                         key={Team.Id}
                                         onMouseDown={(e) => e.preventDefault()}
                                         onClick={() => {
-                                            getTeamById(game, Team.Id)
+                                            getTeamById(selectedGame, Team.Id)
                                             .then((team) => {
                                                 onInputChange("Team", { Id: team.Id, Name: team.Name}
                                                 );

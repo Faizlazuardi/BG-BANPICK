@@ -13,7 +13,7 @@ export default function DraftDisplay() {
         Summary: "col-start-3 row-span-3 row-start-1"
     }
     return (
-        <div className="grid grid-cols-[auto] grid-rows-[auto]">
+        <div className="grid grid-cols-[1fr_auto_auto_auto_1fr] grid-rows-[auto]">
             <TeamDisplay grid={ layoutGrid.Team } />
             <BanDisplay
                 grid={ layoutGrid.Ban }
