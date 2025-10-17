@@ -1,9 +1,7 @@
-import { useGameContext } from "../../contexts/GameContext";
-import { Trash2 } from 'lucide-react';
+import {  Trash2 } from 'lucide-react';
 
 export default function ConfirmDeleteModal({ isOpen, onClose, onDelete, value }) {
     if (!isOpen) return null;
-    const { selectedGame } = useGameContext()
     
     return (
         <div className="z-50 fixed inset-0 flex justify-center items-center bg-gray-900/50">

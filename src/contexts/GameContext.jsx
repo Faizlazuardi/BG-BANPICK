@@ -16,6 +16,7 @@ export function GameProvider({ children }) {
         { id: 3, option: "Best of 7", value: 7 }
     ];
     
+    
     const gameOptions = [
         { id: 1, option: "MLBB", value: "MLBB" },
     ];
@@ -25,11 +26,11 @@ export function GameProvider({ children }) {
         { id: 2, option: "5 Bans", value: 5 },
     ];
 
+    
     const [selectedRound, setSelectedRound] = useState(roundOptions[0].value);
     const [selectedBestOf, setSelectedBestOf] = useState(BestOfOption[0].value);
     const [selectedGame, setSelectedGame] = useState(gameOptions[0].value);
-    const [selectedTotalBan, setSelectedTotalBan] = useState(banOptions[0].value);
-
+    
     const requiredWins = Math.ceil(selectedBestOf / 2);
 
     return (

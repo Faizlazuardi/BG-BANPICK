@@ -17,9 +17,9 @@ export function DraftProvider({ children }){
         initialTeamInputState, teamInput, setTeamInput, handleTeamInputChange, 
         initialTeamSelectionState, teamSelection, setTeamSelection, handleTeamChange, handleWinCheckChange
     } = useTeam();
-
-    const initialPlayerDataState = { blue: [], red: [] }
-    const { playerData, setPlayerData } = usePlayerData({ teamSelection, initialPlayerDataState });
+    
+    const initialPlayerDataState = {blue: [], red: [] }
+    const { playerData, setPlayerData } = usePlayerData({selectedGame, teamSelection, initialPlayerDataState});
     const { initialPlayerInputsState, playerInputs, setPlayerInputs, handlePlayerInputsChange } = usePlayer();
     
     const { 
