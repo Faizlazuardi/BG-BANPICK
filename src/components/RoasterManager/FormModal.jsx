@@ -13,13 +13,13 @@ export default function FormModal({ action, type, isOpen, onClose, onAction, onI
         <div className="z-50 fixed inset-0 flex justify-center items-center bg-gray-900/50">
             <div className="flex flex-col items-center gap-6 bg-white shadow-lg p-6 rounded-lg w-full max-w-2xl">
                 <h2 className="text-5xl">
-                    {action}{" "}
-                    {type !== "Team" && value?.Team.Name}{" "}
+                    { action }{" "}
+                    { type !== "Team" && value?.Team.Name }{" "}
                     {
-                        action === "Add" ? "New" :
-                            action === "Edit" ? value?.Name : null
+                        action === "Add" ? "New" : 
+                        action === "Edit" ? value?.Name : null
                     }{" "}
-                    {!(action === "Edit" && type === "Player") && type}
+                    { !(action === "Edit" && type === "Player") && type }
                 </h2>
                 {
                     type === 'Team' ? (<TeamField value={value} onInputChange={onInputChange} />) :

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { X, SquarePen, Trash2 } from 'lucide-react';
+import { X, SquarePen, Trash2  } from 'lucide-react';
 
 import FormModal from './FormModal';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
@@ -13,9 +13,9 @@ import { getPlayerById, addPlayers, updatePlayers, deletePlayers } from '../../s
 
 export default function PlayerList({ teamSelection }) {
     const { selectedGame } = useGameContext()
-
-    const [playerValue, setPlayerValue] = useState({ Name: "", Foto: null, Team: { Id: teamSelection.single.Id, Name: teamSelection.single.Name } });
-
+    
+    const [playerValue, setPlayerValue] = useState({ Name: "", Foto: null, Team: { Id: teamSelection.single.Id, Name: teamSelection.single.Name }});
+    
     const handlePlayerValueChange = (Field, value) => {
         setPlayerValue((prev) => {
             if (Field === "Team") {
@@ -35,23 +35,23 @@ export default function PlayerList({ teamSelection }) {
             }
         });
     };
-
+    
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const handleAddModalClose = () => {
         setIsAddModalOpen(false);
     }
-
+    
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
     const handleUpdateModalClose = () => {
         setIsUpdateModalOpen(false);
     };
-
+    
     const [deletedValue, setDeletedValue] = useState(null);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const handledeleteModalClose = () => {
         setIsDeleteModalOpen(false);
     };
-
+    
     const initialPlayerDataState = {
         single: []
     };
@@ -60,11 +60,11 @@ export default function PlayerList({ teamSelection }) {
     return (
         <div className="flex flex-col gap-5 mt-5 max-w-3xl text-cyan-950">
             <h2 className="text-5xl text-center">{teamSelection.single.Name} Player List</h2>
-            <button
+            <button 
                 className="flex items-center gap-2 bg-green-500 hover:bg-green-800 px-3 py-1 rounded w-32 font-semibold text-white text-sm"
                 onClick={() => { setIsAddModalOpen(true) }}
             >
-                <X className='rotate-45' />
+                <X className='rotate-45'/>
                 Add Player
             </button>
             <table className="shadow-md rounded-lg w-full overflow-hidden border-collapse table-auto">
@@ -87,7 +87,7 @@ export default function PlayerList({ teamSelection }) {
                                         setIsUpdateModalOpen(true);
                                     }}
                                 >
-                                    <SquarePen />
+                                    <SquarePen/>
                                     Edit
                                 </button>
                                 <button className="flex items-center gap-2 bg-red-500 hover:bg-red-800 px-3 py-1 rounded w-25 font-semibold text-white text-sm"
@@ -96,7 +96,7 @@ export default function PlayerList({ teamSelection }) {
                                         setIsDeleteModalOpen(true);
                                     }}
                                 >
-                                    <Trash2 />
+                                    <Trash2/>
                                     Delete
                                 </button>
                             </td>

@@ -4,7 +4,7 @@ import { useGameContext } from '../../contexts/GameContext';
 import { useDraftContext } from '../../contexts/DraftContext';
 
 export default function MatchSummary({ grid }) {
-    const { requiredWins, selectedRound } = useGameContext();
+    const { requiredWins, selectedRound} = useGameContext();
     const { teamSelection } = useDraftContext()
     const { blue: blueTeamSelection, red: redTeamSelection } = teamSelection;
     const winCard = (team, teamSelection, style) => {

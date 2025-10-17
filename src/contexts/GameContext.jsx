@@ -15,7 +15,7 @@ export function GameProvider({ children }) {
         { id: 2, option: "Best of 5", value: 5 },
         { id: 3, option: "Best of 7", value: 7 }
     ];
-
+    
     const gameOptions = [
         { id: 1, option: "MLBB", value: "MLBB" },
     ];

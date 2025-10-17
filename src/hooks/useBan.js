@@ -16,10 +16,10 @@ export const useBan = () => {
 
         if (setState) {
             setState(prev => ({
-                ...prev,
-                [team]: prev[team].map((item, i) => (i === id ? value : item))
-            }));
-            return;
+            ...prev,
+            [team]: prev[team].map((item, i) => (i === id ? value : item))
+        }));
+        return;
         }
     };
 

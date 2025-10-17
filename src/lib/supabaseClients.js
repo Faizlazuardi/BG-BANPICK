@@ -5,4 +5,4 @@ const supabaseMLBB = createClient(
   import.meta.env.VITE_SUPABASE_KEY_MLBB
 );
 
-export { supabaseMLBB };
+export { supabaseMLBB};

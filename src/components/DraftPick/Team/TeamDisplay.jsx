@@ -1,6 +1,6 @@
 import { useDraftContext } from "../../../contexts/DraftContext";
 
-export default function teamDisplay({ grid }) {
+export default function teamDisplay( { grid } ) {
     const { teamSelection } = useDraftContext()
     return (
         <>

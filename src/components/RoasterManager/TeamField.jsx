@@ -7,11 +7,11 @@ export default function TeamField({ value, onInputChange }) {
         setPreviewLogoUrl(Url);
         onInputChange("Logo", file);
     };
-    return (
+    return(
         <>
             <label className="flex flex-col font-2xl text-bold text-gray-600 text-center">
                 Team Name
-                <input type="text" id="team-name-imput" value={value.Name} onChange={(e) => onInputChange("Name", e.target.value)} />
+                <input type="text" id="team-name-imput" value={value.Name} onChange={(e) => onInputChange("Name", e.target.value)}/>
             </label>
             <label className="flex flex-col font-2xl text-bold text-gray-600 text-center">
                 Team Logo

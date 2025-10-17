@@ -12,10 +12,9 @@ export default function PlayerField({ value, onInputChange, action, teamData }) 
         onInputChange("Foto", file)
     }
     const inputRefs = useRef();
-
-    return (
+    return(
         <>
-            {action !== "Add" && (
+            { action !== "Add" && (
                 <>
                     <h1 className="font-2xl text-bold text-gray-600">Player Team</h1>
                     <div>
@@ -25,9 +24,9 @@ export default function PlayerField({ value, onInputChange, action, teamData }) 
                             className="peer"
                             type="text"
                             placeholder="Enter Player Team Name"
-                            value={value.Team.Name}
+                            value={value.Team.Name} 
                             onChange={
-                                (e) => { onInputChange("Team", { Name: e.target.value }) }
+                                (e) => {onInputChange("Team", {Name: e.target.value})}
                             }
                         />
                         <div className="invisible absolute bg-white w-36.5 max-h-20 overflow-y-auto peer-focus:visible">
@@ -56,7 +55,7 @@ export default function PlayerField({ value, onInputChange, action, teamData }) 
             )}
             <label className="flex flex-col font-2xl text-bold text-gray-600 text-center">
                 Player Name
-                <input type="text" id="player-name-input" placeholder="Enter Player Name" value={value.Name} onChange={(e) => onInputChange("Name", e.target.value)} />
+                <input type="text" id="player-name-input" placeholder="Enter Player Name" value={value.Name} onChange={(e) => onInputChange("Name", e.target.value)}/>
             </label>
             <label className="flex flex-col font-2xl text-bold text-gray-600 text-center">
                 Player Photo

@@ -10,7 +10,7 @@ export default function PlayerField() {
     const { blue: bluePlayers, red: redPlayers } = playerData;
     const onPlayerChange = (team, id, value) => handlePlayerInputsChange("playerInput", team, id, value)
     const inputRefs = useRef(createTeamArray(TEAM_SIZE, ""));
-
+    
     const renderPlayerField = ({ teamSide, playerInput, playerList }) => {
         return Array.from({ length: TEAM_SIZE }).map((_, index) => (
             <div key={index}>

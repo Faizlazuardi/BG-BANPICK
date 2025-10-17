@@ -13,14 +13,14 @@ export const usePlayer = () => {
 
         if (setState) {
             setState(prev => ({
-                ...prev,
-                [team]: prev[team].map((item, i) => (i === id ? value : item))
-            }));
-            return;
+            ...prev,
+            [team]: prev[team].map((item, i) => (i === id ? value : item))
+        }));
+        return;
         }
     };
 
     return {
-        initialPlayerInputsState, playerInputs, setPlayerInputs, handlePlayerInputsChange
+        initialPlayerInputsState,playerInputs, setPlayerInputs, handlePlayerInputsChange
     };
 };

@@ -5,13 +5,12 @@ import { useDraftContext } from "../../../contexts/DraftContext";
 
 import { useHeroData } from "../../../hooks/useHeroData";
 
-import { TEAM_SIZE } from "../../../constants/gameConstant";
 import { createTeamArray } from "../../../utils/arrayUtils";
 
 export default function BanField() {
     const { selectedGame, selectedTotalBan } = useGameContext()
     const { action, banInputs, handleAnimatedSelection, handleBan } = useDraftContext()
-    const { type: actionType, team: actionTeam, index: actionIndex } = action;
+    const { type:actionType, team:actionTeam, index: actionIndex } = action;
     const { heroData } = useHeroData(selectedGame);
     const { blue: blueBanInputs, red: redBanInputs } = banInputs;
     const onBanSelectionChange = (team, id, hero) => handleAnimatedSelection('ban', team, id, hero)
@@ -29,12 +28,12 @@ export default function BanField() {
                             ref={(elem) => (inputRefs.current[teamSide.toLowerCase()][index] = elem)}
                             id={`ban-${teamSide}-${index + 1}`}
                             className={`peer rounded-md w-36.5 
-                                ${actionType === "ban" ? (isActive ? "border-blue-500" : null) : null}`}
+                                ${actionType === "ban" ? (isActive ? "border-blue-500" : null) : null }`}
                             type="text"
                             placeholder={`${teamSide} Side Ban ${index + 1}`}
                             value={banInput[index]}
                             onChange={(e) => onBanInputChange(teamSide.toLowerCase(), index, e.target.value)}
-                            disabled={actionType === "ban" ? !isActive : true}
+                            disabled={ actionType === "ban" ? !isActive : true }
                         />
                         {actionType === "ban" && actionIndex === index && actionTeam === teamSide.toLowerCase() && (
                             <div className="invisible absolute bg-white w-36.5 max-h-20 overflow-y-auto peer-focus:visible">

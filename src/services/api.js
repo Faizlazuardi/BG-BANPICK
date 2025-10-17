@@ -56,14 +56,14 @@ async function uploadLogoTeam(game, Name, file) {
         .storage
         .from('mlbb')
         .upload(filePath, file, {
-            upsert: true,
-        });
-
+        upsert: true,
+    });
+    
     if (error) {
         console.error('Upload error:', error.message);
         return null;
     }
-
+    
     const { data: publicUrlData } = supabase
         .storage
         .from('mlbb')
@@ -74,17 +74,17 @@ async function uploadLogoTeam(game, Name, file) {
 export const addTeams = async (game, value) => {
     const supabase = getClient(game)
     let LogoUrl;
-    if (value.Logo !== null) {
+    if(value.Logo !== null){
         LogoUrl = await uploadLogoTeam(game, value.Name, value.Logo)
     }
     const { data, error } = await supabase
-        .from('Teams')
-        .insert({
+    .from('Teams')
+    .insert({
             Name: value.Name,
             Logo: LogoUrl || null
         })
-        .select().single()
-
+    .select().single()
+    
     if (error) {
         console.error('Insert error:', error.message);
         throw error;
@@ -92,10 +92,10 @@ export const addTeams = async (game, value) => {
     return data;
 }
 
-export const updateTeams = async (game, value, id) => {
+export const updateTeams = async (game, value, id)=>{
     const supabase = getClient(game)
     let LogoUrl;
-    if (value.Logo !== null) {
+    if(value.Logo !== null){
         LogoUrl = await uploadLogoTeam(game, value.Name, value.Logo)
     }
     const { data, error } = await supabase
@@ -113,12 +113,12 @@ export const updateTeams = async (game, value, id) => {
     return data;
 }
 
-export const deleteTeams = async (game, id) => {
+export const deleteTeams = async (game, id)=>{
     const supabase = getClient(game)
     const { error } = await supabase
-        .from('Teams')
-        .delete()
-        .eq('Id', id)
+    .from('Teams')
+    .delete()
+    .eq('Id', id)
     if (error) {
         console.error('Delete error:', error.message);
         throw error;
@@ -129,20 +129,20 @@ export const getAllPlayersByTeam = async (game, teamName) => {
     const supabase = getClient(game);
     try {
         const { data: teamData, error: teamError } = await supabase
-            .from('Teams')
-            .select('Id')
-            .eq('Name', teamName)
-            .maybeSingle();
+        .from('Teams')
+        .select('Id')
+        .eq('Name', teamName)
+        .maybeSingle();
         if (teamError) throw teamError;
         if (!teamData) return { error: 'Team not found' };
-
+        
         const { data: players, error: playersError } = await supabase
-            .from('Players')
-            .select('Id, Name')
-            .eq('Team_id', teamData.Id)
-            .order('Id', { ascending: true });
-
-        if (playersError) throw playersError;
+        .from('Players')
+        .select('Id, Name')
+        .eq('Team_id', teamData.Id)
+        .order('Id', { ascending: true });
+    
+    if (playersError) throw playersError;
         return players.length > 0 ? players : { error: 'No players found in this team' };
     } catch (err) {
         return { error: err.message };
@@ -152,14 +152,14 @@ export const getAllPlayersByTeam = async (game, teamName) => {
 export const getPlayerById = async (game, id) => {
     const supabase = getClient(game);
     try {
-        const { data, error } = await supabase
-            .from('Players')
-            .select('Team:Teams(Id, Name), Id, Name, Foto')
-            .eq('Id', id)
-            .single()
-            .order('Id', { ascending: true });
-
-        if (error) throw error;
+    const { data, error } = await supabase
+    .from('Players')
+    .select('Team:Teams(Id, Name), Id, Name, Foto')
+    .eq('Id', id)
+    .single()
+    .order('Id', { ascending: true });
+    
+    if (error) throw error;
         return data;
     } catch (err) {
         return { error: err.message };
@@ -176,14 +176,14 @@ async function uploadPhotoPlayer(game, Name, file) {
         .storage
         .from('mlbb')
         .upload(filePath, file, {
-            upsert: true,
-        });
-
+        upsert: true,
+    });
+    
     if (error) {
         console.error('Upload error:', error.message);
         return null;
     }
-
+    
     const { data: publicUrlData } = supabase
         .storage
         .from('mlbb')
@@ -192,21 +192,21 @@ async function uploadPhotoPlayer(game, Name, file) {
 }
 
 
-export const addPlayers = async (game, value) => {
+export const addPlayers = async (game, value)=>{
     const supabase = getClient(game)
     let FotoUrl;
-    if (value.Foto !== null) {
+    if(value.Foto !== null){
         FotoUrl = await uploadPhotoPlayer(game, value.Name, value.Foto)
     }
     const { data, error } = await supabase
-        .from('Players')
-        .insert({
+    .from('Players')
+    .insert({
             Team_id: value.Team.Id,
             Name: value.Name,
             Foto: FotoUrl || null,
         })
-        .select().single()
-
+    .select().single()
+    
     if (error) {
         console.error('Insert error:', error.message);
         throw error;
@@ -214,21 +214,21 @@ export const addPlayers = async (game, value) => {
     return data;
 }
 
-export const updatePlayers = async (game, value, id) => {
+export const updatePlayers = async (game, value, id)=>{
     const supabase = getClient(game)
-    if (value.Foto !== null) {
+    if(value.Foto !== null){
         FotoUrl = await uploadPhotoPlayer(game, value.Name, value.Foto)
     }
     const { data, error } = await supabase
-        .from('Players')
-        .update({
-            Team_id: value.Team.Id,
-            Name: value.Name,
-            Foto: value.Foto ? value.Foto : null
-        })
-        .eq('Id', id)
-        .select()
-
+    .from('Players')
+    .update({
+        Team_id: value.Team.Id,
+        Name: value.Name,
+        Foto: value.Foto ? value.Foto : null
+    })
+    .eq('Id', id)
+    .select()
+    
     if (error) {
         console.error('Update error:', error.message);
         throw error;
@@ -236,13 +236,13 @@ export const updatePlayers = async (game, value, id) => {
     return data;
 }
 
-export const deletePlayers = async (game, id) => {
+export const deletePlayers = async (game, id)=>{
     const supabase = getClient(game)
-    const { error } = await supabase
-        .from('Players')
-        .delete()
-        .eq('Id', id)
-
+        const { error } = await supabase
+    .from('Players')
+    .delete()
+    .eq('Id', id)
+    
     if (error) {
         console.error('Delete error:', error.message);
         throw error;
