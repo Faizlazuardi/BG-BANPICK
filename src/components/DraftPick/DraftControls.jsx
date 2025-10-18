@@ -18,7 +18,7 @@ export default function DraftControls() {
         initialTeamInputState, setTeamInput,
         initialTeamSelectionState, setTeamSelection,
         setPlayerData,
-        initialPlayerInputState, setPlayerInputs,
+        initialPlayerInputsState, setPlayerInputs,
         initialBanSelectionState, setBanSelection,
         initialBanInputsState, setBanInputs,
         initialPickSelectionState, setPickSelection,
@@ -43,7 +43,7 @@ export default function DraftControls() {
         setTeamInput, initialTeamInputState,
         setTeamSelection, initialTeamSelectionState,
         setPlayerData, initialPlayerDataState,
-        setPlayerInputs, initialPlayerInputState,
+        setPlayerInputs, initialPlayerInputsState,
         setSwapStatus, initialSwapStatus
     });
     const { switchTeam } = useSwitchTeam({ setTeamInput, setTeamSelection, setPlayerInputs });

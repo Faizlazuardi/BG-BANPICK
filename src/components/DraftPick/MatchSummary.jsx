@@ -1,4 +1,4 @@
-import TournamentLogo from '/src/assets/TournamentLogo.gif';
+import TournamentLogo from '/src/assets/TournamentLogo.png';
 
 import { useGameContext } from '../../contexts/GameContext';
 import { useDraftContext } from '../../contexts/DraftContext';
@@ -21,8 +21,8 @@ export default function MatchSummary({ grid }) {
     }
     return (
         <div className={`flex flex-col justify-center gap-2 bg-amber-400 w-85 h-69 ${grid}`}>
-            <div className="mx-auto max-w-40 max-h-22.5">
-                <img src={TournamentLogo} alt="Tournament Logo" />
+            <div className="mx-auto max-w-40 max-h-22">
+                <img className="w-full h-full" src={TournamentLogo} alt="Tournament Logo" />
             </div>
             <h1 className="text-2xl text-center">{selectedRound}</h1>
             <div className="flex justify-evenly">
