@@ -13,17 +13,11 @@ export default function DraftDisplay() {
         Summary: "col-start-3 row-span-3 row-start-1"
     }
     return (
-        <div className="grid grid-cols-[1fr_auto_auto_auto_1fr] grid-rows-[auto]">
+        <div className="grid grid-cols-[1fr_auto_auto_auto_1fr] grid-rows-[auto_auto_auto] w-fit h-fit">
             <TeamDisplay grid={ layoutGrid.Team } />
-            <BanDisplay
-                grid={ layoutGrid.Ban }
-            />
-            <PickDisplay
-                grid={ layoutGrid.Pick }
-            />
-            <PlayerDisplay
-                grid={layoutGrid.Player}
-            />
+            <BanDisplay grid={ layoutGrid.Ban } />
+            <PickDisplay grid={ layoutGrid.Pick } />
+            <PlayerDisplay grid={layoutGrid.Player} />
             <MatchSummary grid={layoutGrid.Summary} />
         </div>
     );

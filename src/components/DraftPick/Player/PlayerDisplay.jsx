@@ -9,17 +9,17 @@ export default function PlayerDisplay({ grid }){
     
     const renderPlayers = (player, highlight) => {
         return Array.from({ length: TEAM_SIZE }).map((_, index) => (
-            <div className={`flex justify-center items-center h-8 w-29 text-white ${highlight[index] ? 'bg-amber-700' : 'bg-cyan-950'}`} key={index}>
+            <div className={`flex justify-center items-center h-8 w-29 text-white ${highlight[index] ? 'bg-[#289132]' : 'bg-[#00C92A]'}`} key={index}>
                 {player[index]}
             </div>
         ));
     };
     return (
         <>
-            <div className={`flex ${grid.Blue}`}>
+            <div className={`flex w-fit ${grid.Blue}`}>
                 {renderPlayers(bluePlayers, highlightBlueClass)}
             </div>
-            <div className={`flex flex-row-reverse ${grid.Red}`}>
+            <div className={`flex flex-row-reverse w-fit ${grid.Red}`}>
                 {renderPlayers(redPlayers, highlightRedClass)}
             </div>
         </>

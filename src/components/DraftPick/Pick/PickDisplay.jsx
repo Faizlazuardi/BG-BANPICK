@@ -9,7 +9,7 @@ export default function PickDisplay({ grid }) {
     
     const renderPicks = (picks, animationClass) => {
         return Array.from({ length: TEAM_SIZE }).map((_, index) => (
-            <div className="bg-yellow-100 bg-cover bg-center border-x-2 w-29 h-45 overflow-hidden" key={index}>
+            <div className="bg-[url('/images/BackroundPick.png')] bg-cover bg-center w-29 h-45 overflow-hidden" key={index}>
                 <img className={`w-full object-cover ${animationClass[index]}`} src={picks[index].img} alt="" />
             </div>
         ));
@@ -17,10 +17,10 @@ export default function PickDisplay({ grid }) {
 
     return (
         <>
-            <div className={`flex ${grid.Blue}`}>
+            <div className={`flex w-fit ${grid.Blue}`}>
                 {renderPicks(bluePicks, animationBlueClass)}
             </div>
-            <div className={`flex flex-row-reverse ${grid.Red}`}>
+            <div className={`flex flex-row-reverse w-fit ${grid.Red}`}>
                 {renderPicks(redPicks, animationRedClass)}
             </div>
         </>
